@@ -63,7 +63,7 @@ import {Container, Row, Col, Card, ListGroup, ListGroupItem, NavDropdown, Navbar
       let cov_ncrit = []
       let cov_cumchild = []
       axios
-      .get("http://localhost:4000/api/csvCovid/nd")
+      .get("http://89.253.218.66:4000/api/csvCovid/nd")
       .then(res => {
         console.log(res);
         cov_last_nd.push(parseInt(res.data[res.data.length-1].new_diagnoses))

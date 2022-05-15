@@ -14,7 +14,7 @@ export default function NaviBar() {
   return (
 
     <>
-      <Navbar collapseOnSelect scrolling transparent expand="md" >
+      <Navbar collapseOnSelect scrolling transparent expand="md" className="text-white">
         <Container className="py-1">
         <Navbar.Brand href="/"  className="text-white" >Обратные задачи</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />

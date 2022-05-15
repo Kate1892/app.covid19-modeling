@@ -20,13 +20,13 @@ export const Main= () => (
 
       <div className="my-auto" style={{ "margin-left": "6rem"}}>
 
-      <h1 style={{fontSize: 40}} className="text-white mx-5"><b>Математическое моделирование</b></h1>
-      <h1 style={{fontSize: 40}} className="text-white mx-5"><b>распространения инфекционных заболеваний</b></h1>
-      <div className="text-white mx-5"><i>Суперкомпьютерный анализ, математическое моделирование и </i></div>
-      <div className="text-white mx-5"><i>построение сценариев социально-экономического развития</i></div>
-      <div className="text-white mx-5"><i>Новосибирской области в условиях пандемии COVID-19</i></div>
+      <h1 className="text-white" ><b>Математическое моделирование</b></h1>
+      <h1 className="text-white"><b>распространения инфекционных заболеваний</b></h1>
+      <div className="text-white"><i>Суперкомпьютерный анализ, математическое моделирование и </i></div>
+      <div className="text-white "><i>построение сценариев социально-экономического развития</i></div>
+      <div className="text-white"><i>Новосибирской области в условиях пандемии COVID-19</i></div>
 
-      <div><Button href="/modeling" className="text-white mx-5 my-3 py-2" variant="info" size="sm">
+      <div><Button href="/modeling" className="text-white my-3 py-2" variant="info" size="sm">
             <div style={{fontSize: 16}}>Перейти к моделированию</div>
           </Button></div>
       </div>
@@ -35,7 +35,7 @@ export const Main= () => (
       </Col>
       <Col xs= {12} md={6} lg={6}>
       <div style={{"margin-right": "6rem" }}>
-      <div align="right" className="text-white my-5"><i>Проект поддержан Российским научным фондом (проект № 18-71-10044), Российским фондом фундаментальных исследований (проекты № 18-31-20019, № 21-51-10003) и Правительством города Новосибирска.</i></div>
+      <div align="right" className="text-white my-5"><i><h6>Проект поддержан Российским научным фондом (проект № 18-71-10044), Российским фондом фундаментальных исследований (проекты № 18-31-20019, № 21-51-10003) и Правительством города Новосибирска.</h6></i></div>
       </div>
       </Col>
       </Row>

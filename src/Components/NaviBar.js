@@ -24,9 +24,6 @@ export default function NaviBar() {
             <Nav.Link href="/modeling" className="text-white"><u>Моделирование</u></Nav.Link>
             <NavDropdown text-white title={<span className="text-white"><u>Статистика</u></span>} id="collasible-nav-dropdown">
               <NavDropdown.Item href="/covid19" >Коронавирус</NavDropdown.Item>
-              <NavDropdown.Item href="/flu" >Грипп</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3" >Туберкулез</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3" >ВИЧ</NavDropdown.Item>
 
             </NavDropdown>
           </Nav>

@@ -66,7 +66,7 @@ ChartJS.register(zoomPlugin);
 const download_article=(e)=>{
    e.preventDefault()
    axios({
-     url:"http://localhost:4000/article",
+     url:"http://89.253.218.66:4000/article",
      method: "GET",
      responseType:"blob"
    }).then((resA)=>{
@@ -119,7 +119,7 @@ export function Modeling(){
     setIsrunning(true)
     cancelToken.current = axios.CancelToken.source();
   axios({
-      url:'http://localhost:4000/data',
+      url:'http://89.253.218.66:4000/data',
       method: "POST",
       responseType:"blob",
       data: {population_data, region_data, n_future_day, init_inf},
@@ -136,14 +136,14 @@ export function Modeling(){
     setWithspinner(true)
     setIsrunning(true)
   axios({
-      url:'http://localhost:4000/data',
+      url:'http://89.253.218.66:4000/data',
       method: "POST",
       responseType:"blob",
       data: {population_data, region_data, n_future_day, init_inf},
     }).then((res)=>{
       cancelToken.current = axios.CancelToken.source();
       axios({
-        url:"http://localhost:4000/api/try2",
+        url:"http://89.253.218.66:4000/api/try2",
         method: "GET",
         responseType:"blob",
         cancelToken: cancelToken.current.token
@@ -208,7 +208,7 @@ export function Modeling(){
 
     const real_data1=(e)=>{
       axios
-      .get("http://localhost:4000/api/csvCovid/nd")
+      .get("http://89.253.218.66:4000/api/csvCovid/nd")
       .then(res => {
         for (const dataObj of res.data) {
           cov_nd_state.push(parseInt(dataObj.new_diagnoses));
@@ -263,7 +263,7 @@ export function Modeling(){
     }
     const real_data2=(e)=>{
       axios
-      .get("http://localhost:4000/api/csvCovid/nd")
+      .get("http://89.253.218.66:4000/api/csvCovid/nd")
       .then(res => {
         for (const dataObj of res.data) {
           cov_nd_state.push(parseInt(dataObj.cum_diagnoses));
@@ -318,7 +318,7 @@ export function Modeling(){
     }
     const real_data3=(e)=>{
       axios
-      .get("http://localhost:4000/api/csvCovid/nd")
+      .get("http://89.253.218.66:4000/api/csvCovid/nd")
       .then(res => {
         for (const dataObj of res.data) {
           cov_nd_state.push(parseInt(dataObj.new_deaths));
@@ -373,7 +373,7 @@ export function Modeling(){
     }
     const real_data4=(e)=>{
       axios
-      .get("http://localhost:4000/api/csvCovid/nd")
+      .get("http://89.253.218.66:4000/api/csvCovid/nd")
       .then(res => {
         for (const dataObj of res.data) {
           cov_nd_state.push(parseInt(dataObj.new_recoveries));
@@ -428,7 +428,7 @@ export function Modeling(){
     }
     const real_data5=(e)=>{
       axios
-      .get("http://localhost:4000/api/csvCovid/nd")
+      .get("http://89.253.218.66:4000/api/csvCovid/nd")
       .then(res => {
         for (const dataObj of res.data) {
           cov_nd_state.push(parseInt(dataObj.n_critical));
@@ -484,7 +484,7 @@ export function Modeling(){
 
     const real_data6=(e)=>{
       axios({
-          url:'http://localhost:4000/api/curData',
+          url:'http://89.253.218.66:4000/api/curData',
           method: "POST",
           data: {region_data},
         })
@@ -542,7 +542,7 @@ export function Modeling(){
     }
     const real_data7=(e)=>{
       axios({
-          url:'http://localhost:4000/api/curData',
+          url:'http://89.253.218.66:4000/api/curData',
           method: "POST",
           data: {region_data},
         })
@@ -600,7 +600,7 @@ export function Modeling(){
     }
     const real_data8=(e)=>{
       axios({
-          url:'http://localhost:4000/api/curData',
+          url:'http://89.253.218.66:4000/api/curData',
           method: "POST",
           data: {region_data},
         })
@@ -658,7 +658,7 @@ export function Modeling(){
     }
     const real_data9=(e)=>{
       axios({
-          url:'http://localhost:4000/api/curData',
+          url:'http://89.253.218.66:4000/api/curData',
           method: "POST",
           data: {region_data},
         })
@@ -716,7 +716,7 @@ export function Modeling(){
     }
     const real_data10=(e)=>{
       axios({
-          url:'http://localhost:4000/api/curData',
+          url:'http://89.253.218.66:4000/api/curData',
           method: "POST",
           data: {region_data},
         })
@@ -777,7 +777,7 @@ export function Modeling(){
     const initchart = () => {
       setChartnum(6)
       axios({
-          url:'http://localhost:4000/getUMsim2',
+          url:'http://89.253.218.66:4000/getUMsim2',
           method: "POST",
           data: {population_data, region_data, n_future_day, init_inf},
         })
@@ -875,7 +875,7 @@ export function Modeling(){
     const initchart_cumdiag = () => {
       setChartnum(7)
       axios({
-          url:'http://localhost:4000/getUMsim2',
+          url:'http://89.253.218.66:4000/getUMsim2',
           method: "POST",
           data: {population_data, region_data, n_future_day, init_inf},
         })
@@ -971,7 +971,7 @@ export function Modeling(){
     const initchart_newdeath = () => {
       setChartnum(8)
       axios({
-          url:'http://localhost:4000/getUMsim2',
+          url:'http://89.253.218.66:4000/getUMsim2',
           method: "POST",
           data: {population_data, region_data, n_future_day, init_inf},
         })
@@ -1067,7 +1067,7 @@ export function Modeling(){
     const initchart_new_rec = () => {
       setChartnum(9)
       axios({
-          url:'http://localhost:4000/getUMsim2',
+          url:'http://89.253.218.66:4000/getUMsim2',
           method: "POST",
           data: {population_data, region_data, n_future_day, init_inf},
         })
@@ -1163,7 +1163,7 @@ export function Modeling(){
     const initchart_new_crit = () => {
       setChartnum(10)
       axios({
-          url:'http://localhost:4000/getUMsim2',
+          url:'http://89.253.218.66:4000/getUMsim2',
           method: "POST",
           data: {population_data, region_data, n_future_day, init_inf},
         })
@@ -1260,7 +1260,7 @@ export function Modeling(){
     const chart = () => {
       setChartnum(1)
       axios
-        .get("http://localhost:4000/getMsim")
+        .get("http://89.253.218.66:4000/getMsim")
         .then(res => {
           setSomeerrors(false)
           console.log(res)
@@ -1363,7 +1363,7 @@ export function Modeling(){
     const chart_cumdiag = () => {
       setChartnum(2)
       axios
-        .get("http://localhost:4000/getMsim")
+        .get("http://89.253.218.66:4000/getMsim")
         .then(res => {
           for (const dataObj of res.data.results.cum_diagnoses) {
             cov_cum_diag.push(parseInt(dataObj));
@@ -1456,7 +1456,7 @@ export function Modeling(){
     const chart_newdeath = () => {
       setChartnum(3)
       axios
-        .get("http://localhost:4000/getMsim")
+        .get("http://89.253.218.66:4000/getMsim")
         .then(res => {
           for (const dataObj of res.data.results.new_deaths) {
             cov_new_death.push(parseInt(dataObj));
@@ -1549,7 +1549,7 @@ export function Modeling(){
     const chart_new_rec = () => {
       setChartnum(4)
       axios
-        .get("http://localhost:4000/getMsim")
+        .get("http://89.253.218.66:4000/getMsim")
         .then(res => {
           for (const dataObj of res.data.results.new_recoveries) {
             cov_new_rec.push(parseInt(dataObj));
@@ -1642,7 +1642,7 @@ export function Modeling(){
     const chart_new_crit = () => {
       setChartnum(5)
       axios
-        .get("http://localhost:4000/getMsim")
+        .get("http://89.253.218.66:4000/getMsim")
         .then(res => {
           for (const dataObj of res.data.results.new_critical) {
             cov_new_crit.push(parseInt(dataObj));
@@ -1750,7 +1750,7 @@ export function Modeling(){
 
       const handleUnload = (e) => {
         const message = "o/";
-         axios.get("http://localhost:4000/deleteCurFiles")
+         axios.get("http://89.253.218.66:4000/deleteCurFiles")
         return 1;
       };
 

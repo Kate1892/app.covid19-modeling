@@ -11,7 +11,7 @@ import CollapseParamCSV from './CollapseParamCSV'
 const downloadN=(e)=>{
    e.preventDefault()
    Axios({
-     url:"http://localhost:4000/api/n",
+     url:"http://89.253.218.66:4000/api/n",
      method: "GET"
    }).then((res)=>{
      console.log(res);
@@ -22,7 +22,7 @@ const downloadN=(e)=>{
 const downloadA=(e)=>{
    e.preventDefault()
    Axios({
-     url:"http://localhost:4000/api/a",
+     url:"http://89.253.218.66:4000/api/a",
      method: "GET",
      responseType:"blob"
    }).then((resA)=>{
@@ -34,7 +34,7 @@ const downloadA=(e)=>{
 const downloadO=(e)=>{
    e.preventDefault()
    Axios({
-     url:"http://localhost:4000/api/o",
+     url:"http://89.253.218.66:4000/api/o",
      method: "GET",
      responseType:"blob"
    }).then((resO)=>{

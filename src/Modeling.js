@@ -2304,7 +2304,7 @@ COVID-19, в основе которой лежат обработка непо�
           </Tab>
           <Tab eventKey="SEIR-HCD" title="SEIR-HCD">
           <Card className="text-center mx-auto" border="light">
-          <h3>Модель</h3>
+          <h3>...</h3>
           </Card>
 
           </Tab>

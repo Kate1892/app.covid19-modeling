@@ -14,12 +14,12 @@ function Footer() {
       <Row>
       <Col xs={12} md={12} lg={6}>
       <div className="mx-5">
-      <h3 className="text-white text-muted mx-5">ИВМиМГ СО РАН</h3>
-      <div className="text-white text-muted mx-5">630090, Новосибирск, Проспект академика Лаврентьева, 6, ком.2-431</div>
-        <div className="text-white text-muted mx-5">контакты: info@covid19-modeling.ru, +7 (383) 330-84-60</div>
+      <h3 className="text-white text-muted mx-auto">ИВМиМГ СО РАН</h3>
+      <div className="text-white text-muted mx-auto">630090, Новосибирск, Проспект академика Лаврентьева, 6, ком.2-431</div>
+        <div className="text-white text-muted mx-auto">контакты: info@covid19-modeling.ru, +7 (383) 330-84-60</div>
 
-      <hr className="text-white mx-4"/>
-      <small align="left" className="text-center text-muted text-white mx-5">© 2022 COVID-19 в Новосибирской области</small></div></Col>
+      <hr className="text-white mx-auto"/>
+      <small align="left" className="text-center text-muted text-white mx-auto">© 2022 COVID-19 в Новосибирской области</small></div></Col>
       <Col  align="right" xs={12} md={12} lg={6}>
       <Stack align="right" direction="horizontal" gap={3} style={{"margin-left": "15rem" }}>
         <div align="right">

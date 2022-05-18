@@ -1785,15 +1785,18 @@ export function Modeling(){
           <Tab eventKey="AOM" title="Агентная модель">
           <Card className="text-center mx-auto" border="light">
           <Row>
-            <Col md={2}>
-              <Button
-                variant="outline-primary"
-                className="bg-white my-2 mx-2"
-                onClick={() => setOpen(!open)}
-                aria-controls="example-fade-text"
-                aria-expanded={open}
-              >  {open? <BsFillCaretDownFill size = {15}/> : <BsFillCaretRightFill size = {15}/>} Описание модели
-              </Button>
+            <Col md={2} >
+            <Row>
+              <Col xs= {12}  lg={12}>    <Button
+                    variant="outline-primary"
+                    className="bg-white my-2 mx-2"
+                    onClick={() => setOpen(!open)}
+                    aria-controls="example-fade-text"
+                    aria-expanded={open}
+                  >  {open? <BsFillCaretDownFill size = {15}/> : <BsFillCaretRightFill size = {15}/>} Описание модели
+                  </Button></Col>
+              <Col xs= {12} lg={12}>
+
               <OverlayTrigger
                  placement="bottom"
                  overlay={
@@ -1846,8 +1849,10 @@ export function Modeling(){
                          }>
                           <a href="https://arxiv.org/pdf/2112.05315.pdf"><Button variant="link"><BsFillArrowUpRightSquareFill size={30}/></Button></a>
                           </OverlayTrigger>
+                          </Col>
+                          </Row>
           </Col>
-          <Col md={10}>
+          <Col md={10} >
           <p align="justify" className="mx-3 my-1"><small>Прогнозирование производится посредством агентной модели расчета сценариев динамики выявленных случаев
 COVID-19, в основе которой лежат обработка неполных эпидемиологических данных и решение обратной задачи восстановления параметров агентной
 модели по совокупности доступных эпидемиологических данных. Основным инструментом построения модели является открытая библиотека <a href="https://docs.idmod.org/projects/covasim/en/latest/index.html" >COVASIM</a>. </small></p>

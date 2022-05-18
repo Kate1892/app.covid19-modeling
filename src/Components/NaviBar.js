@@ -2,6 +2,7 @@ import React from "react";
 import {Navbar, Nav, Button, Container, NavDropdown, OverlayTrigger, Tooltip, Modal, Image} from 'react-bootstrap';
 import {Link} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import ".././styles.css";
 import Modals from "./../Modal"
 import ".././styles.css";
 import MMA from "./../images/MMA.png"
@@ -17,7 +18,7 @@ export default function NaviBar() {
       <Navbar collapseOnSelect scrolling transparent expand="md" className="text-white">
         <Container className="py-1">
         <Navbar.Brand href="/"  className="text-white" >Обратные задачи</Navbar.Brand>
-        <Navbar.Toggle className="bg-light" aria-controls="responsive-navbar-nav" />
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/main" className="text-white"><u>Главная</u></Nav.Link>

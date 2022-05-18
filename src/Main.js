@@ -392,7 +392,7 @@ export const Main= () => (
           <Row className="justify-xs-center">
           <Col xs= {10} md={6} className="justify-xs-center">
           <a href="https://siriusmathcenter.ru/all-russian-conference">
-          <Card border="light"  className="mx-auto align-center" style={{ minWidth: '10rem' }} >
+          <Card border="light"  className="mx-auto align-center" style={{ minWidth: '15rem' }} >
           <Container  className=" text-center" style={{height: '9rem'}}>
           <Image variant="top" className="my-5" style={{ width: '5rem' }, {height: '5rem'}}
           src="https://covid19-modeling.ru/wp-content/uploads/2021/08/Sirius_conference.png"
@@ -408,7 +408,7 @@ export const Main= () => (
           </Col >
           <Col xs= {10} md={6}>
           <a href="https://qipa2021.mipt.ru/home">
-          <Card border="light" className="mx-auto" style={{ minWidth: '10rem' }}>
+          <Card border="light" className="mx-auto" style={{ minWidth: '15rem' }}>
           <Container  className=" text-center" style={{height: '9rem'}}>
           <Image variant="top" className="my-5" style={{ width: '4rem' }, {height: '4rem'}}
           src="https://covid19-modeling.ru/wp-content/uploads/2021/08/QIPA_conference.png"

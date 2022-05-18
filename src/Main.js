@@ -349,8 +349,8 @@ export const Main= () => (
                 </Row>
               </Col>
               <Col>
-                <Row>
-                  <Col>
+                <Row className="justify-content-md-center">
+                  <Col className="justify-content-md-center">
                   <a href="http://mim.rmc.math.tsu.ru">
                   <Card border="light" style={{ width: '18rem' }} className="mx-auto">
                   <Container style={{ width: '9rem' }, {height: '9rem'}} className=" text-center">
@@ -389,17 +389,16 @@ export const Main= () => (
           </Row>
         </Container>
         <Container className="my-5">
-          <Row >
-          <Col xs= {10} md={6}>
+          <Row className="justify-xs-center">
+          <Col xs= {10} md={6} className="justify-xs-center">
           <a href="https://siriusmathcenter.ru/all-russian-conference">
-          <Card border="light" style={{ width: '37rem' }} className="mx-auto">
-          <Container style={{ width: '9rem' }, {height: '9rem'}} className=" text-center">
+          <Card border="light"  className="mx-auto align-center" style={{ minWidth: '25rem' }} >
+          <Container  className=" text-center" style={{height: '9rem'}}>
           <Image variant="top" className="my-5" style={{ width: '5rem' }, {height: '5rem'}}
           src="https://covid19-modeling.ru/wp-content/uploads/2021/08/Sirius_conference.png"
           rounded
           fluid
           />
-
           </Container>
             <Card.Body>
                 <Card.Title className="text-center"><a href="https://siriusmathcenter.ru/all-russian-conference" className="nav-link d-inline text-black" target="_blank" rel="noopener noreferrer">Конференция международных математических центров мирового уровня - 2021</a></Card.Title>
@@ -409,8 +408,8 @@ export const Main= () => (
           </Col >
           <Col xs= {10} md={6}>
           <a href="https://qipa2021.mipt.ru/home">
-          <Card border="light" style={{ width: '37rem' }} className="mx-auto">
-          <Container style={{ width: '9rem' }, {height: '9rem'}} className=" text-center">
+          <Card border="light" className="mx-auto" style={{ minWidth: '25rem' }}>
+          <Container  className=" text-center" style={{height: '9rem'}}>
           <Image variant="top" className="my-5" style={{ width: '4rem' }, {height: '4rem'}}
           src="https://covid19-modeling.ru/wp-content/uploads/2021/08/QIPA_conference.png"
           rounded

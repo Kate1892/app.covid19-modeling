@@ -16,7 +16,7 @@ function NaviBarv2() {
     <>
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container className="py-1">
-        <Navbar.Brand href="/" >Обратные задачи</Navbar.Brand>
+        <Navbar.Brand href="#" >Обратные задачи</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">

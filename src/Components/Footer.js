@@ -5,6 +5,8 @@ import MMA from "./../images/MMA.png"
 import RNF4 from "./../images/RNF4.png"
 import MCA2 from "./../images/MCA2.png"
 import RFFI from "./../images/RFFI.png"
+import RF2 from "./../images/RF2.png"
+import mmf3 from "./../images/mmf3.png"
 
 function Footer() {
   return (
@@ -22,29 +24,36 @@ function Footer() {
       <small align="left" className="text-center text-muted text-white mx-auto">© 2022 COVID-19 в Новосибирской области</small></div></Col>
       <Col  align="right" xs={12} md={12} lg={6}>
       <Stack align="right" direction="horizontal" gap={3} style={{"margin-left": "15rem" }}>
-        <div align="right">
-        <Image variant="top"
-        src={MCA2}
-        fluid
-        style={{ width: '3.5rem' }, {height: '3.5em'}}
-        />
-        </div>
 
-        <div align="right" >
-        <Image variant="top" className = "mx-3"
-        src={RFFI}
-        fluid
-        style={{ width: '3.5rem' }, {height: '3.5em'}}
-        />
-        </div>
-        <div align="righ">
-        <Image variant="bottom" className = " my-1"
+        <div align="left">
+        <Image variant="bottom" className = "my-1"
         src={RNF4}
         fluid
         style={{ width: '2.5rem' }, {height: '2.5rem'}}
         />
         </div>
+        <div align="left" >
+        <Image variant="bottom" className = "mx-1"
+        src={RFFI}
+        fluid
+        style={{ width: '3.5rem' }, {height: '3.5em'}}
+        />
+        </div>
+        <div align="left">
+        <Image variant="bottom" className = " my-1 mx-4"
+        src={RF2}
+        fluid
+        style={{ width: '4rem' }, {height: '4rem'}}
+        />
+        </div>
       </Stack>
+      <div align="center" style={{ width: '20rem' }, {height: '4rem'}}>
+      <Image variant="bottom" className = " mx-4"
+      src={mmf3}
+      fluid
+      style={{ width: '4rem' }, {height: '6rem'}}
+      />
+      </div>
 
 
       </Col>

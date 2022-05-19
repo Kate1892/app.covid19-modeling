@@ -199,10 +199,10 @@ export const Main= () => (
           <Container className="mx-1 my-1">
         <ListGroup as="ol" variant="flush" numbered>
           <ListGroup.Item as="li">
-          <a href="https://arxiv.org/pdf/2112.05315.pdf" className="nav-link d-inline text-black" target="_blank" rel="noopener noreferrer">О. И. Криворотько, С. И. Кабанихин. Математические модели распространения COVID-19. 63 с. (препринт)</a>
+          <a href="https://arxiv.org/pdf/2112.05315.pdf" className="nav-link d-inline text-black" target="_blank" rel="noopener noreferrer">О. И. Криворотько, С. И. Кабанихин. Математические модели распространения COVID-19. Препринт 300 СО РАН, института математики им. С.Л.Соболева. 63с.</a>
           </ListGroup.Item>
           <ListGroup.Item as="li">
-          <a href="https://arxiv.org/pdf/2112.12313.pdf" className="nav-link d-inline text-black" target="_blank" rel="noopener noreferrer">V. Petrakova and O. Krivorotko. Mean field game for modeling of COVID-19 spread (arxiv)</a>
+          <a href="https://arxiv.org/pdf/2112.12313.pdf" className="nav-link d-inline text-black" target="_blank" rel="noopener noreferrer">V. Petrakova and O. Krivorotko. Mean field game for modeling of COVID-19 spread. Journal of Mathematical Analysis and Applications. Volume 514, Issue 1, 1 October 2022, 126271. DOI: https://doi.org/10.1016/j.jmaa.2022.126271</a>
 
           </ListGroup.Item>
           <ListGroup.Item as="li">

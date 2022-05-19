@@ -1779,7 +1779,7 @@ export function Modeling(){
 
   <NaviBarv2 />
       <Container className="my-3"   style={{
-              height: "100vh" }}>
+              height: "100%" }}>
 
         <Tabs justify defaultActiveKey="AOM" id="uncontrolled-tab-example" >
           <Tab eventKey="AOM" title="Агентная модель">

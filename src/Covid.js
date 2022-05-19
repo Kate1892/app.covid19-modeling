@@ -33,7 +33,7 @@ export const Covid= () => (
   <>
   <NaviBarv2 />
   <Container className="my-3" style={{
-          height: "100vh" }}>
+          height: "100%" }}>
 
   <Container>
     <h3 className="text-center my-3 text-secondary">Коронавирус</h3>

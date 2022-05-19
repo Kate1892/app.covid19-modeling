@@ -2,11 +2,11 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Row, Col, Image, Stack} from 'react-bootstrap';
 import MMA from "./../images/MMA.png"
-import RNF4 from "./../images/RNF4.png"
+import RNF6 from "./../images/RNF6.png"
 import MCA2 from "./../images/MCA2.png"
 import RFFI from "./../images/RFFI.png"
 import RF2 from "./../images/RF2.png"
-import mmf3 from "./../images/mmf3.png"
+import mmf6 from "./../images/mmf6.png"
 
 function Footer() {
   return (
@@ -25,33 +25,33 @@ function Footer() {
       <Col  align="right" xs={12} md={12} lg={6}>
       <Stack align="right" direction="horizontal" gap={3} style={{"margin-left": "15rem" }}>
 
-        <div align="left">
+        <div align="center">
         <Image variant="bottom" className = "my-1"
-        src={RNF4}
+        src={RNF6}
         fluid
         style={{ width: '2.5rem' }, {height: '2.5rem'}}
         />
         </div>
-        <div align="left" >
-        <Image variant="bottom" className = "mx-1"
+        <div align="center" >
+        <Image variant="bottom" className = ""
         src={RFFI}
         fluid
-        style={{ width: '3.5rem' }, {height: '3.5em'}}
+        style={{ width: '2.5rem' }, {height: '2.5em'}}
         />
         </div>
-        <div align="left">
-        <Image variant="bottom" className = " my-1 mx-4"
+        <div align="center">
+        <Image variant="bottom" className = ""
         src={RF2}
         fluid
-        style={{ width: '4rem' }, {height: '4rem'}}
+        style={{ width: '2.7rem' }, {height: '2.7rem'}}
         />
         </div>
       </Stack>
       <div align="center" style={{ width: '20rem' }, {height: '4rem'}}>
-      <Image variant="bottom" className = " mx-4"
-      src={mmf3}
+      <Image variant="center" className = " my-2"
+      src={mmf6}
       fluid
-      style={{ width: '4rem' }, {height: '6rem'}}
+      style={{ width: '7rem' }, {height: '5rem'}}
       />
       </div>
 

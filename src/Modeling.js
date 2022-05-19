@@ -2119,7 +2119,7 @@ COVID-19, в основе которой лежат обработка непо�
                           lastName: '3',
                         }}
                       >
-                        {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, }) => (
+                        {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, resetForm, setFieldValue}) => (
                 <Form noValidate >
                   <Stack gap={3}>
                       <Form.Select aria-label="Default select example"
@@ -2133,16 +2133,24 @@ COVID-19, в основе которой лежат обработка непо�
                           if(sregion == 1){
                             console.log("работает1")
                             setRegion_name("Новосибирская область")
+                            setPopulation_data(2798170)
+                            setFieldValue("population", 2798170)
+                            console.log(population_data)
                           } else if(sregion == 2) {
                             console.log("работает2")
                             setRegion_name("Омская область")
                             setPopulation_data(578698)
-                            setReset(true)
+                            setFieldValue("population", 1879548)
+                            console.log(population_data)
                           } else if(sregion == 3) {
                             console.log("работае3")
                             setRegion_name("Алтайский край")
+                            setPopulation_data(2268179)
+                            setFieldValue("population", 2268179)
+                            console.log(population_data)
                           }
-                        }}>
+                        }}
+                        >
                             <option value="1">Новосибирская область</option>
                             <option value="2">Омская область</option>
                             <option value="3">Алтайский край</option>

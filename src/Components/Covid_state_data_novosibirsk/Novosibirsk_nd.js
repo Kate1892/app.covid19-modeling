@@ -166,7 +166,6 @@ import {Container, Row, Col, Card, ListGroup, ListGroupItem, NavDropdown, Navbar
         });
 
         setChartOptions({
-          maintainAspectRatio: false,
           responsive: true,
           plugins: {
             legend: {
@@ -262,8 +261,8 @@ import {Container, Row, Col, Card, ListGroup, ListGroupItem, NavDropdown, Navbar
   </Row>
 
       </Container>
-      <Card align="center"  className ="my-4">
-        <Line options={chartOptions} data={chartData} />
+      <Card align="center" style={{ width: '80rem' }} className ="my-4">
+        <Line options={chartOptions} data={chartData} height="90%" />
       </Card>
       </div>
     );

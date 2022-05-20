@@ -7,13 +7,14 @@ import MCA2 from "./../images/MCA2.png"
 import RFFI from "./../images/RFFI.png"
 import RF2 from "./../images/RF2.png"
 import mmf6 from "./../images/mmf6.png"
+import ".././styles.css";
 
 function Footer() {
   return (
     <footer
   className="py-4 my-6 bg-dark navbar-fixed-bottom row-fluid">
-
-      <Row>
+      <Row style={{
+              width: "100%" }}>
       <Col xs={12} md={12} lg={6}>
       <div className="mx-5">
       <h3 className="text-white text-muted mx-auto">ИВМиМГ СО РАН</h3>
@@ -54,12 +55,8 @@ function Footer() {
       style={{ width: '7rem' }, {height: '5rem'}}
       />
       </div>
-
-
       </Col>
     </Row>
-
-
     </footer>
   )
 }

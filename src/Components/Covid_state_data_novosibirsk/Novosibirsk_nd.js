@@ -221,7 +221,8 @@ import {Container, Row, Col, Card, ListGroup, ListGroupItem, NavDropdown, Navbar
       <div>
       <Container>
 
-      <Row>
+      <Row style={{
+              width: "100%" }}>
     <Col xs= {10} md={4}>  <Card  border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2">
         <Card.Body>
         <Card.Title className="text-center text-info"><h3>{lastData}</h3></Card.Title>

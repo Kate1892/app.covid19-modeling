@@ -33,13 +33,15 @@ export const Covid= () => (
   <>
   <NaviBarv2 />
   <Container className="my-3" style={{
-          height: "100%" }}>
+          height: "100%" },
+        {  width: "100%"}}>
 
   <Container>
     <h3 className="text-center my-3 text-secondary">Коронавирус</h3>
   </Container>
 
-  <Tab.Container id="left-tabs-example" defaultActiveKey="novosibirsk">
+  <Tab.Container style={{
+          width: "100%" }} id="left-tabs-example" defaultActiveKey="novosibirsk" >
 
       <Nav variant="pills" defaultActiveKey="/home" >
         <Nav.Item >
@@ -121,13 +123,7 @@ export const Covid= () => (
       </Tab.Content>
   </Tab.Container>
     </Container>
-  <div  style={{
-
-            bottom: 0,
-            left: 'forCenteredBottom',
-            width: "99vw"
-
-}}><Footer /></div>
+<Footer />
 
      </>
 )

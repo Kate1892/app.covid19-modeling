@@ -28,19 +28,16 @@ import "./styles.css";
 function App() {
   return (
     <div className="bg-light">
+
     <Helmet>
-                <meta charSet="utf-8" />
-                <title>Обратные задачи</title>
-                <link rel="canonical" href="http://mysite.com/example" />
-
-            </Helmet>
+      <meta charSet="utf-8" />
+      <title>Обратные задачи</title>
+      <link rel="canonical" href="http://app.covid19-modeling/main.ru" />
+    </Helmet>
     <Router>
-
       <Routes>
         <Route exact path="/covid19" element={<Covid />} />
-        <Route exact path="/flu" element={<Flu />} />
         <Route exact path="/main" element={<Main />} />
-        <Route exact path="/registration" element={<Registration />} />
         <Route exact path="/modeling" element={<Modeling />} />
       </Routes>
     </Router>

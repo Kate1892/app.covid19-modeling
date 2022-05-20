@@ -30,7 +30,8 @@ export const Main= () => (
             <div style={{fontSize: 16}}>Перейти к моделированию</div>
           </Button></div>
       </div>
-      <Row className="my-auto">
+      <Row className="my-auto" style={{
+              width: "100%" }}>
       <Col xs= {12} md={6} lg={6}>
       </Col>
       <Col xs= {12} md={6} lg={6}>
@@ -47,7 +48,8 @@ export const Main= () => (
             <Card.Title> <h3 className="my-1">Команда</h3> </Card.Title>
           </Card>
           <Container  >
-            <Row xs={1} md={2} className="justify-content-md-center">
+            <Row xs={1} md={2} className="justify-content-md-center" style={{
+                    width: "100%" }}>
               <Col xs= {20} md={6} lg={4} className="my-1">
                 <Card border="light" style={{height: '15rem'}} className="mx-auto" >
                 <Container style={{ width: '10rem' }, {height: '10rem'}} className="my-1 text-center">
@@ -166,7 +168,8 @@ export const Main= () => (
 
           <Card className="text-center bg-secondary text-white my-3">
           <Card.Body>
-            <Row className="justify-content-md-center">
+            <Row className="justify-content-md-center" style={{
+                    width: "100%" }}>
               <Col xs= {6} md={4}>
               <Container  className="my-3">
               < BsFillGeoAltFill size={25} className="my-3"/>
@@ -231,10 +234,13 @@ export const Main= () => (
           <Card.Title> <h3 className="my-1">Конференции</h3> </Card.Title>
         </Card>
         <Container className="my-3">
-          <Row className="justify-content-md-center">
-            <Row>
+          <Row className="justify-content-md-center" style={{
+                  width: "100%" }}>
+            <Row style={{
+                    width: "100%" }}>
               <Col >
-                <Row>
+                <Row style={{
+                        width: "100%" }}>
                   <Col>
                   <a href="http://www.math.nsc.ru/conference/ds/2020/">
                     <Card border="light" style={{ width: '18rem' }} className="mx-auto">
@@ -270,7 +276,8 @@ export const Main= () => (
                 </Row>
               </Col>
               <Col>
-                <Row>
+                <Row style={{
+                        width: "100%" }}>
                   <Col>
                   <a href="https://conf.icgbio.ru/sbb2020/">
                   <Card border="light" style={{ width: '18rem' }} className="mx-auto">
@@ -310,10 +317,13 @@ export const Main= () => (
         </Container>
 
         <Container className="my-5">
-          <Row className="justify-content-md-center">
-            <Row>
+          <Row className="justify-content-md-center" style={{
+                  width: "100%" }}>
+            <Row style={{
+                    width: "100%" }}>
               <Col>
-                <Row>
+                <Row style={{
+                        width: "100%" }}>
                   <Col>
                   <a href="http://conf.nsc.ru/tcmiip2021">
                     <Card border="light" style={{ width: '18rem' }} className="mx-auto">
@@ -349,7 +359,8 @@ export const Main= () => (
                 </Row>
               </Col>
               <Col>
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-md-center" style={{
+                        width: "100%" }}>
                   <Col className="justify-content-md-center">
                   <a href="http://mim.rmc.math.tsu.ru">
                   <Card border="light" style={{ width: '18rem' }} className="mx-auto">

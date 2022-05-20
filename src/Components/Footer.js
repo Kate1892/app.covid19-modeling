@@ -11,6 +11,7 @@ import ".././styles.css";
 
 function Footer() {
   return (
+    <Container>
     <footer
   className="py-4 my-6 bg-dark navbar-fixed-bottom row-fluid">
       <Row style={{
@@ -58,6 +59,7 @@ function Footer() {
       </Col>
     </Row>
     </footer>
+    </Container>
   )
 }
 export default Footer;

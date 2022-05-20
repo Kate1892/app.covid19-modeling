@@ -1784,11 +1784,9 @@ export function Modeling(){
         <Tabs justify defaultActiveKey="AOM" id="uncontrolled-tab-example" >
           <Tab eventKey="AOM" title="Агентная модель">
           <Card className="text-center mx-auto" border="light">
-          <Row style={{
-                  width: "100%" }}>
+          <Row >
             <Col md={2} >
-            <Row style={{
-                    width: "100%" }}>
+            <Row >
               <Col xs= {12}  lg={12}>    <Button
                     variant="outline-primary"
                     className="bg-white my-2 mx-2"
@@ -1862,8 +1860,7 @@ COVID-19, в основе которой лежат обработка непо�
         </Row>
           <Collapse in={open}>
             <div id="example-collapse-text">
-            <Row style={{
-                    width: "100%" }}>
+            <Row >
                <Col sm={12} xs={12} md={6} lg={3}><Card className="border mx-3 my-1">
                  <Card.Header className="text-success">1. Инициация популяции</Card.Header>
                  <Card.Body>
@@ -1887,8 +1884,7 @@ COVID-19, в основе которой лежат обработка непо�
                <Col sm={12} xs={12} md={6}  lg={4}><Card className="border my-1">
                  <Card.Header className="text-white bg-success"><BsFillPersonLinesFill size={30}/>   Параметры агентов</Card.Header>
                  <Card.Body align="left">
-                 <Row style={{
-                         width: "100%" }}>
+                 <Row >
                   <Col><div>Не зависят от времени:</div>
                   <small>
                   <div>• возраст</div>
@@ -1930,8 +1926,7 @@ COVID-19, в основе которой лежат обработка непо�
                  <Card.Body align="justify">
                  <div><small> Предполагается, что вирус передается между агентами, соединенными ребром графа. Заражение при близком контакте описывается кусочно-постоянным параметром.</small></div>
 
-                 <Row style={{
-                         width: "100%" }}><Col sm={4}>
+                 <Row ><Col sm={4}>
                     <div><small><div className="text-success">Пример:</div> домохозяйства - заполняются агентами согласно статистическим данным о
 среднем размере семьи в регионе.</small></div></Col >
                   <Col sm={8}>
@@ -1943,8 +1938,7 @@ COVID-19, в основе которой лежат обработка непо�
                    /></div> </Col></Row>
                  </Card.Body></Card></Col>
              </Row>
-             <Row style={{
-                     width: "100%" }}>
+             <Row >
                <Col sm={12} xs={12} lg={7}><Card className="border mx-3 my-1">
                  <Card.Header className="bg-success text-white">3. Прогрессирование заболевания</Card.Header>
                  <Card.Body>
@@ -1993,8 +1987,7 @@ COVID-19, в основе которой лежат обработка непо�
 
             </div>
           </Collapse>
-          <Row style={{
-                  width: "100%" }}>
+          <Row >
             <Col sm={12} xs={12} md={12} lg={4}>
               <ListGroup className = "mx-3 my-1">
               <OverlayTrigger
@@ -2014,8 +2007,7 @@ COVID-19, в основе которой лежат обработка непо�
                 </ListGroup.Item>
                 </OverlayTrigger>
                 <ListGroup.Item variant="light">
-                <Row style={{
-                        width: "100%" }}>
+                <Row >
                   <Col sm={12} sm={12} xs={12} md={12} lg={7} >
                   <Stack gap={0}>
                   <div>
@@ -2103,8 +2095,7 @@ COVID-19, в основе которой лежат обработка непо�
                     </OverlayTrigger>
                   </div>
                 </Stack>
-                <Row style={{
-                        width: "100%" }}>
+                <Row >
                       <Col sm={6}></Col>
                       <Col sm={6}>  <Button variant="secondary" align="end" className=" my-3 text-white" disabled={!isrunning} onClick={break_get}>Прервать</Button></Col>
                 </Row>
@@ -2228,8 +2219,7 @@ COVID-19, в основе которой лежат обработка непо�
             </Col>
             <Col sm={12} xs={12} md={12} lg={8}>
             <Container>
-              <Row style={{
-                      width: "100%" }}>
+              <Row >
               <Col  sm={8}>
             </Col>
               <Col sm={4}>

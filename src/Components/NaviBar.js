@@ -17,7 +17,14 @@ export default function NaviBar() {
     <>
       <Navbar collapseOnSelect scrolling transparent expand="md" className="text-white">
         <Container className="py-1">
-        <Navbar.Brand href="#"  className="text-white" >Обратные задачи</Navbar.Brand>
+        <Navbar.Brand href="#"  className="text-white" >
+        <Image variant="bottom" className = "mx-3"
+        src="https://covid19-modeling.ru/wp-content/uploads/2020/11/ip_head_with_trans-55x55.png"
+        roundedCircle
+        fluid
+        style={{ width: '2rem' }, {height: '2rem'}}
+        />{' '}
+        Обратные задачи</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
@@ -27,17 +34,6 @@ export default function NaviBar() {
               <NavDropdown.Item href="/covid19" >Коронавирус</NavDropdown.Item>
 
             </NavDropdown>
-          </Nav>
-          <Nav>
-          <div align="right" style={{ width: '2.5rem' }} className = "mx-4">
-          <Image variant="bottom" className = "mx-3"
-          src="https://covid19-modeling.ru/wp-content/uploads/2020/11/ip_head_with_trans-55x55.png"
-          roundedCircle
-          fluid
-          style={{ width: '2.5rem' }, {height: '2.5rem'}}
-          />
-          </div>
-
           </Nav>
         </Navbar.Collapse>
         </Container>

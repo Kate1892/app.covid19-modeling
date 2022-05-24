@@ -33,7 +33,7 @@ export const Covid= () => (
   <>
   <NaviBarv2 />
   <Container className="my-3" style={{
-          height: "100%" },
+          height: "120%" },
         {  width: "100%"}}>
 
   <Container>

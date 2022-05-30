@@ -3108,7 +3108,9 @@ function ModelingSEIR_HCD() {
      <Stack gap={3}>
          <Form.Select aria-label="Default select example"
            type="number"
-           name="data"  >
+           name="data"
+           disabled={true}
+           >
                <option value="1">21.07.2021</option>
                <option value="2">20.07.2021</option>
          </Form.Select>
@@ -3504,7 +3506,7 @@ function ModelingSEIR_HCD() {
        >
         <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
         </OverlayTrigger>
-        
+
         <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart4(e)}><FiDownload/></Button>
       </Col>
       </Row>

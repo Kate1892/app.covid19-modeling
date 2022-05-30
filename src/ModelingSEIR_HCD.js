@@ -3048,7 +3048,7 @@ function ModelingSEIR_HCD() {
            style={{ width: '3rem' }, {height: '3rem'}}
            />
            <small>
-методом глобальной оптимизации на основе древовидных оценок Парзена OPTUNA (ссылка на сайт).
+методом глобальной оптимизации на основе древовидных оценок Парзена <a href="https://optuna.org">OPTUNA</a>.
 <div className="text-success">Реальные данные:</div>
  <div><i>f<sub>k</sub></i> – количество выявленных случаев COVID-19 в день <i>k</i>,</div>
 <div><i>b<sub>k</sub></i> – процент бессимптомных выявленных в день <i>k</i>,</div>

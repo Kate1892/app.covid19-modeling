@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useMemo} from "react";
 import  Carousels from './Components/Carousels';
 import {Container, Card, CardGroup, Image, Row, Col, ListGroup, NavLink, Button} from 'react-bootstrap';
 import { BsFillTelephoneFill, BsFillEnvelopeFill, BsFillGeoAltFill} from "react-icons/bs";
@@ -6,9 +6,12 @@ import NavBar from './Components/NavBar';
 import NaviBarv2 from './Components/NaviBarv2';
 import NaviBar from './Components/NaviBar';
 import Footer from './Components/Footer'
+import { YMaps, Map, Placemark, ZoomControl } from 'react-yandex-maps';
 
 
-export const Main= () => (
+export function Main() {
+
+  return(
       <>
       <Card  border="light" style={{
       backgroundImage: `url("https://ega.ee/wp-content/uploads/2020/08/corona_1.jpg")`,
@@ -166,7 +169,7 @@ export const Main= () => (
 
             <h3 className="text-center text-secondary">Наши контакты</h3>
 
-          <Card className="text-center bg-secondary text-white my-3">
+          <Card border="light" className="text-center bg-secondary text-white my-3">
           <Card.Body>
             <Row className="justify-content-md-center" style={{
                     width: "100%" }}>
@@ -194,8 +197,17 @@ export const Main= () => (
               </Col>
             </Row>
           </Card.Body>
-          </Card>
 
+          <YMaps >
+            <div >
+              <Map defaultState={{ center: [54.851360, 83.102482], zoom: 15, controls: []}} width='100%'>
+              <ZoomControl options={{ float: 'right' }} />
+              <Placemark geometry={[54.851360, 83.102482]} />
+              </Map>
+
+            </div>
+          </YMaps>
+          </Card>
           <h3 className="text-center my-3 text-secondary">Публикации</h3>
 
           <Card border="secondary" className="my-1">
@@ -395,7 +407,7 @@ export const Main= () => (
         </Container>
         <Container className="my-5">
           <Row className="justify-xs-center">
-          <Col xs= {10} md={6} className="justify-xs-center">
+          <Col xs= {12} md={6} className="justify-xs-center">
           <a href="https://siriusmathcenter.ru/all-russian-conference">
           <Card border="light"  className="mx-auto align-center" style={{ minWidth: '20rem' }} >
           <Container  className=" text-center" style={{height: '9rem'}}>
@@ -411,7 +423,7 @@ export const Main= () => (
           </Card>
           </a>
           </Col >
-          <Col xs= {10} md={6}>
+          <Col xs= {12} md={6}>
           <a href="https://qipa2021.mipt.ru/home">
           <Card border="light" className="mx-auto" style={{ minWidth: '20rem' }}>
           <Container  className=" text-center" style={{height: '9rem'}}>
@@ -434,3 +446,4 @@ export const Main= () => (
 <Footer />
     </>
 )
+}

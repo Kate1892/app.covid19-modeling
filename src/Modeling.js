@@ -12,18 +12,21 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import {FiDownload } from 'react-icons/fi'
 import {BsFillFileEarmarkPdfFill, BsFillArrowUpRightSquareFill, BsFillCaretRightFill, BsFillCaretDownFill,
-BsFillPersonLinesFill, BsExclamationLg} from 'react-icons/bs'
+BsFillPersonLinesFill, BsExclamationLg, BsInfo} from 'react-icons/bs'
 import {FcSearch} from 'react-icons/fc'
 import NaviBarv2 from './Components/NaviBarv2';
+import {BsZoomIn} from 'react-icons/bs'
 
 import Novosibirsk_nd from './Components/Covid_state_data_novosibirsk/Novosibirsk_nd'
 import CovidNewD_plot from './Components/CovidNewD_plot'
 
 import { DownloadCount } from 'axios-progress-bar'
 
-import structura from "./images/structura.png"
+import ModelingSEIR_HCD from './ModelingSEIR_HCD'
+
+import fblok from "./images/fblok.png"
 import model from "./images/model.png"
-import houses from "./images/houses.png"
+import sblok from "./images/sblok.png"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import NavBar from './Components/NavBar';
@@ -1772,7 +1775,7 @@ export function Modeling(){
 
   const [show1, setShow1] = useState(false);
   const handleClose1 = () => setShow1(false);
-  const handleShow1 = () => setShow1(true)
+  const handleShow1 = () => setShow1(true);
 
   return(
   <>
@@ -1780,16 +1783,15 @@ export function Modeling(){
   <NaviBarv2 />
       <Container className="my-3"   style={{
               height: "120%" }}>
-
         <Tabs justify defaultActiveKey="AOM" id="uncontrolled-tab-example" >
           <Tab eventKey="AOM" title="Агентная модель">
-          <Card className="text-center mx-auto" border="light">
+          <Card className="text-center mx-auto" border="light" bg="light">
           <Row >
             <Col md={2} >
             <Row >
               <Col xs= {12}  lg={12}>    <Button
                     variant="outline-primary"
-                    className="bg-white my-2 mx-2"
+                    className="bg-white text-primary my-2 mx-2"
                     onClick={() => setOpen(!open)}
                     aria-controls="example-fade-text"
                     aria-expanded={open}
@@ -1853,35 +1855,48 @@ export function Modeling(){
                           </Row>
           </Col>
           <Col md={10} >
-          <p align="justify" className="mx-3 my-1"><small>Прогнозирование производится посредством агентной модели расчета сценариев динамики выявленных случаев
+        <Card className="my-3">  <p align="justify" className="mx-3 my-1"><small>Прогнозирование производится посредством агентной модели расчета сценариев динамики выявленных случаев
 COVID-19, в основе которой лежат обработка неполных эпидемиологических данных и решение обратной задачи восстановления параметров агентной
-модели по совокупности доступных эпидемиологических данных. Основным инструментом построения модели является открытая библиотека <a href="https://docs.idmod.org/projects/covasim/en/latest/index.html" >COVASIM</a>. </small></p>
+модели по совокупности доступных эпидемиологических данных. Основным инструментом построения модели является открытая библиотека <a href="https://docs.idmod.org/projects/covasim/en/latest/index.html" >COVASIM</a>. </small></p></Card>
+<div className="mx-2"><hr /></div>
       </Col>
         </Row>
           <Collapse in={open}>
-            <div id="example-collapse-text">
+            <div id="example-collapse-text" className="my-2">
             <Row >
-               <Col sm={12} xs={12} md={6} lg={3}><Card className="border mx-3 my-1">
+               <Col sm={12} xs={12} md={12} lg={6}><Card className="border mx-3 my-1">
                  <Card.Header className="text-success">1. Инициация популяции</Card.Header>
                  <Card.Body>
-                 <p><small>Формируются четыре структуры контактов:</small></p>
+                 <p align="justify"><small >Формируются четыре структуры контактов, в которых могут находиться агенты в зависимости от возраста 0-9,10-19, …, 80+ лет.</small></p>
                  <Image
-                 style={{ width: '10rem' }, {height: '10rem'}}
-                 src={structura}
+                 src={fblok}
                  rounded
                  fluid
                  onClick={handleShow1}
                  />
                  <Modal show={show1} onHide={handleClose1} animation={true}>
                  <Image
-                  style={{ width: '20rem' }, {height: '20rem'}}
-                 src={structura}
+                 src={fblok}
                  rounded
                  fluid
                  />
                   </Modal>
-                 </Card.Body></Card></Col>
-               <Col sm={12} xs={12} md={6}  lg={4}><Card className="border my-1">
+                 </Card.Body></Card>
+                 <Card className="border mx-3 my-1">
+                   <Card.Header className="text-white bg-success">2. Заражение</Card.Header>
+                   <Card.Body align="justify">
+                   <div><small> Предполагается, что вирус передается между агентами, соединенными ребром графа. Заражение при близком контакте описывается кусочно-постоянным параметром <i className="text-danger">{'\u03B2'}</i>.</small></div>
+                   <div className="my-3"><Image
+                   src={sblok}
+                   rounded
+                   fluid
+
+                   /></div>
+                      <div><small><div className="text-success">Пример:</div> Домохозяйства - заполняются агентами согласно статистическим данным о
+                 среднем размере семьи в регионе.</small></div>
+                   </Card.Body></Card>
+                 </Col>
+               <Col sm={12} xs={12} md={12}  lg={6}><Card className="border my-1 mx-3">
                  <Card.Header className="text-white bg-success"><BsFillPersonLinesFill size={30}/>   Параметры агентов</Card.Header>
                  <Card.Body align="left">
                  <Row >
@@ -1890,10 +1905,10 @@ COVID-19, в основе которой лежат обработка непо�
                   <div>• возраст</div>
                   <div>• пол</div>
                   <div>• социальный статус</div>
-                  <div>• вероятность прогрессирования заболевания</div></small></Col>
+                  <div>• прогрессирование заболевания</div></small></Col>
                   <Col><div>Зависят от времени:</div>
                   <small>
-                  <div>• эпидемиологический статус:</div>
+                  <div>• эпид. статус:</div>
                   <div>𝑆, 𝐸, 𝐼, 𝑅, 𝐻, 𝐶, 𝐷, 𝐴, 𝑀<OverlayTrigger
                      placement="right"
                      overlay={
@@ -1920,71 +1935,46 @@ COVID-19, в основе которой лежат обработка непо�
                 </Row>
                 <div align="justify"><small>В зависимости от возраста агенты
                 контактируют друг с другом в контактных сетях, представляющие собой полносвязные графы.</small></div>
-                 </Card.Body></Card></Col>
-               <Col sm={12} xs={12} md={12} lg={5}><Card className="border mx-3 my-1">
-                 <Card.Header className="text-success">2. Заражение</Card.Header>
-                 <Card.Body align="justify">
-                 <div><small> Предполагается, что вирус передается между агентами, соединенными ребром графа. Заражение при близком контакте описывается кусочно-постоянным параметром.</small></div>
+                 </Card.Body></Card>
+                 <Card className="border  my-1 mx-3">
+                   <Card.Header className="text-success">3. Прогрессирование заболевания</Card.Header>
+                   <Card.Body>
+                   <Image
 
-                 <Row ><Col sm={4}>
-                    <div><small><div className="text-success">Пример:</div> домохозяйства - заполняются агентами согласно статистическим данным о
-среднем размере семьи в регионе.</small></div></Col >
-                  <Col sm={8}>
-                   <div><Image
-                   style={{ width: '11rem' }, {height: '11rem'}}
-                   src={houses}
+                   src={model}
                    rounded
                    fluid
-                   /></div> </Col></Row>
-                 </Card.Body></Card></Col>
+                   onClick={handleShow}
+                   />
+                   <Modal show={show} onHide={handleClose} animation={true}>
+                   <Image
+
+                   src={model}
+                   rounded
+                   fluid
+                   />
+                    </Modal>
+                   </Card.Body></Card>
+                   <Card className="border my-1 mx-3">
+                     <Card.Header className="text-success bg-light">4. Тестирование агентов</Card.Header>
+                     <Card.Body align="justify">
+                     <div><small>Проводится согласно ежедневным статистическим данным о количестве проведенных тестов в регионе. Шанс быть протестированным
+   на COVID-19 <i>{'\u03C1'}</i> зависит от эпидемиологического статуса агента и определяется в ходе решения обратной задачи. Положительный результат
+   могут получить агенты, статус которых обведен в оранжевую рамку. В модели предполагается, что вероятность
+   тестирования агентов с симптомами выше, чем у бессимптомных больных.</small></div>
+
+                     </Card.Body></Card>
+                 </Col>
+                 <Col sm={12} xs={12} md={12} lg={12}>
+                 <Card className="border my-1 mx-3">
+                   <Card.Header className="text-white bg-success">5. Введение сдерживающих эпидемию мер</Card.Header>
+                   <Card.Body align="justify">
+                     <div><small>В модели возможно введение карантинных мер как для всех контактных слоев, так и для каждого в отдельности.
+    Это может быть сделано двумя способами: либо изменением значения параметра контагиозности вируса <i className="text-danger">{'\u03B2'}</i> (в случае введения обязательной меры ношения масок или социального дистанцирования), либо удалением ребер в графах сетей контактов (в случае введения самоизоляции
+    и дистанционной работы).</small></div>
+
+                   </Card.Body></Card></Col>
              </Row>
-             <Row >
-               <Col sm={12} xs={12} lg={7}><Card className="border mx-3 my-1">
-                 <Card.Header className="bg-success text-white">3. Прогрессирование заболевания</Card.Header>
-                 <Card.Body>
-                 <div> Взаимосвязь эпидемиологических состояний:</div>
-                 <Image
-                 style={{ width: '25rem' }, {height: '25rem'}}
-                 src={model}
-                 rounded
-                 fluid
-                 onClick={handleShow}
-                 />
-                 <Modal show={show} onHide={handleClose} animation={true}>
-                 <Image
-                  style={{ width: '30rem' }, {height: '28rem'}}
-                 src={model}
-                 rounded
-                 fluid
-                 />
-                  </Modal>
-                 </Card.Body></Card></Col>
-
-               <Col>
-
-               <Stack gap={0}>
-                <div ><Card className="border my-1 mx-3">
-                  <Card.Header className="text-success bg-light">4. Тестирование агентов</Card.Header>
-                  <Card.Body align="justify">
-                  <div><small>Проводится согласно ежедневным статистическим данным о количестве проведенных тестов в регионе. Шанс быть протестированным
-на COVID-19 зависит от эпидемиологического статуса агента и определяется в ходе решения обратной задачи. Положительный результат
-могут получить агенты, находящиеся в симптомном, бессимптомном, в легкой
-форме, госпитализированном, критическом состояниях. В модели предполагается, что вероятность
-тестирования агентов с симптомами выше, чем у бессимптомных больных.</small></div>
-
-                  </Card.Body></Card></div>
-                <div ><Card className="border my-1 mx-3">
-                  <Card.Header className="text-white bg-success">5. Введение сдерживающих эпидемию мер</Card.Header>
-                  <Card.Body align="justify">
-                    <div><small>В модели возможно введение карантинных мер как для всех контактных слоев, так и для каждого в отдельности.
-Это может быть сделано двумя способами: либо изменением значения параметра контагиозности вируса (в случае введения обязательной меры ношения масок или социального дистанцирования), либо удалением ребер в графах (в случае введения самоизоляции
-и дистанционной работы).</small></div>
-
-                  </Card.Body></Card></div>
-              </Stack>
-               </Col>
-             </Row>
-
             </div>
           </Collapse>
           <Row >
@@ -2239,18 +2229,30 @@ COVID-19, в основе которой лежат обработка непо�
              overlay={
                <Popover>
                  <Popover.Body>
+                  <small className="text-muted">Чтобы скрыть отображаемые данные - кликните по их названиям</small>
+                 </Popover.Body>
+               </Popover>
+             }
+             >
+              <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsInfo size = {18} /></Button>
+              </OverlayTrigger>
+            <OverlayTrigger
+             placement="left"
+             overlay={
+               <Popover>
+                 <Popover.Body>
                   <small className="text-muted">Для приближения - выделите необходимую область или прокрутите колесо мыши.</small>
                  </Popover.Body>
                </Popover>
              }
              >
-              <Button variant="outline-secondary" size="sm"  className=" mx-1" onClick={(e)=>zoom_chart(e)}><FcSearch /></Button>
+              <Button variant="outline-secondary" size="sm"  className=" mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
               </OverlayTrigger>
               <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e)}><FiDownload/></Button>
               </Col>
               </Row>
               {someerrors ?   <Alert variant="danger" className="my-5"> <Alert.Heading>Ошибка загрузки</Alert.Heading>
-              Сервер временно не отвечает, пожалуйста, <Alert.Link href="/modeling">обновите страницу</Alert.Link> и повторите попытку позже.
+              Сервер временно не отвечает, пожалуйста, <Alert.Link href="/modeling">обновите страницу</Alert.Link> или повторите попытку позже.
               <hr /> </Alert> :
 
    newChart? <div style={{ width: '50rem' }}><Line  id="chart" data={chartData_all} options={chartOptions} /></div> : <div style={{ width: '50rem' }}><Line id="chart" options={chartOptions} data={initchartData_all}/></div>}
@@ -2316,13 +2318,10 @@ COVID-19, в основе которой лежат обработка непо�
         </Card>
           </Tab>
           <Tab eventKey="SEIR-HCD" title="SEIR-HCD">
-          <Card className="text-center mx-auto" border="light">
-          <h3>...</h3>
-          </Card>
+          <ModelingSEIR_HCD />
 
           </Tab>
         </Tabs>
-
     </Container>
 <Footer />
   </>

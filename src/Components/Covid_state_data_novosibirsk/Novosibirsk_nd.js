@@ -1,8 +1,9 @@
 import React, { useState, useEffect} from "react";
 import axios from "axios";
+import {FiDownload } from 'react-icons/fi'
 import {Container, Row, Col, Card, ListGroup, ListGroupItem, NavDropdown, Navbar, Button,
-  Image, Tab, Nav, Dropdown, ButtonGroup, DropdownButton, CardGroup} from 'react-bootstrap';
-
+  Image, Tab, Nav, Dropdown, ButtonGroup, DropdownButton, CardGroup, OverlayTrigger, Popover} from 'react-bootstrap';
+import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
   import {
     Chart as ChartJS,
     PointElement,
@@ -38,6 +39,23 @@ import {Container, Row, Col, Card, ListGroup, ListGroupItem, NavDropdown, Navbar
 
 
   function Novosibirsk_nd() {
+
+    const zoom_chart=(e) => {
+      e.preventDefault()
+      const img = document.getElementById('chart')
+      img.plugins.scales.y.min = 80;
+      img.plugins.scales.y.max = 100;
+      img.update()
+    }
+
+    const download_chart=(e) => {
+      e.preventDefault()
+      const imageLink = document.createElement('a')
+      const img = document.getElementById('chart')
+      imageLink.download = 'scenario.png'
+      imageLink.href = img.toDataURL('image/png', 1)
+      imageLink.click()
+    }
 
     const [lastData, setLastsData] = useState(0)
     const [lastDatadate, setLastsDatadate] = useState(0)
@@ -168,6 +186,26 @@ import {Container, Row, Col, Card, ListGroup, ListGroupItem, NavDropdown, Navbar
         setChartOptions({
           responsive: true,
           plugins: {
+            zoom: {
+              pan: {
+                enabled: true,
+                mode: 'xy',
+              },
+             zoom: {
+               wheel: {
+                 enabled: true,
+                 speed: 0.1,
+               },
+               drag: {
+                enabled: true,
+              },
+               pan: {enabled: true},
+               pinch: {
+                 enabled: true
+               },
+               mode: 'xy',
+             },
+          },
             legend: {
               maxWidth: 250,
               position: "left",
@@ -262,9 +300,41 @@ import {Container, Row, Col, Card, ListGroup, ListGroupItem, NavDropdown, Navbar
   </Row>
 
       </Container>
-      <Card align="center" style={{ width: '80rem' }} className ="my-4">
-        <Line options={chartOptions} data={chartData} height="90%" />
-      </Card>
+      <div align="center" style={{ width: '80rem' }} className ="my-4" bg="light">
+      <Row className="my-2">
+      <Col  xs={12} sm={9}>
+     </Col>
+      <Col xs={12} sm={3}>
+      <OverlayTrigger
+       placement="left"
+       overlay={
+         <Popover>
+           <Popover.Body>
+            <small className="text-muted">Чтобы скрыть отображаемые данные - кликните по их названиям</small>
+           </Popover.Body>
+         </Popover>
+       }
+       >
+        <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsInfo size = {18} /></Button>
+        </OverlayTrigger>
+      <OverlayTrigger
+       placement="left"
+       overlay={
+         <Popover>
+           <Popover.Body>
+            <small className="text-muted">Для приближения - выделите необходимую область или прокрутите колесо мыши.</small>
+           </Popover.Body>
+         </Popover>
+       }
+       >
+        <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
+        </OverlayTrigger>
+         <Button variant="outline-secondary" size="sm" className="mx-1" onClick={chart}><BsZoomOut/></Button>
+        <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e)}><FiDownload/></Button>
+      </Col>
+      </Row>
+        <Line id="chart" options={chartOptions} data={chartData} height="90%" />
+      </div>
       </div>
     );
   };

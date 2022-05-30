@@ -351,7 +351,7 @@ const [reset, setReset] = useState(true);
         <Card.Title> <h3 className="my-1">Модели</h3></Card.Title>
       </Card>
 
-        <Tabs justify defaultActiveKey="AOM" id="uncontrolled-tab-example" >
+        <Tabs justify defaultActiveKey="AOM" id="uncontrolled-tab-example">
 
           <Tab eventKey="AOM" title="Агентная модель">
           <Card className="text-center mx-auto" border="light">

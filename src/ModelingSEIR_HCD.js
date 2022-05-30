@@ -136,7 +136,7 @@ function ModelingSEIR_HCD() {
     let tr_min = []
     let tr_max = []
     axios
-    .get("http://localhost:4000/api/forecasts_train")
+    .get("http://89.253.218.66:4000/api/forecasts_train")
     .then(res => {
         console.log("this!")
         console.log(res)
@@ -150,7 +150,7 @@ function ModelingSEIR_HCD() {
           min.push(dataObj.R0_min)
         }
         axios
-        .get("http://localhost:4000/api/forecasts")
+        .get("http://89.253.218.66:4000/api/forecasts")
         .then(res => {
             console.log("this")
             console.log(res)
@@ -299,7 +299,7 @@ function ModelingSEIR_HCD() {
     let min = [];
     let tr = []
     axios
-    .get("http://localhost:4000/api/forecasts_true")
+    .get("http://89.253.218.66:4000/api/forecasts_true")
     .then(res => {
         console.log("this")
         console.log(res)
@@ -309,7 +309,7 @@ function ModelingSEIR_HCD() {
           mean.push(0)
         }
         axios
-        .get("http://localhost:4000/api/forecasts")
+        .get("http://89.253.218.66:4000/api/forecasts")
         .then(res => {
             console.log("this")
             console.log(res)
@@ -397,7 +397,7 @@ function ModelingSEIR_HCD() {
     let min = [];
     let tr = []
     axios
-    .get("http://localhost:4000/api/forecasts_true")
+    .get("http://89.253.218.66:4000/api/forecasts_true")
     .then(res => {
         console.log("this")
         console.log(res)
@@ -407,7 +407,7 @@ function ModelingSEIR_HCD() {
           mean.push(0)
         }
         axios
-        .get("http://localhost:4000/api/forecasts")
+        .get("http://89.253.218.66:4000/api/forecasts")
         .then(res => {
             console.log("this")
             console.log(res)
@@ -495,7 +495,7 @@ function ModelingSEIR_HCD() {
     let min = [];
     let tr = []
     axios
-    .get("http://localhost:4000/api/forecasts_true")
+    .get("http://89.253.218.66:4000/api/forecasts_true")
     .then(res => {
         console.log("this")
         console.log(res)
@@ -505,7 +505,7 @@ function ModelingSEIR_HCD() {
           mean.push(0)
         }
         axios
-        .get("http://localhost:4000/api/forecasts")
+        .get("http://89.253.218.66:4000/api/forecasts")
         .then(res => {
             console.log("this")
             console.log(res)
@@ -595,7 +595,7 @@ function ModelingSEIR_HCD() {
   const res_validR0=()=>{
     let dataBS = [];
     axios
-    .get("http://localhost:4000/api/res_valid")
+    .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -702,7 +702,7 @@ function ModelingSEIR_HCD() {
   const new_i=()=>{
     let dataBS = [];
     axios
-    .get("http://localhost:4000/api/res_valid")
+    .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
       console.log("!")
     //  console.log(res)
@@ -741,7 +741,7 @@ function ModelingSEIR_HCD() {
   const res_trainR0=()=>{
       let dataBS = [];
     axios
-    .get("http://localhost:4000/api/res_train")
+    .get("http://89.253.218.66:4000/api/res_train")
     .then(res => {
       console.log("!!")
       console.log(res)
@@ -849,7 +849,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://localhost:4000/api/res_train")
+    .get("http://89.253.218.66:4000/api/res_train")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -966,7 +966,7 @@ function ModelingSEIR_HCD() {
     let max_data = []
     let min_data = []
     axios
-    .get("http://localhost:4000/api/res_train")
+    .get("http://89.253.218.66:4000/api/res_train")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -1063,7 +1063,7 @@ function ModelingSEIR_HCD() {
     let max_data = []
     let min_data = []
     axios
-    .get("http://localhost:4000/api/res_train")
+    .get("http://89.253.218.66:4000/api/res_train")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -1160,7 +1160,7 @@ function ModelingSEIR_HCD() {
     let max_data = []
     let min_data = []
     axios
-    .get("http://localhost:4000/api/res_train")
+    .get("http://89.253.218.66:4000/api/res_train")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -1258,7 +1258,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://localhost:4000/api/res_train")
+    .get("http://89.253.218.66:4000/api/res_train")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -1377,7 +1377,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://localhost:4000/api/res_train")
+    .get("http://89.253.218.66:4000/api/res_train")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -1496,7 +1496,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://localhost:4000/api/res_train")
+    .get("http://89.253.218.66:4000/api/res_train")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -1615,7 +1615,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://localhost:4000/api/res_train")
+    .get("http://89.253.218.66:4000/api/res_train")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -1739,7 +1739,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://localhost:4000/api/res_valid")
+    .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
       console.log("!!!")
       //console.log(res)
@@ -1856,7 +1856,7 @@ function ModelingSEIR_HCD() {
     let max_data = []
     let min_data = []
     axios
-    .get("http://localhost:4000/api/res_valid")
+    .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -1953,7 +1953,7 @@ function ModelingSEIR_HCD() {
     let max_data = []
     let min_data = []
     axios
-    .get("http://localhost:4000/api/res_valid")
+    .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -2050,7 +2050,7 @@ function ModelingSEIR_HCD() {
     let max_data = []
     let min_data = []
     axios
-    .get("http://localhost:4000/api/res_valid")
+    .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -2148,7 +2148,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://localhost:4000/api/res_valid")
+    .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -2266,7 +2266,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://localhost:4000/api/res_valid")
+    .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -2384,7 +2384,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://localhost:4000/api/res_valid")
+    .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -2502,7 +2502,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://localhost:4000/api/res_valid")
+    .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -2625,7 +2625,7 @@ function ModelingSEIR_HCD() {
     let e_data = []
     let m_data = []
     axios
-    .get("http://localhost:4000/api/res_valid")
+    .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
       console.log("!")
       for (const dataObj of res.data) {
@@ -2750,7 +2750,7 @@ function ModelingSEIR_HCD() {
     let e_data = []
     let m_data = []
     axios
-    .get("http://localhost:4000/api/res_train")
+    .get("http://89.253.218.66:4000/api/res_train")
     .then(res => {
       console.log("!")
       for (const dataObj of res.data) {

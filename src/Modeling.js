@@ -1823,7 +1823,9 @@ export function Modeling(){
                 }}><BsFillFileEarmarkPdfFill size={30}/></Button>
                   </OverlayTrigger>
                   <OverlayTrigger
+                  rootClose={true}
                      placement="bottom"
+                     ref={(ref) => this.overlay = ref}
                      overlay={
                        <Popover>
                          <Popover.Body>
@@ -1839,9 +1841,14 @@ export function Modeling(){
                          </Popover.Body>
                        </Popover>
                      }>
-                    <a href="https://www.sciencedirect.com/science/article/pii/S2468042721000798"><Button variant="link"><BsFillArrowUpRightSquareFill size={30}/></Button></a>
+                    <a href="https://www.sciencedirect.com/science/article/pii/S2468042721000798"><Button variant="link" onClick={(e)=>{
+                    document.body.click(e)
+                    this.overlay.hide()
+                    }}><BsFillArrowUpRightSquareFill size={30}/></Button></a>
                       </OverlayTrigger>
                       <OverlayTrigger
+                      rootClose={true}
+                      ref={(ref) => this.overlay = ref}
                          placement="bottom"
                          overlay={
                            <Popover>
@@ -1855,7 +1862,10 @@ export function Modeling(){
                              </Popover.Body>
                            </Popover>
                          }>
-                          <a href="https://arxiv.org/pdf/2112.05315.pdf"><Button variant="link"><BsFillArrowUpRightSquareFill size={30}/></Button></a>
+                          <a href="https://arxiv.org/pdf/2112.05315.pdf"><Button variant="link" onClick={(e)=>{
+                          document.body.click(e)
+                          this.overlay.hide()
+                          }}><BsFillArrowUpRightSquareFill size={30}/></Button></a>
                           </OverlayTrigger>
                           </Col>
                           </Row>

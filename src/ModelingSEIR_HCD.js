@@ -3201,7 +3201,7 @@ function ModelingSEIR_HCD() {
  <div className="mx-3"><hr /></div>
   <h4 className="mx-5 text-secondary">Текущие параметры модели и их доверительный интервал</h4>
  <Row className="mx-5 my-3">
- <Col xs= {10} md={3}><Card border="light"  className="mx-2">
+ <Col xs= {12} md={6} lg={3}><Card border="light"  className="">
    <Card.Body>
    <OverlayTrigger
     placement="bottom"
@@ -3215,7 +3215,7 @@ function ModelingSEIR_HCD() {
     >
    <Row>
     <Col sm={6} md={6} xs={6} lg={6}>
-  <Card.Title className="text-success"><h1 style={{fontSize:"80px", align:"right"}}>{'\u03B1'}<sub style={{fontSize:"35px"}}>e</sub></h1></Card.Title>
+  <Card.Title className="text-success"><h1 align='center' style={{fontSize:"80px", align:"left"}}>{'\u03B1'}<sub style={{fontSize:"25px"}}>e</sub></h1></Card.Title>
     </Col>
     <Col sm={6} md={6} xs={6} lg={6}><Card.Text className="">
     <Stack className="">
@@ -3227,7 +3227,7 @@ function ModelingSEIR_HCD() {
   </Row></OverlayTrigger>
    </Card.Body>
  </Card></Col>
- <Col xs= {10} md={3}><Card border="light" className="mx-2">
+ <Col xs= {12} md={6} lg={3}><Card border="light" className="">
    <Card.Body>
    <OverlayTrigger
     placement="bottom"
@@ -3241,7 +3241,7 @@ function ModelingSEIR_HCD() {
     >
    <Row>
     <Col sm={6} md={6} xs={6} lg={6}>
-  <Card.Title className="text-success"><h1 style={{fontSize:"80px"}}>{'\u03B1'}<sub style={{fontSize:"35px"}}>i</sub></h1></Card.Title>
+  <Card.Title className="text-success"><h1 align='center' style={{fontSize:"80px"}}>{'\u03B1'}<sub style={{fontSize:"25px"}}>i</sub></h1></Card.Title>
     </Col>
     <Col sm={6} md={6} xs={6} lg={6}><Card.Text className="">
     <Stack className="">
@@ -3253,7 +3253,7 @@ function ModelingSEIR_HCD() {
   </Row></OverlayTrigger>
    </Card.Body>
  </Card></Col>
- <Col xs= {10} md={3}><Card border="light"  className="mx-2">
+ <Col xs= {12} md={6} lg={3}><Card border="light"  className="">
    <Card.Body>
    <OverlayTrigger
     placement="bottom"
@@ -3267,10 +3267,10 @@ function ModelingSEIR_HCD() {
     }
     >
    <Row>
-    <Col sm={6} md={6} xs={6} lg={7}>
-  <Card.Title className=" text-success"><h1 className="mx-2" style={{fontSize:"80px"}}>{'\u03B5'}<sub style={{fontSize:"32px"}}>hc</sub></h1></Card.Title>
+    <Col sm={6} md={6} xs={6} lg={6}>
+  <Card.Title className=" text-success"><h1 align='center' className="" style={{fontSize:"80px"}}>{'\u03B5'}<sub style={{fontSize:"25px"}}>hc</sub></h1></Card.Title>
     </Col>
-    <Col sm={6} md={6} xs={6} lg={5}><Card.Text className="">
+    <Col sm={6} md={6} xs={6} lg={6}><Card.Text className="">
     <Stack className="">
     <small>
     <div className="text-muted" >среднее <b className="text-black"><h5>0.237</h5></b></div>
@@ -3280,7 +3280,7 @@ function ModelingSEIR_HCD() {
   </Row></OverlayTrigger>
    </Card.Body>
  </Card></Col>
- <Col xs= {10} md={3}><Card border="light"  className="mx-2">
+ <Col xs= {12} md={6} lg={3}><Card border="light"  className="">
    <Card.Body>
    <OverlayTrigger
     placement="bottom"
@@ -3294,7 +3294,7 @@ function ModelingSEIR_HCD() {
     >
    <Row>
     <Col sm={6} md={6} xs={6} lg={6}>
-  <Card.Title className="text-success"><h1 style={{fontSize:"80px"}}>{'\u03BC'}</h1></Card.Title>
+  <Card.Title className="text-success"><h1 align='center' style={{fontSize:"80px"}}>{'\u03BC'}</h1></Card.Title>
     </Col>
     <Col sm={6} md={6} xs={6} lg={6}><Card.Text className="">
     <Stack className="">

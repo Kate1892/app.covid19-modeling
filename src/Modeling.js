@@ -1800,7 +1800,9 @@ export function Modeling(){
               <Col xs= {12} lg={12}>
 
               <OverlayTrigger
+                rootClose={true}
                  placement="bottom"
+                 ref={(ref) => this.overlay = ref}
                  overlay={
                    <Popover>
                      <Popover.Body>
@@ -1814,7 +1816,11 @@ export function Modeling(){
                      </Popover.Body>
                    </Popover>
                  }>
-                <Button variant="link" onClick={(e)=>download_article(e)}><BsFillFileEarmarkPdfFill size={30}/></Button>
+                <Button variant="link" onClick={(e)=>{
+                document.body.click(e)
+                download_article(e)
+                this.overlay.hide()
+                }}><BsFillFileEarmarkPdfFill size={30}/></Button>
                   </OverlayTrigger>
                   <OverlayTrigger
                      placement="bottom"

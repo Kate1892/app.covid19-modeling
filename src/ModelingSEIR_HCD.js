@@ -3156,9 +3156,9 @@ function ModelingSEIR_HCD() {
    </Col>
    <Col xs={12} md={8}>
    <Row >
-   <Col  xs={12} sm={9}>
+   <Col  xs={12} sm={12} md={12} lg={8}>
  </Col>
-   <Col xs={12} sm={3}>
+   <Col xs={12} sm={12} md={12} lg={4}>
    <OverlayTrigger
     placement="left"
     overlay={
@@ -3183,7 +3183,7 @@ function ModelingSEIR_HCD() {
     >
      <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
      </OverlayTrigger>
-     <Button variant="outline-secondary" size="sm" className="mx-1" onClick={(e) => {
+     <Button variant="outline-secondary" size="sm" className="mx-1 align-right" onClick={(e) => {
        if (prognose_type == 1){
          forecasts_newd()
        }else if(prognose_type == 2){
@@ -3192,7 +3192,7 @@ function ModelingSEIR_HCD() {
          forecasts_newdth()
        }
      }}><BsZoomOut/></Button>
-     <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e)}><FiDownload/></Button>
+     <Button variant="outline-secondary" size="sm" className="mx-1" onClick={(e)=>download_chart(e)}><FiDownload/></Button>
    </Col>
    </Row>
 <div style={{ width: '55rem' }}><Bar id="chart2" options={chartOptions_pred} data={chartData_pred} height="100%" /></div>
@@ -3311,9 +3311,9 @@ function ModelingSEIR_HCD() {
  <h4 className="mx-5 text-secondary">Базовый индекс репродукции COVID-19 в Новосибирской области и прогноз</h4>
  <Container className="mx-2">
  <Row >
- <Col  xs={12} sm={9}>
+ <Col  xs={12} sm={12} md={12} lg={8}>
 </Col>
- <Col xs={12} sm={3}>
+ <Col xs={12} sm={12} md={12} lg={4}>
  <OverlayTrigger
   placement="left"
   overlay={
@@ -3479,9 +3479,9 @@ function ModelingSEIR_HCD() {
         </Nav.Item>
       </Nav>
       <Row >
-      <Col  xs={12} sm={9}>
+      <Col  xs={12} sm={12} md={12} lg={8}>
      </Col>
-      <Col xs={12} sm={3}>
+      <Col xs={12} sm={12} md={12} lg={4}>
       <OverlayTrigger
        placement="left"
        overlay={
@@ -3514,9 +3514,9 @@ function ModelingSEIR_HCD() {
 <div className="mx-3"><hr /></div>
        <h4 className="mx-5 text-secondary">Базовый индекс репродукции COVID-19 в Новосибирской области</h4>
        <Row >
-       <Col  xs={12} sm={9}>
+       <Col  xs={12} sm={12} md={12} lg={8}>
       </Col>
-       <Col xs={12} sm={3}>
+       <Col xs={12} sm={12} md={12} lg={4}>
        <OverlayTrigger
         placement="left"
         overlay={
@@ -3549,9 +3549,9 @@ function ModelingSEIR_HCD() {
        <hr />
        <h4 className="mx-5 text-secondary">Восстановленные параметры модели COVID-19 для Новосибирской области</h4>
        <Row >
-       <Col  xs={12} sm={9}>
+       <Col  xs={12} sm={12} md={12} lg={8}>
       </Col>
-       <Col xs={12} sm={3}>
+       <Col xs={12} sm={12} md={12} lg={4}>
        <OverlayTrigger
         placement="left"
         overlay={
@@ -3716,9 +3716,9 @@ function ModelingSEIR_HCD() {
         </Nav.Item>
       </Nav>
       <Row >
-      <Col  xs={12} sm={9}>
-     </Col>
-      <Col xs={12} sm={3}>
+      <Col  xs={12} sm={12} md={12} lg={8}>
+    </Col>
+      <Col xs={12} sm={12} md={12} lg={4}>
       <OverlayTrigger
        placement="left"
        overlay={
@@ -3750,9 +3750,9 @@ function ModelingSEIR_HCD() {
 <hr />
 <h4 className="mx-5 text-secondary">Базовый индекс репродукции COVID-19 в Новосибирской области</h4>
 <Row >
-<Col  xs={12} sm={9}>
+<Col  xs={12} sm={12} md={12} lg={8}>
 </Col>
-<Col xs={12} sm={3}><OverlayTrigger
+<Col xs={12} sm={12} md={12} lg={4}><OverlayTrigger
  placement="left"
  overlay={
    <Popover>
@@ -3784,9 +3784,9 @@ function ModelingSEIR_HCD() {
 <hr />
 <h4 className="mx-5 text-secondary">Восстановленные параметры модели COVID-19 для Новосибирской области</h4>
 <Row >
-<Col  xs={12} sm={9}>
+<Col  xs={12} sm={12} md={12} lg={8}>
 </Col>
-<Col xs={12} sm={3}>
+<Col xs={12} sm={12} md={12} lg={4}>
 <OverlayTrigger
  placement="left"
  overlay={

@@ -1817,8 +1817,8 @@ export function Modeling(){
                    </Popover>
                  }>
                 <Button variant="link" onClick={(e)=>{
-                document.body.click(e)
                 download_article(e)
+                document.body.click(e)
                 this.overlay.hide()
                 }}><BsFillFileEarmarkPdfFill size={30}/></Button>
                   </OverlayTrigger>

@@ -261,7 +261,7 @@ import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
 
       <Row style={{
               width: "100%" }}>
-    <Col xs= {10} md={4}>  <Card  border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2">
+    <Col xs= {12} md={4}>  <Card  border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2">
         <Card.Body>
         <Card.Title className="text-center text-info"><h3>{lastData}</h3></Card.Title>
         <Card.Text className="text-center">
@@ -273,7 +273,7 @@ import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
       </Card.Footer>
       </Card>
       </Col>
-    <Col xs= {10} md={4}>  <Card border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2">
+    <Col xs= {12} md={4}>  <Card border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2">
         <Card.Body>
         <Card.Title className="text-center text-success"><h3>{last_nrec}</h3></Card.Title>
         <Card.Text className="text-center">
@@ -285,7 +285,7 @@ import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
       </Card.Footer>
       </Card>
       </Col>
-    <Col xs= {10} md={4}>  <Card  border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2">
+    <Col xs= {12} md={4}>  <Card  border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2">
         <Card.Body>
         <Card.Title className="text-center text-danger"><h3>{last_ndeaths}</h3></Card.Title>
         <Card.Text className="text-center">

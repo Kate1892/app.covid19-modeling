@@ -10,10 +10,8 @@ import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
 import {BsFillFileEarmarkPdfFill, BsFillArrowUpRightSquareFill, BsFillCaretRightFill, BsFillCaretDownFill,
 BsFillPersonLinesFill, BsExclamationLg} from 'react-icons/bs'
 import { Formik } from "formik";
-import sfblok from "./images/sfblok.png"
-import sfifblok from "./images/sfifblok.png"
-import firdblok from "./images/firdblok.png"
-import blokd from "./images/blokd.png"
+
+import Description_SEIRHCD from './Components/Description_SEIRHCD'
 
 import {
   Chart as ChartJS,
@@ -50,58 +48,10 @@ ChartJS.register(zoomPlugin);
 
 function ModelingSEIR_HCD() {
 
-  const download_chart=(e) => {
+  const download_chart=(e, chart) => {
     e.preventDefault()
     const imageLink = document.createElement('a')
-    const img = document.getElementById('chart2')
-    imageLink.download = 'scenario.png'
-    imageLink.href = img.toDataURL('image/png', 1)
-    imageLink.click()
-  }
-  const download_chart3=(e) => {
-    e.preventDefault()
-    const imageLink = document.createElement('a')
-    const img = document.getElementById('chart3')
-    imageLink.download = 'scenario.png'
-    imageLink.href = img.toDataURL('image/png', 1)
-    imageLink.click()
-  }
-  const download_chart4=(e) => {
-    e.preventDefault()
-    const imageLink = document.createElement('a')
-    const img = document.getElementById('chart4')
-    imageLink.download = 'scenario.png'
-    imageLink.href = img.toDataURL('image/png', 1)
-    imageLink.click()
-  }
-  const download_chart5=(e) => {
-    e.preventDefault()
-    const imageLink = document.createElement('a')
-    const img = document.getElementById('chart5')
-    imageLink.download = 'scenario.png'
-    imageLink.href = img.toDataURL('image/png', 1)
-    imageLink.click()
-  }
-  const download_chart6=(e) => {
-    e.preventDefault()
-    const imageLink = document.createElement('a')
-    const img = document.getElementById('chart6')
-    imageLink.download = 'scenario.png'
-    imageLink.href = img.toDataURL('image/png', 1)
-    imageLink.click()
-  }
-  const download_chart7=(e) => {
-    e.preventDefault()
-    const imageLink = document.createElement('a')
-    const img = document.getElementById('chart7')
-    imageLink.download = 'scenario.png'
-    imageLink.href = img.toDataURL('image/png', 1)
-    imageLink.click()
-  }
-  const download_chart8=(e) => {
-    e.preventDefault()
-    const imageLink = document.createElement('a')
-    const img = document.getElementById('chart8')
+    const img = document.getElementById(chart)
     imageLink.download = 'scenario.png'
     imageLink.href = img.toDataURL('image/png', 1)
     imageLink.click()
@@ -127,7 +77,7 @@ function ModelingSEIR_HCD() {
   })
   const [chartOptions_bsR0, setChartOptions_bsR0] = useState({})
 
-  const forecasts_R0=()=>{
+  const forecasts_R0=(selected)=>{
     let data = [];
     let mean = [];
     let max = [];
@@ -135,8 +85,14 @@ function ModelingSEIR_HCD() {
     let tr = []
     let tr_min = []
     let tr_max = []
-    axios
-    .get("http://89.253.218.66:4000/api/forecasts_train")
+    let datatype = selected
+    let dataT = selected
+    axios({
+        //url:'http://89.253.218.66:4000/api/forecasts_train',
+        url:'http://localhost:4000/api/forecasts_train',
+        method: "POST",
+        data: {dataT},
+      })
     .then(res => {
         console.log("this!")
         console.log(res)
@@ -149,8 +105,12 @@ function ModelingSEIR_HCD() {
           max.push(dataObj.R0_max)
           min.push(dataObj.R0_min)
         }
-        axios
-        .get("http://89.253.218.66:4000/api/forecasts")
+        axios({
+            //url:'http://89.253.218.66:4000/api/forecasts',
+            url:'http://localhost:4000/api/forecasts',
+            method: "POST",
+            data: {datatype},
+          })
         .then(res => {
             console.log("this")
             console.log(res)
@@ -292,228 +252,70 @@ function ModelingSEIR_HCD() {
   })
   const [chartOptions_pred, setChartOptions_pred] = useState({})
 
-  const forecasts_newd=()=>{
+  const forecasts_new = (stype, datatype)=>{
+    console.log(datatype);
     let data = [];
     let mean = [];
     let max = [];
     let min = [];
     let tr = []
-    axios
-    .get("http://89.253.218.66:4000/api/forecasts_true")
+    let name = "Новые выявленные случаи";
+    axios({
+        //url:'http://89.253.218.66:4000/api/forecasts_true',
+        url:'http://localhost:4000/api/forecasts_true',
+        method: "POST",
+        data: {datatype},
+      })
     .then(res => {
         console.log("this")
         console.log(res)
         for (const dataObj of res.data) {
           data.push(dataObj.date);
-          tr.push(dataObj.new_diagnoses)
+          if (stype == 1){
+            name = "Новые выявленные случаи"
+            tr.push(dataObj.new_diagnoses)
+          } else if (stype == 2) {
+            name = "Критически больные, С"
+            tr.push(dataObj.ventilation)
+          } else if (stype == 3) {
+            name = "Умершие, D"
+            tr.push(dataObj.cum_deaths)
+          }
           mean.push(0)
         }
-        axios
-        .get("http://89.253.218.66:4000/api/forecasts")
-        .then(res => {
-            console.log("this")
-            console.log(res)
-            for (const dataObj of res.data) {
-              data.push(dataObj.Date);
-              mean.push(dataObj.fk_mean)
-              max.push(dataObj.fk_max)
-              min.push(dataObj.fk_min)
-            }
-            setChartData_pred({
-              labels: data,
-              datasets: [
-                {
-                  label: "реальные данные",
-                  data: tr,
-                  fill: false,
-                  borderColor: "rgba(2, 117, 216, 1)",
-                  backgroundColor: "rgba(2, 117, 216, 1)",
-                  tension: 0.9,
-                  borderWidth: 0.1,
-                  pointRadius: 0.3,
-                  pointHoverRadius: 5,
-                  pointHitRadius: 30,
-                  pointBorderWidth: 0.1,
-                  barPercentage: 2
-                  },
-              {
-                label: "модель",
-                data: mean,
-                fill: false,
-                borderColor: "rgba(217, 83, 79, 1)",
-                backgroundColor: "rgba(217, 83, 79, 1)",
-                tension: 0.9,
-                borderWidth: 0.1,
-                pointRadius: 0.3,
-                pointHoverRadius: 5,
-                pointHitRadius: 30,
-                pointBorderWidth: 0.1,
-                barPercentage: 2
-                },
-            ],
-            });
-            setChartOptions_pred({
-              responsive: true,
-                plugins: {
-                  zoom: {
-                    pan: {
-                      enabled: true,
-                      mode: 'xy',
-                    },
-                   zoom: {
-                     wheel: {
-                       enabled: true,
-                       speed: 0.1,
-                     },
-                     drag: {
-                      enabled: true,
-                    },
-                     pan: {enabled: true},
-                     pinch: {
-                       enabled: true
-                     },
-                     mode: 'xy',
-                   },
-                },
-                legend: {
-                  position: "right",
-                },
-                title: {
-                  display: true,
-                  align: 'start',
-                  text: "Новые выявленные случаи",
-                },
-              }
-            });
+        axios({
+            //url:'http://89.253.218.66:4000/api/forecasts',
+            url:'http://localhost:4000/api/forecasts',
+            method: "POST",
+            data: {datatype},
           })
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const forecasts_newcr=()=>{
-    let data = [];
-    let mean = [];
-    let max = [];
-    let min = [];
-    let tr = []
-    axios
-    .get("http://89.253.218.66:4000/api/forecasts_true")
-    .then(res => {
-        console.log("this")
-        console.log(res)
-        for (const dataObj of res.data) {
-          data.push(dataObj.date);
-          tr.push(dataObj.ventilation)
-          mean.push(0)
-        }
-        axios
-        .get("http://89.253.218.66:4000/api/forecasts")
         .then(res => {
             console.log("this")
             console.log(res)
+            setAE(Math.round(parseFloat(res.data[res.data.length-1].alpha_e_std)*1000) / 1000)
+            setAI(Math.round(parseFloat(res.data[res.data.length-1].alpha_i_std)*1000) / 1000)
+            setEhc(Math.round(parseFloat(res.data[res.data.length-1].eps_hc_std)*1000) / 1000)
+            setM(Math.round(parseFloat(res.data[res.data.length-1].mu_std)*1000) / 1000)
+            setAE_mean(Math.round(parseFloat(res.data[res.data.length-1].alpha_e_mean)*1000) / 1000)
+            setAI_mean(Math.round(parseFloat(res.data[res.data.length-1].alpha_i_mean)*1000) / 1000)
+            setEhc_mean(Math.round(parseFloat(res.data[res.data.length-1].eps_hc_mean)*1000) / 1000)
+            setM_mean(Math.round(parseFloat(res.data[res.data.length-1].mu_mean)*1000) / 1000)
+            console.log(ae, ai, ehc, m)
             for (const dataObj of res.data) {
               data.push(dataObj.Date);
-              mean.push(dataObj.C_mean)
-              max.push(dataObj.C_max)
-              min.push(dataObj.C_min)
-            }
-            setChartData_pred({
-              labels: data,
-              datasets: [
-                {
-                  label: "реальные данные",
-                  data: tr,
-                  fill: false,
-                  borderColor: "rgba(2, 117, 216, 1)",
-                  backgroundColor: "rgba(2, 117, 216, 1)",
-                  tension: 0.9,
-                  borderWidth: 0.1,
-                  pointRadius: 0.3,
-                  pointHoverRadius: 5,
-                  pointHitRadius: 30,
-                  pointBorderWidth: 0.1,
-                  barPercentage: 2
-                  },
-              {
-                label: "модель",
-                data: mean,
-                fill: false,
-                borderColor: "rgba(217, 83, 79, 1)",
-                backgroundColor: "rgba(217, 83, 79, 1)",
-                tension: 0.9,
-                borderWidth: 0.1,
-                pointRadius: 0.3,
-                pointHoverRadius: 5,
-                pointHitRadius: 30,
-                pointBorderWidth: 0.1,
-                barPercentage: 2
-                },
-            ],
-            });
-            setChartOptions_pred({
-              responsive: true,
-                plugins: {
-                  zoom: {
-                    pan: {
-                      enabled: true,
-                      mode: 'xy',
-                    },
-                   zoom: {
-                     wheel: {
-                       enabled: true,
-                       speed: 0.1,
-                     },
-                     drag: {
-                      enabled: true,
-                    },
-                     pan: {enabled: true},
-                     pinch: {
-                       enabled: true
-                     },
-                     mode: 'xy',
-                   },
-                },
-                legend: {
-                  position: "right",
-                },
-                title: {
-                  display: true,
-                  align: 'start',
-                  text: "Критически больные, С",
-                },
+              if (stype == 1){
+                mean.push(dataObj.fk_mean)
+                max.push(dataObj.fk_max)
+                min.push(dataObj.fk_min)
+              } else if (stype == 2) {
+                mean.push(dataObj.C_mean)
+                max.push(dataObj.C_max)
+                min.push(dataObj.C_min)
+              } else if (stype== 3) {
+                mean.push(dataObj.D_mean)
+                max.push(dataObj.D_max)
+                min.push(dataObj.D_min)
               }
-            });
-          })
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const forecasts_newdth=()=>{
-    let data = [];
-    let mean = [];
-    let max = [];
-    let min = [];
-    let tr = []
-    axios
-    .get("http://89.253.218.66:4000/api/forecasts_true")
-    .then(res => {
-        console.log("this")
-        console.log(res)
-        for (const dataObj of res.data) {
-          data.push(dataObj.date);
-          tr.push(dataObj.cum_deaths)
-          mean.push(0)
-        }
-        axios
-        .get("http://89.253.218.66:4000/api/forecasts")
-        .then(res => {
-            console.log("this")
-            console.log(res)
-            for (const dataObj of res.data) {
-              data.push(dataObj.Date);
-              mean.push(dataObj.D_mean)
-              max.push(dataObj.D_max)
-              min.push(dataObj.D_min)
             }
             setChartData_pred({
               labels: data,
@@ -577,7 +379,7 @@ function ModelingSEIR_HCD() {
                 title: {
                   display: true,
                   align: 'start',
-                  text: "Умершие, D",
+                  text: name,
                 },
               }
             });
@@ -698,45 +500,6 @@ function ModelingSEIR_HCD() {
     datasets: [],
   })
   const [chartOptionsTrain, setChartOptionsTrain] = useState({})
-  let newI = []
-  const new_i=()=>{
-    let dataBS = [];
-    axios
-    .get("http://89.253.218.66:4000/api/res_valid")
-    .then(res => {
-      console.log("!")
-    //  console.log(res)
-      /*for (const dataObj of res.data) {
-        newI.push(dataObj.I_mean)
-        dataBS.push(dataObj.Date);
-      }
-      console.log(dataBS)
-      setChartData2({
-        labels: dataBS,
-        datasets: [
-          {
-            label: "I mean",
-            data: newI,
-            fill: false,
-            borderColor: [
-              'rgba(0, 0, 255, 0.8)',
-            ],
-            backgroundColor: [
-              'rgba(0, 0, 255, 0.8)',
-            ],
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            }
-      ],
-    });*/
-    }).catch(err => {
-        console.log(err);
-      });
-  }
 
   const res_trainR0=()=>{
       let dataBS = [];
@@ -842,7 +605,8 @@ function ModelingSEIR_HCD() {
     datasets: [],
   })
 
-  const res_trainFK=()=>{
+  const res_train=(mean, max, min, param)=>{
+    console.log(mean, max, min)
     let dataSEIRHCD = []
     let mean_data = []
     let max_data = []
@@ -855,15 +619,15 @@ function ModelingSEIR_HCD() {
       //console.log(res)
       for (const dataObj of res.data) {
         dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.fk_mean)
-        max_data.push(dataObj.fk_max)
-        min_data.push(dataObj.fk_min)
+        mean_data.push(dataObj[mean])
+        max_data.push(dataObj[max])
+        min_data.push(dataObj[min])
       }
       axios
       .get("http://89.253.218.66:4000/api/csvCovid/nd")
       .then(res2 => {
         for (const dataObj of res2.data) {
-          r_data.push(parseInt(dataObj.new_diagnoses));
+          r_data.push(parseInt(dataObj[param]));
         }
         setChartDataSEIRHCD({
           labels:   dataSEIRHCD,
@@ -952,772 +716,6 @@ function ModelingSEIR_HCD() {
               display: true,
               align: 'center',
               text: "Новые выявленные случаи",
-            },
-          }
-        });
-      })
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_trainS=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_train")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.S_mean)
-        max_data.push(dataObj.S_max)
-        min_data.push(dataObj.S_min)
-      }
-      setChartDataSEIRHCD({
-        labels:   dataSEIRHCD,
-        datasets: [
-          {
-            label: "S min",
-            data: min_data,
-            fill: false,
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-          {
-            label: "S max",
-            data: max_data,
-            fill: '-1',
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-        {
-          label: "S среднее",
-          data: mean_data,
-          fill: false,
-          borderColor: "rgba(13,110,253, 1)",
-          backgroundColor: "rgba(13,110,253, 1)",
-          tension: 0.9,
-          borderWidth: 2,
-          pointRadius: 0.3,
-          pointHoverRadius: 5,
-          pointHitRadius: 30,
-          pointBorderWidth: 0.1,
-          },
-      ],
-      });
-      setChartOptionsSEIRHCD({
-        responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-             zoom: {
-               wheel: {
-                 enabled: true,
-                 speed: 0.1,
-               },
-               drag: {
-                enabled: true,
-              },
-               pan: {enabled: true},
-               pinch: {
-                 enabled: true
-               },
-               mode: 'xy',
-             },
-          },
-          legend: {
-            position: "right",
-          },
-          title: {
-            display: true,
-            align: 'center',
-            text: "Восприимчивые",
-          },
-        }
-      });
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_trainE=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_train")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.E_mean)
-        max_data.push(dataObj.E_max)
-        min_data.push(dataObj.E_min)
-      }
-      setChartDataSEIRHCD({
-        labels:   dataSEIRHCD,
-        datasets: [
-          {
-            label: "E min",
-            data: min_data,
-            fill: false,
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-          {
-            label: "E max",
-            data: max_data,
-            fill: '-1',
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-        {
-          label: "E среднее",
-          data: mean_data,
-          fill: false,
-          borderColor: "rgba(13,110,253, 1)",
-          backgroundColor: "rgba(13,110,253, 1)",
-          tension: 0.9,
-          borderWidth: 2,
-          pointRadius: 0.3,
-          pointHoverRadius: 5,
-          pointHitRadius: 30,
-          pointBorderWidth: 0.1,
-          },
-      ],
-      });
-      setChartOptionsSEIRHCD({
-        responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-             zoom: {
-               wheel: {
-                 enabled: true,
-                 speed: 0.1,
-               },
-               drag: {
-                enabled: true,
-              },
-               pan: {enabled: true},
-               pinch: {
-                 enabled: true
-               },
-               mode: 'xy',
-             },
-          },
-          legend: {
-            position: "right",
-          },
-          title: {
-            display: true,
-            align: 'center',
-            text: "Больные без симптомов",
-          },
-        }
-      });
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_trainI=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_train")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.I_mean)
-        max_data.push(dataObj.I_max)
-        min_data.push(dataObj.I_min)
-      }
-      setChartDataSEIRHCD({
-        labels:   dataSEIRHCD,
-        datasets: [
-          {
-            label: "I min",
-            data: min_data,
-            fill: false,
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-          {
-            label: "I max",
-            data: max_data,
-            fill: '-1',
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-        {
-          label: "I среднее",
-          data: mean_data,
-          fill: false,
-          borderColor: "rgba(13,110,253, 1)",
-          backgroundColor: "rgba(13,110,253, 1)",
-          tension: 0.9,
-          borderWidth: 2,
-          pointRadius: 0.3,
-          pointHoverRadius: 5,
-          pointHitRadius: 30,
-          pointBorderWidth: 0.1,
-          },
-      ],
-      });
-      setChartOptionsSEIRHCD({
-        responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-             zoom: {
-               wheel: {
-                 enabled: true,
-                 speed: 0.1,
-               },
-               drag: {
-                enabled: true,
-              },
-               pan: {enabled: true},
-               pinch: {
-                 enabled: true
-               },
-               mode: 'xy',
-             },
-          },
-          legend: {
-            position: "right",
-          },
-          title: {
-            display: true,
-            align: 'center',
-            text: "Больные с симптомами",
-          },
-        }
-      });
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_trainR=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    let r_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_train")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.R_mean)
-        max_data.push(dataObj.R_max)
-        min_data.push(dataObj.R_min)
-      }
-      axios
-      .get("http://89.253.218.66:4000/api/csvCovid/nd")
-      .then(res2 => {
-        for (const dataObj of res2.data) {
-          r_data.push(parseInt(dataObj.cum_recoveries));
-        }
-        setChartDataSEIRHCD({
-          labels:   dataSEIRHCD,
-          datasets: [
-            {
-              label: "R min",
-              data: min_data,
-              fill: false,
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-            {
-              label: "R max",
-              data: max_data,
-              fill: '-1',
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-          {
-            label: "R среднее",
-            data: mean_data,
-            fill: false,
-            borderColor: "rgba(13,110,253, 1)",
-            backgroundColor: "rgba(13,110,253, 1)",
-            tension: 0.9,
-            borderWidth: 2,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-            {
-              label: "Реальные данные",
-              data: r_data,
-              fill: false,
-              borderColor: "rgba(255, 127, 80, 1)",
-              backgroundColor: "rgba(255, 127, 80, 1)",
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1
-              },
-        ],
-        });
-        setChartOptionsSEIRHCD({
-          responsive: true,
-            plugins: {
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'xy',
-                },
-               zoom: {
-                 wheel: {
-                   enabled: true,
-                   speed: 0.1,
-                 },
-                 drag: {
-                  enabled: true,
-                },
-                 pan: {enabled: true},
-                 pinch: {
-                   enabled: true
-                 },
-                 mode: 'xy',
-               },
-            },
-            legend: {
-              position: "right",
-            },
-            title: {
-              display: true,
-              align: 'center',
-              text: "Вылеченные",
-            },
-          }
-        });
-      })
-
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_trainH=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    let r_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_train")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.H_mean)
-        max_data.push(dataObj.H_max)
-        min_data.push(dataObj.H_min)
-      }
-      axios
-      .get("http://89.253.218.66:4000/api/csvCovid/nd")
-      .then(res2 => {
-        for (const dataObj of res2.data) {
-          r_data.push(parseInt(dataObj.hospitalised));
-        }
-        setChartDataSEIRHCD({
-          labels:   dataSEIRHCD,
-          datasets: [
-            {
-              label: "H min",
-              data: min_data,
-              fill: false,
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-            {
-              label: "H max",
-              data: max_data,
-              fill: '-1',
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-          {
-            label: "H среднее",
-            data: mean_data,
-            fill: false,
-            borderColor: "rgba(13,110,253, 1)",
-            backgroundColor: "rgba(13,110,253, 1)",
-            tension: 0.9,
-            borderWidth: 2,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-            {
-              label: "Реальные данные",
-              data: r_data,
-              fill: false,
-              borderColor: "rgba(255, 127, 80, 1)",
-              backgroundColor: "rgba(255, 127, 80, 1)",
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1
-              },
-        ],
-        });
-        setChartOptionsSEIRHCD({
-          responsive: true,
-            plugins: {
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'xy',
-                },
-               zoom: {
-                 wheel: {
-                   enabled: true,
-                   speed: 0.1,
-                 },
-                 drag: {
-                  enabled: true,
-                },
-                 pan: {enabled: true},
-                 pinch: {
-                   enabled: true
-                 },
-                 mode: 'xy',
-               },
-            },
-            legend: {
-              position: "right",
-            },
-            title: {
-              display: true,
-              align: 'center',
-              text: "Госпитализированные",
-            },
-          }
-        });
-      })
-
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_trainC=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    let r_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_train")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.C_mean)
-        max_data.push(dataObj.C_max)
-        min_data.push(dataObj.C_min)
-      }
-      axios
-      .get("http://89.253.218.66:4000/api/csvCovid/nd")
-      .then(res2 => {
-        for (const dataObj of res2.data) {
-          r_data.push(parseInt(dataObj.n_critical));
-        }
-        setChartDataSEIRHCD({
-          labels:   dataSEIRHCD,
-          datasets: [
-            {
-              label: "C min",
-              data: min_data,
-              fill: false,
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-            {
-              label: "C max",
-              data: max_data,
-              fill: '-1',
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-          {
-            label: "C среднее",
-            data: mean_data,
-            fill: false,
-            borderColor: "rgba(13,110,253, 1)",
-            backgroundColor: "rgba(13,110,253, 1)",
-            tension: 0.9,
-            borderWidth: 2,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-            {
-              label: "Реальные данные",
-              data: r_data,
-              fill: false,
-              borderColor: "rgba(255, 127, 80, 1)",
-              backgroundColor: "rgba(255, 127, 80, 1)",
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1
-              },
-        ],
-        });
-        setChartOptionsSEIRHCD({
-          responsive: true,
-            plugins: {
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'xy',
-                },
-               zoom: {
-                 wheel: {
-                   enabled: true,
-                   speed: 0.1,
-                 },
-                 drag: {
-                  enabled: true,
-                },
-                 pan: {enabled: true},
-                 pinch: {
-                   enabled: true
-                 },
-                 mode: 'xy',
-               },
-            },
-            legend: {
-              position: "right",
-            },
-            title: {
-              display: true,
-              align: 'center',
-              text: "Критически больные",
-            },
-          }
-        });
-      })
-
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_trainD=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    let r_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_train")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.D_mean)
-        max_data.push(dataObj.D_max)
-        min_data.push(dataObj.D_min)
-      }
-      axios
-      .get("http://89.253.218.66:4000/api/csvCovid/nd")
-      .then(res2 => {
-        for (const dataObj of res2.data) {
-          r_data.push(parseInt(dataObj.cum_deaths));
-        }
-        setChartDataSEIRHCD({
-          labels:   dataSEIRHCD,
-          datasets: [
-            {
-              label: "D min",
-              data: min_data,
-              fill: false,
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-            {
-              label: "D max",
-              data: max_data,
-              fill: '-1',
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-          {
-            label: "D среднее",
-            data: mean_data,
-            fill: false,
-            borderColor: "rgba(13,110,253, 1)",
-            backgroundColor: "rgba(13, 110, 253, 1)",
-            tension: 0.9,
-            borderWidth: 2,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-            {
-              label: "Реальные данные",
-              data: r_data,
-              fill: false,
-              borderColor: "rgba(255, 127, 80, 1)",
-              backgroundColor: "rgba(255, 127, 80, 1)",
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1
-              },
-        ],
-        });
-        setChartOptionsSEIRHCD({
-          responsive: true,
-            plugins: {
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'xy',
-                },
-               zoom: {
-                 wheel: {
-                   enabled: true,
-                   speed: 0.1,
-                 },
-                 drag: {
-                  enabled: true,
-                },
-                 pan: {enabled: true},
-                 pinch: {
-                   enabled: true
-                 },
-                 mode: 'xy',
-               },
-            },
-            legend: {
-              position: "right",
-            },
-            title: {
-              display: true,
-              align: 'center',
-              text: "Умершие",
             },
           }
         });
@@ -1732,7 +730,7 @@ function ModelingSEIR_HCD() {
     datasets: [],
   })
 
-  const res_validFK=()=>{
+  const res_valid=(mean, max, min, param)=>{
     let dataSEIRHCD = []
     let mean_data = []
     let max_data = []
@@ -1745,15 +743,15 @@ function ModelingSEIR_HCD() {
       //console.log(res)
       for (const dataObj of res.data) {
         dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.fk_mean)
-        max_data.push(dataObj.fk_max)
-        min_data.push(dataObj.fk_min)
+        mean_data.push(dataObj[mean])
+        max_data.push(dataObj[max])
+        min_data.push(dataObj[min])
       }
       axios
       .get("http://89.253.218.66:4000/api/csvCovid/nd")
       .then(res2 => {
         for (const dataObj of res2.data) {
-          r_data.push(parseInt(dataObj.new_diagnoses));
+          r_data.push(parseInt(dataObj[param]));
         }
         setChartDataSEIRHCD_v({
           labels:   dataSEIRHCD,
@@ -1842,769 +840,6 @@ function ModelingSEIR_HCD() {
               display: true,
               align: 'center',
               text: "Новые выявленные случаи",
-            },
-          }
-        });
-      })
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_validS=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_valid")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.S_mean)
-        max_data.push(dataObj.S_max)
-        min_data.push(dataObj.S_min)
-      }
-      setChartDataSEIRHCD_v({
-        labels:   dataSEIRHCD,
-        datasets: [
-          {
-            label: "S min",
-            data: min_data,
-            fill: false,
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-          {
-            label: "S max",
-            data: max_data,
-            fill: '-1',
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-        {
-          label: "S среднее",
-          data: mean_data,
-          fill: false,
-          borderColor: "rgba(13,110,253, 1)",
-          backgroundColor: "rgba(13,110,253, 1)",
-          tension: 0.9,
-          borderWidth: 2,
-          pointRadius: 0.3,
-          pointHoverRadius: 5,
-          pointHitRadius: 30,
-          pointBorderWidth: 0.1,
-          },
-      ],
-      });
-      setChartOptionsSEIRHCD_v({
-        responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-             zoom: {
-               wheel: {
-                 enabled: true,
-                 speed: 0.1,
-               },
-               drag: {
-                enabled: true,
-              },
-               pan: {enabled: true},
-               pinch: {
-                 enabled: true
-               },
-               mode: 'xy',
-             },
-          },
-          legend: {
-            position: "right",
-          },
-          title: {
-            display: true,
-            align: 'center',
-            text: "Восприимчивые",
-          },
-        }
-      });
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_validE=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_valid")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.E_mean)
-        max_data.push(dataObj.E_max)
-        min_data.push(dataObj.E_min)
-      }
-      setChartDataSEIRHCD_v({
-        labels:   dataSEIRHCD,
-        datasets: [
-          {
-            label: "E min",
-            data: min_data,
-            fill: false,
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-          {
-            label: "E max",
-            data: max_data,
-            fill: '-1',
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-        {
-          label: "E среднее",
-          data: mean_data,
-          fill: false,
-          borderColor: "rgba(13,110,253, 1)",
-          backgroundColor: "rgba(13,110,253, 1)",
-          tension: 0.9,
-          borderWidth: 2,
-          pointRadius: 0.3,
-          pointHoverRadius: 5,
-          pointHitRadius: 30,
-          pointBorderWidth: 0.1,
-          },
-      ],
-      });
-      setChartOptionsSEIRHCD_v({
-        responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-             zoom: {
-               wheel: {
-                 enabled: true,
-                 speed: 0.1,
-               },
-               drag: {
-                enabled: true,
-              },
-               pan: {enabled: true},
-               pinch: {
-                 enabled: true
-               },
-               mode: 'xy',
-             },
-          },
-          legend: {
-            position: "right",
-          },
-          title: {
-            display: true,
-            align: 'center',
-            text: "Больные без симптомов",
-          },
-        }
-      });
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_validI=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_valid")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.I_mean)
-        max_data.push(dataObj.I_max)
-        min_data.push(dataObj.I_min)
-      }
-      setChartDataSEIRHCD_v({
-        labels:   dataSEIRHCD,
-        datasets: [
-          {
-            label: "I min",
-            data: min_data,
-            fill: false,
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-          {
-            label: "I max",
-            data: max_data,
-            fill: '-1',
-            borderColor: "rgba(0,0,0, 0.1)",
-            backgroundColor: "rgba(0, 0, 0, 0.1)",
-            tension: 0.9,
-            borderWidth: 1,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-        {
-          label: "I среднее",
-          data: mean_data,
-          fill: false,
-          borderColor: "rgba(13,110,253, 1)",
-          backgroundColor: "rgba(13,110,253, 1)",
-          tension: 0.9,
-          borderWidth: 2,
-          pointRadius: 0.3,
-          pointHoverRadius: 5,
-          pointHitRadius: 30,
-          pointBorderWidth: 0.1,
-          },
-      ],
-      });
-      setChartOptionsSEIRHCD_v({
-        responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-             zoom: {
-               wheel: {
-                 enabled: true,
-                 speed: 0.1,
-               },
-               drag: {
-                enabled: true,
-              },
-               pan: {enabled: true},
-               pinch: {
-                 enabled: true
-               },
-               mode: 'xy',
-             },
-          },
-          legend: {
-            position: "right",
-          },
-          title: {
-            display: true,
-            align: 'center',
-            text: "Больные с симптомами",
-          },
-        }
-      });
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_validR=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    let r_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_valid")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.R_mean)
-        max_data.push(dataObj.R_max)
-        min_data.push(dataObj.R_min)
-      }
-      axios
-      .get("http://89.253.218.66:4000/api/csvCovid/nd")
-      .then(res2 => {
-        for (const dataObj of res2.data) {
-          r_data.push(parseInt(dataObj.cum_recoveries));
-        }
-        setChartDataSEIRHCD_v({
-          labels:   dataSEIRHCD,
-          datasets: [
-            {
-              label: "R min",
-              data: min_data,
-              fill: false,
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-            {
-              label: "R max",
-              data: max_data,
-              fill: '-1',
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-          {
-            label: "R среднее",
-            data: mean_data,
-            fill: false,
-            borderColor: "rgba(13,110,253, 1)",
-            backgroundColor: "rgba(13,110,253, 1)",
-            tension: 0.9,
-            borderWidth: 2,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-            {
-              label: "Реальные данные",
-              data: r_data,
-              fill: false,
-              borderColor: "rgba(255, 127, 80, 1)",
-              backgroundColor: "rgba(255, 127, 80, 1)",
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1
-              },
-        ],
-        });
-        setChartOptionsSEIRHCD_v({
-          responsive: true,
-            plugins: {
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'xy',
-                },
-               zoom: {
-                 wheel: {
-                   enabled: true,
-                   speed: 0.1,
-                 },
-                 drag: {
-                  enabled: true,
-                },
-                 pan: {enabled: true},
-                 pinch: {
-                   enabled: true
-                 },
-                 mode: 'xy',
-               },
-            },
-            legend: {
-              position: "right",
-            },
-            title: {
-              display: true,
-              align: 'center',
-              text: "Вылеченные",
-            },
-          }
-        });
-      })
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_validH=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    let r_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_valid")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.H_mean)
-        max_data.push(dataObj.H_max)
-        min_data.push(dataObj.H_min)
-      }
-      axios
-      .get("http://89.253.218.66:4000/api/csvCovid/nd")
-      .then(res2 => {
-        for (const dataObj of res2.data) {
-          r_data.push(parseInt(dataObj.hospitalised));
-        }
-        setChartDataSEIRHCD_v({
-          labels:   dataSEIRHCD,
-          datasets: [
-            {
-              label: "H min",
-              data: min_data,
-              fill: false,
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-            {
-              label: "H max",
-              data: max_data,
-              fill: '-1',
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-          {
-            label: "H среднее",
-            data: mean_data,
-            fill: false,
-            borderColor: "rgba(13,110,253, 1)",
-            backgroundColor: "rgba(13,110,253, 1)",
-            tension: 0.9,
-            borderWidth: 2,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-            {
-              label: "Реальные данные",
-              data: r_data,
-              fill: false,
-              borderColor: "rgba(255, 127, 80, 1)",
-              backgroundColor: "rgba(255, 127, 80, 1)",
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1
-              },
-        ],
-        });
-        setChartOptionsSEIRHCD_v({
-          responsive: true,
-            plugins: {
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'xy',
-                },
-               zoom: {
-                 wheel: {
-                   enabled: true,
-                   speed: 0.1,
-                 },
-                 drag: {
-                  enabled: true,
-                },
-                 pan: {enabled: true},
-                 pinch: {
-                   enabled: true
-                 },
-                 mode: 'xy',
-               },
-            },
-            legend: {
-              position: "right",
-            },
-            title: {
-              display: true,
-              align: 'center',
-              text: "Госпитализированные",
-            },
-          }
-        });
-      })
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_validC=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    let r_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_valid")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.C_mean)
-        max_data.push(dataObj.C_max)
-        min_data.push(dataObj.C_min)
-      }
-      axios
-      .get("http://89.253.218.66:4000/api/csvCovid/nd")
-      .then(res2 => {
-        for (const dataObj of res2.data) {
-          r_data.push(parseInt(dataObj.n_critical));
-        }
-        setChartDataSEIRHCD_v({
-          labels:   dataSEIRHCD,
-          datasets: [
-            {
-              label: "C min",
-              data: min_data,
-              fill: false,
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-            {
-              label: "C max",
-              data: max_data,
-              fill: '-1',
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-          {
-            label: "C среднее",
-            data: mean_data,
-            fill: false,
-            borderColor: "rgba(13,110,253, 1)",
-            backgroundColor: "rgba(13,110,253, 1)",
-            tension: 0.9,
-            borderWidth: 2,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-            {
-              label: "Реальные данные",
-              data: r_data,
-              fill: false,
-              borderColor: "rgba(255, 127, 80, 1)",
-              backgroundColor: "rgba(255, 127, 80, 1)",
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1
-              },
-        ],
-        });
-        setChartOptionsSEIRHCD_v({
-          responsive: true,
-            plugins: {
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'xy',
-                },
-               zoom: {
-                 wheel: {
-                   enabled: true,
-                   speed: 0.1,
-                 },
-                 drag: {
-                  enabled: true,
-                },
-                 pan: {enabled: true},
-                 pinch: {
-                   enabled: true
-                 },
-                 mode: 'xy',
-               },
-            },
-            legend: {
-              position: "right",
-            },
-            title: {
-              display: true,
-              align: 'center',
-              text: "Критически больные",
-            },
-          }
-        });
-      })
-    }).catch(err => {
-        console.log(err);
-      });
-  }
-  const res_validD=()=>{
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    let r_data = []
-    axios
-    .get("http://89.253.218.66:4000/api/res_valid")
-    .then(res => {
-      console.log("!")
-      //console.log(res)
-      for (const dataObj of res.data) {
-        dataSEIRHCD.push(dataObj.Date);
-        mean_data.push(dataObj.D_mean)
-        max_data.push(dataObj.D_max)
-        min_data.push(dataObj.D_min)
-      }
-      axios
-      .get("http://89.253.218.66:4000/api/csvCovid/nd")
-      .then(res2 => {
-        for (const dataObj of res2.data) {
-          r_data.push(parseInt(dataObj.cum_deaths));
-        }
-        setChartDataSEIRHCD_v({
-          labels:   dataSEIRHCD,
-          datasets: [
-            {
-              label: "D min",
-              data: min_data,
-              fill: false,
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-            {
-              label: "D max",
-              data: max_data,
-              fill: '-1',
-              borderColor: "rgba(0,0,0, 0.1)",
-              backgroundColor: "rgba(0, 0, 0, 0.1)",
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-              },
-          {
-            label: "D среднее",
-            data: mean_data,
-            fill: false,
-            borderColor: "rgba(13,110,253, 1)",
-            backgroundColor: "rgba(13, 110, 253, 1)",
-            tension: 0.9,
-            borderWidth: 2,
-            pointRadius: 0.3,
-            pointHoverRadius: 5,
-            pointHitRadius: 30,
-            pointBorderWidth: 0.1,
-            },
-            {
-              label: "Реальные данные",
-              data: r_data,
-              fill: false,
-              borderColor: "rgba(255, 127, 80, 1)",
-              backgroundColor: "rgba(255, 127, 80, 1)",
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1
-              },
-        ],
-        });
-        setChartOptionsSEIRHCD_v({
-          responsive: true,
-            plugins: {
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'xy',
-                },
-               zoom: {
-                 wheel: {
-                   enabled: true,
-                   speed: 0.1,
-                 },
-                 drag: {
-                  enabled: true,
-                },
-                 pan: {enabled: true},
-                 pinch: {
-                   enabled: true
-                 },
-                 mode: 'xy',
-               },
-            },
-            legend: {
-              position: "right",
-            },
-            title: {
-              display: true,
-              align: 'center',
-              text: "Умершие",
             },
           }
         });
@@ -2865,6 +1100,21 @@ function ModelingSEIR_HCD() {
       });
   }
 
+  const [prognose_type, setPrognose_type] = useState(1)
+  const [prognose_data, setPrognose_data] = useState("2021-07-20")
+
+//1 - новые выявленные случаи
+//2 - критически больные
+//3 - умершие
+
+  const [ae, setAE] = useState()
+  const [ai, setAI] = useState()
+  const [ehc, setEhc] = useState()
+  const [m, setM] = useState()
+  const [ae_mean, setAE_mean] = useState()
+  const [ai_mean, setAI_mean] = useState()
+  const [ehc_mean, setEhc_mean] = useState()
+  const [m_mean, setM_mean] = useState()
   useEffect(() => {
      res_validR0();
   }, [])
@@ -2874,10 +1124,10 @@ function ModelingSEIR_HCD() {
   }, [])
 
   useEffect(() => {
-     res_trainFK();
+    res_train("fk_mean", "fk_max", "fk_min", "new_diagnoses");
   }, [])
   useEffect(() => {
-     res_validFK();
+     res_valid("fk_mean", "fk_max", "fk_min", "new_diagnoses");
   }, [])
   useEffect(() => {
      res_validP();
@@ -2886,17 +1136,12 @@ function ModelingSEIR_HCD() {
      res_trainP();
   }, [])
   useEffect(() => {
-     forecasts_newd();
+     forecasts_new(1, "2021-07-20");
   }, [])
   useEffect(() => {
-     forecasts_R0();
+     forecasts_R0("2021-07-20");
   }, [])
 
-  const [prognose_type, setPrognose_type] = useState(1)
-  const [prognose_data, setPrognose_data] = useState(1)
-//1 - новые выявленные случаи
-//2 - критически больные
-//3 - умершие
   const [openSEIRHCD, setOpenSEIRHCD] = useState(false);
   return (
     <>
@@ -2920,152 +1165,8 @@ function ModelingSEIR_HCD() {
 </Col>
   </Row>
   <Collapse in={openSEIRHCD}>
-    <div id="example-collapse-text" className="my-2">
-    <Row >
-       <Col sm={12} xs={12} md={12} lg={6}><Card className="border mx-3 my-1">
-         <Card.Header className=" text-center text-success">Структура модели</Card.Header>
-         <Card.Body>
-         <Image
-         src={sfblok}
-         rounded
-         fluid
-         />
-         </Card.Body></Card>
-         <Card className="border mx-3 my-1">
-           <Card.Header className=" text-center text-white bg-success">Математическая модель</Card.Header>
-           <Card.Body align="justify">
-           <div><small>Описывается системой 7 обыкновенных дифференциальных уравнений, удовлетворяющих закону баланса масс:</small></div>
-           <div className="my-3">
-           <Image
-           src={blokd}
-           rounded
-           fluid
-           />
-           </div>
-           </Card.Body></Card>
-         </Col>
-       <Col sm={12} xs={12} md={12}  lg={6}><Card className="border my-1 mx-3">
-         <Card.Header className=" text-center text-white bg-success">Параметры модели</Card.Header>
-         <Card.Body align="left">
-         <small>
-         <Table striped bordered hover>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Параметр</th>
-      <th>Описание</th>
-      <th>Границы</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td><i>{'\u03B1'}(t)</i></td>
-      <td>Индекс самоизоляции (<a href="https://yandex.ru/company/researches/2020/podomam">данные Яндекса</a>)</td>
-      <td>(0, 5)</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td><i>{'\u03B1'}<sub>E</sub>(t)</i></td>
-      <td>Параметр заражения между бессимптомной <i>E(t)</i> и восприимчивой <i>S(t)</i> группами населения (<i>{'\u03B1'}<sub>E</sub>>>{'\u03B1'}<sub>I</sub></i>)</td>
-      <td>(0, 1)</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td><i>{'\u03B1'}<sub>I</sub>(t)</i></td>
-      <td>Параметр заражения между инфицированным <i>I(t)</i> и восприимчивым <i>S(t)</i> населением</td>
-      <td>(0, 1)</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td><i>{'\u03B2'}(t)</i></td>
-      <td>Доля инфицированных, имеющая антитела IgG к SARS-CoV-2</td>
-      <td><a href="https://away.vk.com/away.php">Инвитро</a></td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td><i>{'\u03B5'}<sub>hc</sub>(t)</i></td>
-      <td>Доля госпитализированных случаев <i>H(t)</i>, которым требуется подключение ИВЛ</td>
-      <td>(0, 1)</td>
-    </tr>
-    <tr>
-      <td>6</td>
-      <td><i>{'\u03BC'}(t)</i></td>
-      <td>Доля смертельных случаев</td>
-      <td>(0, 0.5)</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td><i>{'\u03C4'}</i></td>
-      <td>Латентный период</td>
-      <td>2 дня</td>
-    </tr>
-    <tr>
-      <td>8</td>
-      <td><i>t<sub>inc</sub></i></td>
-      <td>Длительность инкубационного периода</td>
-      <td>2-14 дней</td>
-    </tr>
-    <tr>
-      <td>9</td>
-      <td><i>t<sub>inf</sub></i></td>
-      <td>Длительность периода инфицирования</td>
-      <td>2,5-14 дней</td>
-    </tr>
-    <tr>
-      <td>10</td>
-      <td><i>t<sub>hosp</sub></i></td>
-      <td>Длительность периода госпитализации</td>
-      <td>4-5 дней</td>
-    </tr>
-    <tr>
-      <td>11</td>
-      <td><i>t<sub>crit</sub></i></td>
-      <td>Длительность использования ИВЛ</td>
-      <td>10-20 дней</td>
-    </tr>
-    <tr>
-      <td>12</td>
-      <td><i>t<sub>imm</sub></i></td>
-      <td>Средняя продолжительность гуморального иммунитета после выздоровления</td>
-      <td>180 дней</td>
-    </tr>
-    </tbody>
-    </Table>
-    </small>
-         </Card.Body></Card>
-         <Card className="border  my-1 mx-3">
-           <Card.Header className="text-center text-success">Обратная задача</Card.Header>
-           <Card.Body>
-           <small>
-           Для каждого временного промежутка (14 дней) уточняются параметры задачи </small><div><i>q(t) = ({'\u03B1'}<sub>E</sub>(t),{'\u03B1'}<sub>I</sub>(t), {'\u03B5'}<sub>hc</sub>(t),{'\u03BC'}(t), E<sub>0</sub>, I<sub>0</sub>) </i>
-           <small>
-           путем минимизации целевого функционала </small></div>
-           <Image
-           src={firdblok}
-           rounded
-           fluid
-           style={{ width: '3rem' }, {height: '3rem'}}
-           />
-           <small>
-методом глобальной оптимизации на основе древовидных оценок Парзена <a href="https://optuna.org">OPTUNA</a>.
-<div className="text-success">Реальные данные:</div>
- <div><i>f<sub>k</sub></i> – количество выявленных случаев COVID-19 в день <i>k</i>,</div>
-<div><i>b<sub>k</sub></i> – процент бессимптомных выявленных в день <i>k</i>,</div>
- <div><i>C<sub>k</sub></i> – количество критических случаев COVID-19 в день <i>k</i>, нуждающихся в подключении аппарата ИВЛ,</div>
-<div><i>g<sub>k</sub></i> – количество умерших в результате COVID-19 в день <i>k</i>.</div></small>
-           </Card.Body></Card>
-           <Card className="border my-1 mx-3">
-             <Card.Header className="text-center text-success bg-light">Алгоритм усвоения данных</Card.Header>
-             <Card.Body align="center">
-             <Image
-             src={sfifblok}
-             rounded
-             fluid
-             />
-             </Card.Body></Card>
-         </Col>
-     </Row>
+  <div id="example-collapse-text" className="my-2">
+    <Description_SEIRHCD />
     </div>
   </Collapse>
     <OverlayTrigger
@@ -3086,7 +1187,6 @@ function ModelingSEIR_HCD() {
      </OverlayTrigger>
      <Collapse in={openBS}>
        <div id="example-collapse-text">
-
        <Row>
 <Col xs={12} md={4}>
        <ListGroup className = "mx-3 my-1">
@@ -3109,10 +1209,15 @@ function ModelingSEIR_HCD() {
          <Form.Select aria-label="Default select example"
            type="number"
            name="data"
-           disabled={true}
+           onChange={(e) => {
+             const selected = e.target.value;
+             setPrognose_data(selected)
+             forecasts_new(prognose_type, selected)
+             forecasts_R0(selected)
+           }}
            >
-               <option value="1">21.07.2021</option>
-               <option value="2">20.07.2021</option>
+              <option value="2021-07-20">20.07.2021</option>
+              <option value="2021-07-21">21.07.2021</option>
          </Form.Select>
          <Form.Select aria-label="Default select example"
            type="number"
@@ -3120,18 +1225,8 @@ function ModelingSEIR_HCD() {
            onChange={(e) => {
              const selectedType = e.target.value;
              let stype = Number(selectedType)
-             setPrognose_type(stype)
-             console.log(prognose_data)
-             if(stype == 1){
-               console.log("1")
-               forecasts_newd()
-             } else if(stype == 2) {
-               console.log("работает2")
-               forecasts_newcr()
-             } else if(stype == 3) {
-               console.log("работае3")
-               forecasts_newdth()
-             }
+             setPrognose_type(stype, prognose_data)
+             forecasts_new(stype, prognose_data)
            }}>
                <option value="1">Новые выявленные случаи</option>
                <option value="2">Критически больные, C</option>
@@ -3184,15 +1279,9 @@ function ModelingSEIR_HCD() {
      <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
      </OverlayTrigger>
      <Button variant="outline-secondary" size="sm" className="mx-1 align-right" onClick={(e) => {
-       if (prognose_type == 1){
-         forecasts_newd()
-       }else if(prognose_type == 2){
-         forecasts_newcr()
-       }else if(prognose_type == 3){
-         forecasts_newdth()
-       }
+         forecasts_new(prognose_type, prognose_data)
      }}><BsZoomOut/></Button>
-     <Button variant="outline-secondary" size="sm" className="mx-1" onClick={(e)=>download_chart(e)}><FiDownload/></Button>
+     <Button variant="outline-secondary" size="sm" className="mx-1" onClick={(e)=>download_chart(e, "chart2")}><FiDownload/></Button>
    </Col>
    </Row>
 <div style={{ width: '55rem' }}><Bar id="chart2" options={chartOptions_pred} data={chartData_pred} height="100%" /></div>
@@ -3220,8 +1309,8 @@ function ModelingSEIR_HCD() {
     <Col sm={6} md={6} xs={6} lg={6}><Card.Text className="">
     <Stack className="">
     <small>
-    <div className="text-muted" >среднее <b className="text-black"><h5>0.127</h5></b></div>
-    <div className="text-muted">std <b className="text-black"><h5>0.095</h5></b></div> </small>
+    <div className="text-muted" >среднее <b className="text-black"><h5>{ae_mean}</h5></b></div>
+    <div className="text-muted">std <b className="text-black"><h5>{ae}</h5></b></div> </small>
   </Stack>
     </Card.Text></Col>
   </Row></OverlayTrigger>
@@ -3246,8 +1335,8 @@ function ModelingSEIR_HCD() {
     <Col sm={6} md={6} xs={6} lg={6}><Card.Text className="">
     <Stack className="">
     <small>
-    <div className="text-muted" >среднее <b className="text-black"><h5>0.062</h5></b></div>
-    <div className="text-muted">std <b className="text-black"><h5>0.045</h5></b></div> </small>
+    <div className="text-muted" >среднее <b className="text-black"><h5>{ai_mean}</h5></b></div>
+    <div className="text-muted">std <b className="text-black"><h5>{ai}</h5></b></div> </small>
   </Stack>
     </Card.Text></Col>
   </Row></OverlayTrigger>
@@ -3273,8 +1362,8 @@ function ModelingSEIR_HCD() {
     <Col sm={6} md={6} xs={6} lg={6}><Card.Text className="">
     <Stack className="">
     <small>
-    <div className="text-muted" >среднее <b className="text-black"><h5>0.237</h5></b></div>
-    <div className="text-muted">std <b className="text-black"><h5>0.115</h5></b></div> </small>
+    <div className="text-muted" >среднее <b className="text-black"><h5>{ehc_mean}</h5></b></div>
+    <div className="text-muted">std <b className="text-black"><h5>{ehc}</h5></b></div> </small>
   </Stack>
     </Card.Text></Col>
   </Row></OverlayTrigger>
@@ -3299,8 +1388,8 @@ function ModelingSEIR_HCD() {
     <Col sm={6} md={6} xs={6} lg={6}><Card.Text className="">
     <Stack className="">
     <small>
-    <div className="text-muted" >среднее <b className="text-black"><h5>0.488</h5></b></div>
-    <div className="text-muted">std <b className="text-black"><h5>0.017</h5></b></div> </small>
+    <div className="text-muted" >среднее <b className="text-black"><h5>{m_mean}</h5></b></div>
+    <div className="text-muted">std <b className="text-black"><h5>{m}</h5></b></div> </small>
   </Stack>
     </Card.Text></Col>
   </Row></OverlayTrigger>
@@ -3338,8 +1427,8 @@ function ModelingSEIR_HCD() {
   >
    <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
    </OverlayTrigger>
-   <Button variant="outline-secondary" size="sm" className="mx-1" onClick={res_validR0}><BsZoomOut/></Button>
-   <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart3(e)}><FiDownload/></Button>
+   <Button variant="outline-secondary" size="sm" className="mx-1" onClick={(e)=>{forecasts_R0(prognose_data)}}><BsZoomOut/></Button>
+   <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart9")}><FiDownload/></Button>
  </Col>
  </Row>
 </Container>
@@ -3366,7 +1455,8 @@ function ModelingSEIR_HCD() {
       <h4 className="mx-5 my-2 text-secondary">Кривые SEIRHCD и реальные данные</h4>
       <Nav variant="pills" defaultActiveKey="1"className="my-2" >
         <Nav.Item >
-        <Button className="mx-3" size="sm" variant="outline-info" onClick={res_trainFK} style={{color:"#FFFFFF"}}>
+        <Button className="mx-3" size="sm" variant="outline-info" onClick={(e) => {
+          res_train("fk_mean", "fk_max", "fk_min", "new_diagnoses")}} style={{color:"#FFFFFF"}}>
           <Nav.Link eventKey="1">Новые выявленные случаи</Nav.Link>
         </Button>
         </Nav.Item>
@@ -3381,7 +1471,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info" onClick={res_trainS} className="mx-1">
+        <Button  size="sm" variant="outline-info" onClick={(e) => {res_train("S_mean", "S_max", "S_min", "")}} className="mx-1">
           <Nav.Link eventKey="2"><b>S</b></Nav.Link>
           </Button>
           </OverlayTrigger>
@@ -3397,7 +1487,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info" onClick={res_trainE} className="mx-1">
+        <Button  size="sm" variant="outline-info" onClick={(e)=>{res_train("E_mean", "E_max", "E_min")}} className="mx-1">
           <Nav.Link eventKey="3"><b>E</b></Nav.Link>
           </Button>
           </OverlayTrigger>
@@ -3413,7 +1503,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info" onClick={res_trainI} className="mx-1">
+        <Button  size="sm" variant="outline-info" onClick={(e)=>{res_train("I_mean", "I_max", "I_min")}} className="mx-1">
           <Nav.Link eventKey="4"><b>I</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
@@ -3428,7 +1518,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info" onClick={res_trainR} className="mx-1">
+        <Button  size="sm" variant="outline-info" onClick={(e)=>{res_train("R_mean", "R_max", "R_min", "cum_recoveries")}} className="mx-1">
           <Nav.Link eventKey="5"><b>R</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
@@ -3443,7 +1533,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info" onClick={res_trainH} className="mx-1">
+        <Button  size="sm" variant="outline-info" onClick={(e)=>{res_train("H_mean", "H_max", "H_min", "hospitalised")}} className="mx-1">
           <Nav.Link eventKey="6"><b>H</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
@@ -3458,7 +1548,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info"  onClick={res_trainC} className="mx-1">
+        <Button  size="sm" variant="outline-info"  onClick={(e)=>{res_train("C_mean", "C_max", "C_min", "n_critical")}} className="mx-1">
           <Nav.Link eventKey="7"><b>C</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
@@ -3473,7 +1563,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info"  onClick={res_trainD} className="mx-1">
+        <Button  size="sm" variant="outline-info"  onClick={(e)=>{res_train("D_mean", "D_max", "D_min", "cum_deaths")}} className="mx-1">
           <Nav.Link eventKey="8"><b>D</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
@@ -3507,7 +1597,7 @@ function ModelingSEIR_HCD() {
         <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
         </OverlayTrigger>
 
-        <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart4(e)}><FiDownload/></Button>
+        <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart4")}><FiDownload/></Button>
       </Col>
       </Row>
 <Container style={{ width: '80rem' }}><Line id="chart4" options={chartOptionsSEIRHCD} data={chartDataSEIRHCD} height="90%" /></Container>
@@ -3542,7 +1632,7 @@ function ModelingSEIR_HCD() {
          <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
          </OverlayTrigger>
           <Button variant="outline-secondary" size="sm" className="mx-1" onClick={res_trainR0}><BsZoomOut/></Button>
-         <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart5(e)}><FiDownload/></Button>
+         <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart5")}><FiDownload/></Button>
        </Col>
        </Row>
        <Container style={{ width: '80rem' }}><Line id="chart5" options={chartOptionsTrain} data={chartDataTrain} height="100%" /></Container>
@@ -3577,7 +1667,7 @@ function ModelingSEIR_HCD() {
          <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
          </OverlayTrigger>
           <Button variant="outline-secondary" size="sm" className="mx-1" onClick={res_trainP}><BsZoomOut/></Button>
-         <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart8(e)}><FiDownload/></Button>
+         <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart8")}><FiDownload/></Button>
        </Col>
        </Row>
        <Container style={{ width: '80rem' }}><Line id="chart8" options={chartOptions_pm} data={chartData_pm} height="90%" /></Container>
@@ -3603,7 +1693,7 @@ function ModelingSEIR_HCD() {
       <h4 className="mx-5 my-2 text-secondary">Кривые SEIRHCD и реальные данные</h4>
       <Nav variant="pills" defaultActiveKey="1"className="my-2" >
         <Nav.Item >
-        <Button className="mx-3" size="sm" variant="outline-info" onClick={res_validFK} style={{color:"#FFFFFF"}}>
+        <Button className="mx-3" size="sm" variant="outline-info" onClick={(e) => {res_valid("fk_mean", "fk_max", "fk_min", "new_diagnoses")}} style={{color:"#FFFFFF"}}>
           <Nav.Link eventKey="1">Новые выявленные случаи</Nav.Link>
         </Button>
         </Nav.Item>
@@ -3618,7 +1708,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info" onClick={res_validS} className="mx-1">
+        <Button  size="sm" variant="outline-info" onClick={(e) => {res_valid("S_mean", "S_max", "S_min", "")}} className="mx-1">
           <Nav.Link eventKey="2"><b>S</b></Nav.Link>
           </Button>
           </OverlayTrigger>
@@ -3634,7 +1724,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info" onClick={res_validE} className="mx-1">
+        <Button  size="sm" variant="outline-info" onClick={(e) => {res_valid("E_mean", "E_max", "E_min", "new_diagnoses")}} className="mx-1">
           <Nav.Link eventKey="3"><b>E</b></Nav.Link>
           </Button>
           </OverlayTrigger>
@@ -3650,7 +1740,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info" onClick={res_validI} className="mx-1">
+        <Button  size="sm" variant="outline-info" onClick={(e) => {res_valid("I_mean", "I_max", "I_min", "new_diagnoses")}} className="mx-1">
           <Nav.Link eventKey="4"><b>I</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
@@ -3665,7 +1755,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info" onClick={res_validR} className="mx-1">
+        <Button  size="sm" variant="outline-info" onClick={(e) => {res_valid("R_mean", "R_max", "R_min", "cum_recoveries")}} className="mx-1">
           <Nav.Link eventKey="5"><b>R</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
@@ -3680,7 +1770,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info" onClick={res_validH} className="mx-1">
+        <Button  size="sm" variant="outline-info" onClick={(e) => {res_valid("H_mean", "H_max", "H_min", "hospitalised")}} className="mx-1">
           <Nav.Link eventKey="6"><b>H</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
@@ -3695,7 +1785,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info"  onClick={res_validC} className="mx-1">
+        <Button  size="sm" variant="outline-info"  onClick={(e) => {res_valid("C_mean", "C_max", "C_min", "n_critical")}} className="mx-1">
           <Nav.Link eventKey="7"><b>C</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
@@ -3710,7 +1800,7 @@ function ModelingSEIR_HCD() {
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info"  onClick={res_validD} className="mx-1">
+        <Button  size="sm" variant="outline-info"  onClick={(e) => {res_valid("D_mean", "D_max", "D_min", "cum_deaths")}} className="mx-1">
           <Nav.Link eventKey="8"><b>D</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
@@ -3743,7 +1833,7 @@ function ModelingSEIR_HCD() {
        >
         <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
         </OverlayTrigger>
-        <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart6(e)}><FiDownload/></Button>
+        <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart6")}><FiDownload/></Button>
       </Col>
       </Row>
 <Container style={{ width: '80rem' }}><Line id="chart6"options={chartOptionsSEIRHCD_v} data={chartDataSEIRHCD_v} height="90%" /></Container>
@@ -3777,7 +1867,7 @@ function ModelingSEIR_HCD() {
   <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
   </OverlayTrigger>
    <Button variant="outline-secondary" size="sm" className="mx-1" onClick={res_validR0}><BsZoomOut/></Button>
-  <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart3(e)}><FiDownload/></Button>
+  <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart3")}><FiDownload/></Button>
 </Col>
 </Row>
 <Container style={{ width: '80rem' }}><Line id="chart3" options={chartOptions} data={chartData} height="90%" /></Container>
@@ -3812,7 +1902,7 @@ function ModelingSEIR_HCD() {
   <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
   </OverlayTrigger>
    <Button variant="outline-secondary" size="sm" className="mx-1" onClick={res_validP}><BsZoomOut/></Button>
-  <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart7(e)}><FiDownload/></Button>
+  <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart7")}><FiDownload/></Button>
 </Col>
 </Row>
 <Container style={{ width: '80rem' }}><Line id="chart7" options={chartOptions_p} data={chartData_p} height="90%" /></Container>

@@ -88,8 +88,8 @@ function ModelingSEIR_HCD() {
     let datatype = selected
     let dataT = selected
     axios({
-        //url:'http://89.253.218.66:4000/api/forecasts_train',
-        url:'http://localhost:4000/api/forecasts_train',
+        url:'http://89.253.218.66:4000/api/forecasts_train',
+        //url:'http://localhost:4000/api/forecasts_train',
         method: "POST",
         data: {dataT},
       })
@@ -106,8 +106,8 @@ function ModelingSEIR_HCD() {
           min.push(dataObj.R0_min)
         }
         axios({
-            //url:'http://89.253.218.66:4000/api/forecasts',
-            url:'http://localhost:4000/api/forecasts',
+            url:'http://89.253.218.66:4000/api/forecasts',
+            //url:'http://localhost:4000/api/forecasts',
             method: "POST",
             data: {datatype},
           })
@@ -261,8 +261,8 @@ function ModelingSEIR_HCD() {
     let tr = []
     let name = "Новые выявленные случаи";
     axios({
-        //url:'http://89.253.218.66:4000/api/forecasts_true',
-        url:'http://localhost:4000/api/forecasts_true',
+        url:'http://89.253.218.66:4000/api/forecasts_true',
+        //url:'http://localhost:4000/api/forecasts_true',
         method: "POST",
         data: {datatype},
       })
@@ -284,8 +284,8 @@ function ModelingSEIR_HCD() {
           mean.push(0)
         }
         axios({
-            //url:'http://89.253.218.66:4000/api/forecasts',
-            url:'http://localhost:4000/api/forecasts',
+            url:'http://89.253.218.66:4000/api/forecasts',
+            //url:'http://localhost:4000/api/forecasts',
             method: "POST",
             data: {datatype},
           })

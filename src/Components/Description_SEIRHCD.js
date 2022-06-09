@@ -156,4 +156,4 @@ const Description_SEIRHCD = () => {
       </>
     )}
 
-    export default Description_SEIRHCD;
+export default Description_SEIRHCD;

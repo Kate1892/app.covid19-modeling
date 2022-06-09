@@ -1,5 +1,4 @@
 import React, {useMemo} from "react";
-import  Carousels from './Components/Carousels';
 import {Container, Card, CardGroup, Image, Row, Col, ListGroup, NavLink, Button} from 'react-bootstrap';
 import Footer from './Components/Footer'
 import TeamItem from './Components/TeamItem'

@@ -1,11 +1,12 @@
 import React, { useState, useEffect} from "react";
 import axios from "axios";
 import {FiDownload } from 'react-icons/fi'
-import {Container, Row, Col, Card, ListGroup, ListGroupItem, NavDropdown, Navbar, Button,
-  Image, Tab, Nav, Dropdown, ButtonGroup, DropdownButton, CardGroup, OverlayTrigger, Popover} from 'react-bootstrap';
+import {Container, Row, Col, Card, Button,
+  Image, Dropdown, OverlayTrigger, Popover} from 'react-bootstrap';
 import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
+import StaticCovidDataItem from './StaticCovidDataItem'
 
-  import {
+import {
     Chart as ChartJS,
     PointElement,
     Filler,
@@ -18,9 +19,9 @@ import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
     Tooltip,
     Legend,
   } from 'chart.js';
-  import {Bar, Line} from 'react-chartjs-2'
-  import zoomPlugin from 'chartjs-plugin-zoom';
-  import scales from 'chartjs-plugin-zoom';
+import {Bar, Line} from 'react-chartjs-2'
+import zoomPlugin from 'chartjs-plugin-zoom';
+import scales from 'chartjs-plugin-zoom';
 
 
   ChartJS.register(
@@ -40,7 +41,7 @@ import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
 
 
 
-function Altay_nd() {
+const StaticCovidData = (props) => {
 
   const zoom_chart=(e) => {
     e.preventDefault()
@@ -82,8 +83,16 @@ function Altay_nd() {
     let cov_nrec = [];
     let cov_ncrit = []
     let cov_cumchild = []
+    let url;
+    if(props.prop == 1) {
+      url="http://89.253.218.66:4000/api/csvCovid/nd"
+    } else if (props.prop == 2) {
+      url="http://89.253.218.66:4000/api/csvCovid/altay"
+    } else if (props.prop == 3) {
+      url="http://89.253.218.66:4000/api/csvCovid/omsk"
+    }
     axios
-    .get("http://89.253.218.66:4000/api/csvCovid/altay")
+    .get(url)
     .then(res => {
       console.log(res);
       cov_last_nd.push(parseInt(res.data[res.data.length-1].new_diagnoses))
@@ -144,6 +153,19 @@ function Altay_nd() {
           yAxisID: 'y'
         },
         {
+        label: "заболеваемость детей, шк.2",
+        data: cov_cumchild,
+        borderColor: "rgb(255, 192, 203)",
+        backgroundColor: "rgb(255, 192, 203)",
+        tension: 0.9,
+        borderWidth: 4,
+        pointRadius: 0.3,
+        pointHoverRadius: 5,
+        pointHitRadius: 30,
+        pointBorderWidth: 0.1,
+        yAxisID: 'y'
+      },
+        {
         label: "cлучаи выздоровления, шк.2",
         data: cov_nrec,
         borderColor: "rgb(252,141,214)",
@@ -156,7 +178,19 @@ function Altay_nd() {
         pointBorderWidth: 0.1,
         yAxisID: 'y'
       },
-
+      {
+        label: "в критическом состоянии, шк.1",
+        data: cov_ncrit,
+        borderColor: "rgb(128, 0, 255)",
+        backgroundColor: "rgb(128,0,255)",
+        tension: 0.9,
+        borderWidth: 4,
+        pointRadius: 0.3,
+        pointHoverRadius: 5,
+        pointHitRadius: 30,
+        pointBorderWidth: 0.1,
+        yAxisID: 'quantity'
+      },
         ],
       });
 
@@ -229,53 +263,28 @@ function Altay_nd() {
 
   useEffect(() => {
     chart();
-
   }, [])
+
+  const lasts = [
+    {id: 1, lastData: lastData, lastDatadate: lastDatadate, name: "случаев заражения"},
+    {id: 2, lastData: last_nrec, lastDatadate: lastDatadate, name: "случаев выздоровления"},
+    {id: 3, lastData: last_ndeaths, lastDatadate: lastDatadate, name: "летальных исходов"},
+  ]
 
   return (
     <div>
     <Container>
-    <Row style={{
-            width: "100%" }}>
-    <Col xs= {12} md={4}><Card border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2">
-      <Card.Body>
-      <Card.Title className="text-center text-info"><h3>{lastData}</h3></Card.Title>
-      <Card.Text className="text-center">
-      <small>случаев заражения</small>
-      </Card.Text>
-      </Card.Body>
-    <Card.Footer className="bg-white">
-    <small className="text-muted"><small className="text-center">По данным на {lastDatadate}</small></small>
-    </Card.Footer>
-    </Card></Col>
-    <Col xs= {12} md={4}><Card border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2">
-      <Card.Body>
-      <Card.Title className="text-center text-success"><h3>{last_nrec}</h3></Card.Title>
-      <Card.Text className="text-center">
-      <small>случаев выздоровления</small>
-      </Card.Text>
-      </Card.Body>
-    <Card.Footer className="bg-white">
-    <small className="text-muted"><small className="text-center">По данным на {lastDatadate}</small></small>
-    </Card.Footer>
-    </Card></Col>
-    <Col xs= {12} md={4}>    <Card border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2">
-          <Card.Body>
-          <Card.Title className="text-center text-danger"><h3>{last_ndeaths}</h3></Card.Title>
-          <Card.Text className="text-center">
-          <small> летальных исходов </small>
-          </Card.Text>
-          </Card.Body>
-        <Card.Footer className="bg-white">
-        <small className="text-muted"><small className="text-center">По данным на {lastDatadate}</small></small>
-        </Card.Footer>
-        </Card></Col>
-  </Row>
+      <Row style={{
+              width: "100%" }}>
+              {lasts.map(last =>
+                  <StaticCovidDataItem last = {last}/>
+              )}
+      </Row>
     </Container>
     <div  align="center" style={{ width: '80rem' }} className ="my-4">
     <Row className="my-2">
-    <Col  xs={12} sm={9}>
-   </Col>
+      <Col  xs={12} sm={9}>
+     </Col>
     <Col xs={12} sm={3}>
     <OverlayTrigger
      placement="left"
@@ -310,4 +319,4 @@ function Altay_nd() {
     </div>
   );
 };
-export default Altay_nd;
+export default StaticCovidData;

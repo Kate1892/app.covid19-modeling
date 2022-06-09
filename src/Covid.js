@@ -2,32 +2,11 @@ import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles.css";
 import NaviBarv2 from './Components/NaviBarv2';
-
-import * as axios from "axios";
-import Axios from "axios"
-import BriefStatCovid from './Components/BriefStatCovid'
-import CollapseModelSettings from './Components/CollapseModelSettings'
-import {Container, Row, Col, Card, ListGroup, ListGroupItem, NavDropdown, Navbar, Button, Image, Tab, Nav,
-  Dropdown, ButtonGroup, DropdownButton, Carousel, OverlayTrigger, Popover} from 'react-bootstrap';
-
-import Altayinfo from './Components/Covid_state_data_altay/Altayinfo'
-import Altay_nd from './Components/Covid_state_data_altay/Altay_nd'
-import  Altay_sumstat from './Components/Covid_state_data_altay/Altay_sumstat'
-import  Altay_newdeath from './Components/Covid_state_data_altay/Altay_newdeath'
-
-import Omskinfo from './Components/Covid_state_data_omsk/Omskinfo'
-import Omsk_nd from './Components/Covid_state_data_omsk/Omsk_nd'
-import  Omsk_sumstat from './Components/Covid_state_data_omsk/Omsk_sumstat'
-import  Omsk_newdeath from './Components/Covid_state_data_omsk/Omsk_newdeath'
-
-import Novosibirskinfo from './Components/Covid_state_data_novosibirsk/Novosibirskinfo'
-import Novosibirsk_nd from './Components/Covid_state_data_novosibirsk/Novosibirsk_nd'
-import  Novosibirsk_sumstat from './Components/Covid_state_data_novosibirsk/Novosibirsk_sumstat'
-import  Novosibirsk_newdeath from './Components/Covid_state_data_novosibirsk/Novosibirsk_newdeath'
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 import Footer from './Components/Footer'
+import {Container, Row, Col, Card, ListGroup, ListGroupItem, Button, Tab, Nav,
+OverlayTrigger, Popover} from 'react-bootstrap';
+
+import StaticCovidData from './Components/StaticCovidData'
 
 export const Covid= () => (
   <>
@@ -105,19 +84,18 @@ export const Covid= () => (
     <Tab.Content>
       <Tab.Pane eventKey="novosibirsk">
       <div className="mx-3 my-3">
-          <Novosibirsk_nd />
+            <StaticCovidData prop={1}/>
       </div>
 
       </Tab.Pane>
       <Tab.Pane eventKey="altay">
           <div className="mx-3 my-3">
-            <Altay_nd />
+            <StaticCovidData prop={2}/>
             </div>
-
         </Tab.Pane>
         <Tab.Pane eventKey="omsk">
             <div className="mx-3 my-3">
-              <Omsk_nd />
+            <StaticCovidData prop={3}/>
               </div>
           </Tab.Pane>
       </Tab.Content>

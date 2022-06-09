@@ -5,7 +5,7 @@ Row, Popover, Col, Stack, Form, OverlayTrigger, FormControl} from 'react-bootstr
 import { Formik } from "formik";
 import * as yup from "yup";
 import {BsFillCaretRightFill, BsFillCaretDownFill} from 'react-icons/bs'
-import CovidDATA2 from './CovidDATA2'
+import CovidDataFiles from './CovidDataFiles'
 const schema = yup.object().shape({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
@@ -30,7 +30,7 @@ function CollapseModelSettings() {
         <div id="example-collapse-text">
 
         <ListGroup.Item variant="light">
-      <CovidDATA2 />
+      <CovidDataFiles />
 
     </ListGroup.Item>
 </div>

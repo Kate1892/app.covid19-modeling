@@ -5,8 +5,6 @@ DropdownButton, Dropdown} from 'react-bootstrap';
 import { CLoadingButton } from '@coreui/react-pro'
 import axios from "axios"
 import FileDownload from "js-file-download"
-import CollapseParamCSV from './Components/CollapseParamCSV'
-import NavModeling from './Components/NavModeling'
 import CollapseModelSettings from './Components/CollapseModelSettings'
 import { Formik } from "formik";
 import * as yup from "yup";
@@ -17,19 +15,12 @@ import {FcSearch} from 'react-icons/fc'
 import NaviBarv2 from './Components/NaviBarv2';
 import {BsZoomIn} from 'react-icons/bs'
 
-import Novosibirsk_nd from './Components/Covid_state_data_novosibirsk/Novosibirsk_nd'
-import CovidNewD_plot from './Components/CovidNewD_plot'
-
 import { DownloadCount } from 'axios-progress-bar'
 
 import ModelingSEIR_HCD from './ModelingSEIR_HCD'
+import Description_AOM from './Components/Description_AOM'
 
-import fblok from "./images/fblok.png"
-import model from "./images/model.png"
-import sblok from "./images/sblok.png"
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import NavBar from './Components/NavBar';
 
 import Footer from './Components/Footer'
 
@@ -79,15 +70,12 @@ const download_article=(e)=>{
 }
 
 const schema = yup.object().shape({
-  //population: yup.number().max(10).typeError("требуется числовое значение").required("обязательное поле"),
   population: yup.number().min(1000000).max(8000000).typeError("требуется числовое значение").required("обязательное поле"),
   n_future: yup.number().min(10).max(100).typeError("требуется числовое значение").required("обязательное поле"),
   init_infected: yup.number().min(10).max(100).typeError("требуется числовое значение").required("обязательное поле"),
 });
 
 export function Modeling(){
-
-
 
   const [population_data, setPopulation_data] = useState(2798170)
   const [region_data, setRegion_data] = useState(1)
@@ -134,36 +122,11 @@ export function Modeling(){
       })
   }
 
-  const run_msim_1 = (e) => {
-    e.preventDefault()
-    setWithspinner(true)
-    setIsrunning(true)
-  axios({
-      url:'http://89.253.218.66:4000/data',
-      method: "POST",
-      responseType:"blob",
-      data: {population_data, region_data, n_future_day, init_inf},
-    }).then((res)=>{
-      cancelToken.current = axios.CancelToken.source();
-      axios({
-        url:"http://89.253.218.66:4000/api/try2",
-        method: "GET",
-        responseType:"blob",
-        cancelToken: cancelToken.current.token
-    })
-       .then((res)=>{
-         setWithspinner(false)
-         setIsrunning(false)
-         initchart()
-      })
-    })
- }
-
- const break_get = () => {
-   setWithspinner(false)
-   setIsrunning(false)
-   cancelToken.current.cancel();
- }
+   const break_get = () => {
+     setWithspinner(false)
+     setIsrunning(false)
+     cancelToken.current.cancel();
+   }
 
     const [chartData_all, setChartData_all] = useState({
       datasets: [],
@@ -874,7 +837,6 @@ export function Modeling(){
           console.log(err);
         });;
     };
-
     const initchart_cumdiag = () => {
       setChartnum(7)
       axios({
@@ -970,7 +932,6 @@ export function Modeling(){
           console.log(err);
         });;
     };
-
     const initchart_newdeath = () => {
       setChartnum(8)
       axios({
@@ -1066,7 +1027,6 @@ export function Modeling(){
           console.log(err);
         });;
     };
-
     const initchart_new_rec = () => {
       setChartnum(9)
       axios({
@@ -1162,7 +1122,6 @@ export function Modeling(){
           console.log(err);
         });;
     };
-
     const initchart_new_crit = () => {
       setChartnum(10)
       axios({
@@ -1258,7 +1217,6 @@ export function Modeling(){
           console.log(err);
         });;
     };
-
 
     const chart = () => {
       setChartnum(1)
@@ -1362,7 +1320,6 @@ export function Modeling(){
         });
       console.log(cov_nd, cov_data);
     };
-
     const chart_cumdiag = () => {
       setChartnum(2)
       axios
@@ -1455,7 +1412,6 @@ export function Modeling(){
           console.log(err);
         });;
     };
-
     const chart_newdeath = () => {
       setChartnum(3)
       axios
@@ -1548,7 +1504,6 @@ export function Modeling(){
           console.log(err);
         });;
     };
-
     const chart_new_rec = () => {
       setChartnum(4)
       axios
@@ -1641,7 +1596,6 @@ export function Modeling(){
           console.log(err);
         });;
     };
-
     const chart_new_crit = () => {
       setChartnum(5)
       axios
@@ -1735,7 +1689,6 @@ export function Modeling(){
         });;
     };
 
-
     useEffect(() => {
       real_data1();
     }, [])
@@ -1744,42 +1697,13 @@ export function Modeling(){
       chart();
     }, [])
 
-    useEffect(() => {
-        window.addEventListener("beforeunload", handleUnload);
-        return () => {
-          window.removeEventListener("beforeunload", handleUnload);
-        };
-      }, []);
-
-      const handleUnload = (e) => {
-        const message = "o/";
-         axios.get("http://89.253.218.66:4000/deleteCurFiles")
-        return 1;
-      };
-
-//    useEffect(() => {
-//      return () => {
-//        axios.get("http://localhost:4000/deleteCurFiles")
-//      };
-//    }, []);
-
-
-
   const [withspinner, setWithspinner] = useState(false)
   const [newChart, setnewChart] = useState(true) /////true
   const [open, setOpen] = useState(false);
   const [reset, setReset] = useState(true);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true)
-
-  const [show1, setShow1] = useState(false);
-  const handleClose1 = () => setShow1(false);
-  const handleShow1 = () => setShow1(true);
 
   return(
   <>
-
   <NaviBarv2 />
       <Container className="my-3"   style={{
               height: "120%" }}>
@@ -1879,118 +1803,7 @@ COVID-19, в основе которой лежат обработка непо�
         </Row>
           <Collapse in={open}>
             <div id="example-collapse-text" className="my-2">
-            <Row >
-               <Col sm={12} xs={12} md={12} lg={6}><Card className="border mx-3 my-1">
-                 <Card.Header className="text-success">1. Инициация популяции</Card.Header>
-                 <Card.Body>
-                 <p align="justify"><small >Формируются четыре структуры контактов, в которых могут находиться агенты в зависимости от возраста 0-9,10-19, …, 80+ лет.</small></p>
-                 <Image
-                 src={fblok}
-                 rounded
-                 fluid
-                 onClick={handleShow1}
-                 />
-                 <Modal show={show1} onHide={handleClose1} animation={true}>
-                 <Image
-                 src={fblok}
-                 rounded
-                 fluid
-                 />
-                  </Modal>
-                 </Card.Body></Card>
-                 <Card className="border mx-3 my-1">
-                   <Card.Header className="text-white bg-success">2. Заражение</Card.Header>
-                   <Card.Body align="justify">
-                   <div><small> Предполагается, что вирус передается между агентами, соединенными ребром графа. Заражение при близком контакте описывается кусочно-постоянным параметром <i className="text-danger">{'\u03B2'}</i>.</small></div>
-                   <div className="my-3"><Image
-                   src={sblok}
-                   rounded
-                   fluid
-
-                   /></div>
-                      <div><small><div className="text-success">Пример:</div> Домохозяйства - заполняются агентами согласно статистическим данным о
-                 среднем размере семьи в регионе.</small></div>
-                   </Card.Body></Card>
-                 </Col>
-               <Col sm={12} xs={12} md={12}  lg={6}><Card className="border my-1 mx-3">
-                 <Card.Header className="text-white bg-success"><BsFillPersonLinesFill size={30}/>   Параметры агентов</Card.Header>
-                 <Card.Body align="left">
-                 <Row >
-                  <Col><div>Не зависят от времени:</div>
-                  <small>
-                  <div>• возраст</div>
-                  <div>• пол</div>
-                  <div>• социальный статус</div>
-                  <div>• прогрессирование заболевания</div></small></Col>
-                  <Col><div>Зависят от времени:</div>
-                  <small>
-                  <div>• эпид. статус:</div>
-                  <div>𝑆, 𝐸, 𝐼, 𝑅, 𝐻, 𝐶, 𝐷, 𝐴, 𝑀<OverlayTrigger
-                     placement="right"
-                     overlay={
-                       <Popover>
-                         <Popover.Body>
-                         <small className="text-success">
-                           <div>S – восприимчивые к заражению</div>
-                           <div>E – зараженные незаразные</div>
-                           <div>𝐼 – инфицированные</div>
-                           <div>R – вылечившиеся</div>
-                           <div>H – госпитализированные</div>
-                           <div>C – больные в критическом состоянии</div>
-                           <div>D – умершие</div>
-                           <div>A - бессимптомные больные</div>
-                           <div>M -  больные в легкой форме</div> </small>
-                         </Popover.Body>
-                       </Popover>
-                     }>
-                    <Button size="sm" variant="link" className="text-success">?</Button>
-                      </OverlayTrigger>
-                  </div>
-                  <div>• шанс быть протестированным</div>
-                  </small></Col>
-                </Row>
-                <div align="justify"><small>В зависимости от возраста агенты
-                контактируют друг с другом в контактных сетях, представляющие собой полносвязные графы.</small></div>
-                 </Card.Body></Card>
-                 <Card className="border  my-1 mx-3">
-                   <Card.Header className="text-success">3. Прогрессирование заболевания</Card.Header>
-                   <Card.Body>
-                   <Image
-
-                   src={model}
-                   rounded
-                   fluid
-                   onClick={handleShow}
-                   />
-                   <Modal show={show} onHide={handleClose} animation={true}>
-                   <Image
-
-                   src={model}
-                   rounded
-                   fluid
-                   />
-                    </Modal>
-                   </Card.Body></Card>
-                   <Card className="border my-1 mx-3">
-                     <Card.Header className="text-success bg-light">4. Тестирование агентов</Card.Header>
-                     <Card.Body align="justify">
-                     <div><small>Проводится согласно ежедневным статистическим данным о количестве проведенных тестов в регионе. Шанс быть протестированным
-   на COVID-19 <i>{'\u03C1'}</i> зависит от эпидемиологического статуса агента и определяется в ходе решения обратной задачи. Положительный результат
-   могут получить агенты, статус которых обведен в оранжевую рамку. В модели предполагается, что вероятность
-   тестирования агентов с симптомами выше, чем у бессимптомных больных.</small></div>
-
-                     </Card.Body></Card>
-                 </Col>
-                 <Col sm={12} xs={12} md={12} lg={12}>
-                 <Card className="border my-1 mx-3">
-                   <Card.Header className="text-white bg-success">5. Введение сдерживающих эпидемию мер</Card.Header>
-                   <Card.Body align="justify">
-                     <div><small>В модели возможно введение карантинных мер как для всех контактных слоев, так и для каждого в отдельности.
-    Это может быть сделано двумя способами: либо изменением значения параметра контагиозности вируса <i className="text-danger">{'\u03B2'}</i> (в случае введения обязательной меры ношения масок или социального дистанцирования), либо удалением ребер в графах сетей контактов (в случае введения самоизоляции
-    и дистанционной работы).</small></div>
-
-                   </Card.Body></Card></Col>
-             </Row>
+                <Description_AOM />
             </div>
           </Collapse>
           <Row >
@@ -2137,19 +1950,16 @@ COVID-19, в основе которой лежат обработка непо�
                           let sregion = Number(selectedRegion)
                           setRegion_data(sregion)
                           if(sregion == 1){
-                            console.log("работает1")
                             setRegion_name("Новосибирская область")
                             setPopulation_data(2798170)
                             setFieldValue("population", 2798170)
                             console.log(population_data)
                           } else if(sregion == 2) {
-                            console.log("работает2")
                             setRegion_name("Омская область")
                             setPopulation_data(578698)
                             setFieldValue("population", 1879548)
                             console.log(population_data)
                           } else if(sregion == 3) {
-                            console.log("работае3")
                             setRegion_name("Алтайский край")
                             setPopulation_data(2268179)
                             setFieldValue("population", 2268179)
@@ -2334,11 +2144,10 @@ COVID-19, в основе которой лежат обработка непо�
         </Card>
           </Tab>
           <Tab eventKey="SEIR-HCD" title="SEIR-HCD">
-          <ModelingSEIR_HCD />
-
+            <ModelingSEIR_HCD />
           </Tab>
         </Tabs>
     </Container>
-<Footer />
+    <Footer />
   </>
 )}

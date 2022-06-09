@@ -1,7 +1,5 @@
 import React, {useEffect} from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NaviBar from './Components/NaviBar';
-import NaviBarv2 from './Components/NaviBarv2';
 import {Button} from 'react-bootstrap';
 import Footer from './Components/Footer'
 import './App.css';
@@ -14,7 +12,6 @@ import {
 } from 'react-router-dom';
 
 import {Covid} from './Covid';
-import {Flu} from './Flu';
 import {Main} from './Main';
 import {Registration} from './Registration';
 import {Modeling} from './Modeling';

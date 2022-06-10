@@ -34,7 +34,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path="/covid19" element={<Covid />} />
-        <Route exact path="/main" element={<Main />} />
+        <Route exact path="/" element={<Main />} />
         <Route exact path="/modeling" element={<Modeling />} />
       </Routes>
     </Router>

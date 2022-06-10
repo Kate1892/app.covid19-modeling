@@ -27,7 +27,7 @@ function NaviBarv2() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/main"><u>Главная</u></Nav.Link>
+            <Nav.Link href="/"><u>Главная</u></Nav.Link>
             <Nav.Link href="/modeling "><u>Моделирование</u></Nav.Link>
             <NavDropdown title={<span><u>Статистика</u></span>} id="collasible-nav-dropdown">
               <NavDropdown.Item href="/covid19">Коронавирус</NavDropdown.Item>

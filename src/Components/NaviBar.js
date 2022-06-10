@@ -17,8 +17,8 @@ export default function NaviBar() {
     <>
       <Navbar collapseOnSelect scrolling transparent expand="md" className="text-white">
         <Container className="py-1">
-        <Navbar.Brand href="#"  className="text-white" >
-        <Image variant="bottom" className = "mx-3"
+        <Navbar.Brand href="#"  className="text-white" href="./">
+        <Image variant="bottom" className = "mx-3" href="./"
         src="https://covid19-modeling.ru/wp-content/uploads/2020/11/ip_head_with_trans-55x55.png"
         roundedCircle
         fluid
@@ -28,7 +28,7 @@ export default function NaviBar() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/main" className="text-white"><u>Главная</u></Nav.Link>
+            <Nav.Link href="/" className="text-white"><u>Главная</u></Nav.Link>
             <Nav.Link href="/modeling" className="text-white"><u>Моделирование</u></Nav.Link>
             <NavDropdown text-white title={<span className="text-white"><u>Статистика</u></span>} id="collasible-nav-dropdown">
               <NavDropdown.Item href="/covid19" >Коронавирус</NavDropdown.Item>

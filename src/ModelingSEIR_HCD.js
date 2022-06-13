@@ -1156,11 +1156,11 @@ function ModelingSEIR_HCD() {
             > {openSEIRHCD? <BsFillCaretDownFill size = {15}/> : <BsFillCaretRightFill size = {15}/>} Описание модели
             </Button></Col>
         <Col xs= {12} lg={12}>
-                    ...</Col>
+                    </Col>
                     </Row>
     </Col>
     <Col md={10} >
-    <Card className="my-3"><p align="justify" className="mx-3 my-1"><small>Краткая информаци </small></p> </Card>
+    <Card className="my-3"><p align="justify" className="mx-3 my-1"><small></small></p> </Card>
 <div className="mx-2"><hr /></div>
 </Col>
   </Row>

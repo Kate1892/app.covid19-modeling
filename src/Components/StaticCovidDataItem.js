@@ -13,7 +13,7 @@ const StaticCovidDataItem = (props) => {
         </Card.Text>
         </Card.Body>
       <Card.Footer className="bg-white">
-      <small className="text-muted"><small className="text-center">По данным на {props.last.lastData ? props.last.lastData : <div></div>}</small></small>
+      <small className="text-muted"><small className="text-center">По данным на {props.last.lastDatadate? props.last.lastDatadate : <div></div>}</small></small>
       </Card.Footer>
       </Card></Col>
     )

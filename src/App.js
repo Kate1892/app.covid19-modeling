@@ -38,7 +38,7 @@ function App() {
         <Route exact path="/modeling" element={<Modeling />} />
       </Routes>
     </Router>
-
+      <Footer />
     </div>
   );
 }

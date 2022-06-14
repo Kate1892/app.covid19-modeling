@@ -167,7 +167,8 @@ export function Modeling(){
     const [data_new_crit, setData_cov_new_crit] = useState(cov_new_crit)
 
 
-    const [someerrors, setSomeerrors] = useState(true)
+    const [someerrors, setSomeerrors] = useState(false)
+    const [loadingprosses, setLoadingprosses] = useState(true)
     const [chartnum, setChartnum] = useState(1)
     //1-5 - chart
     //6-10 - init chart
@@ -1223,6 +1224,7 @@ export function Modeling(){
       axios
         .get("http://89.253.218.66:4000/getMsim")
         .then(res => {
+          setLoadingprosses(false)
           setSomeerrors(false)
           console.log(res)
           for (const dataObj of res.data.results.new_diagnoses) {
@@ -1315,6 +1317,7 @@ export function Modeling(){
           });
         })
         .catch(err => {
+          setLoadingprosses(false)
           setSomeerrors(true)
           console.log(err);
         });
@@ -2077,9 +2080,12 @@ COVID-19, в основе которой лежат обработка непо�
               <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e)}><FiDownload/></Button>
               </Col>
               </Row>
-              {someerrors ?   <Alert variant="danger" className="my-5"> <Alert.Heading>Ошибка загрузки</Alert.Heading>
+              {loadingprosses ? <div style={{
+                      height: '400px'}}><Spinner style={{position: 'absolute', top: '50%'}} animation="border" variant="info"  /></div> :
+              someerrors ?   <div style={{
+                      height: '350px' }}><Alert variant="danger" className="my-5"> <Alert.Heading>Ошибка загрузки</Alert.Heading>
               Сервер временно не отвечает, пожалуйста, <Alert.Link href="/modeling">обновите страницу</Alert.Link> или повторите попытку позже.
-              <hr /> </Alert> :
+              <hr /> </Alert> </div> :
 
    newChart? <div style={{ width: '50rem' }}><Line  id="chart" data={chartData_all} options={chartOptions} /></div> : <div style={{ width: '50rem' }}><Line id="chart" options={chartOptions} data={initchartData_all}/></div>}
 
@@ -2148,6 +2154,6 @@ COVID-19, в основе которой лежат обработка непо�
           </Tab>
         </Tabs>
     </Container>
-    <Footer />
+
   </>
 )}

@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import axios from "axios";
 import {FiDownload } from 'react-icons/fi'
 import {Container, Row, Col, Card, Button,
-  Image, Dropdown, OverlayTrigger, Popover} from 'react-bootstrap';
+  Image, Dropdown, OverlayTrigger, Popover, Spinner, Alert} from 'react-bootstrap';
 import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
 import StaticCovidDataItem from './StaticCovidDataItem'
 
@@ -94,6 +94,8 @@ const StaticCovidData = (props) => {
     axios
     .get(url)
     .then(res => {
+      setLoadingprosses(false)
+      setSomeerrors(false)
       console.log(res);
       cov_last_nd.push(parseInt(res.data[res.data.length-1].new_diagnoses))
       cov_last_date.push(res.data[res.data.length-1].date)
@@ -255,6 +257,8 @@ const StaticCovidData = (props) => {
       setlast_nrec(cov_last_nrec)
     })
     .catch(err => {
+      setLoadingprosses(false)
+      setSomeerrors(true)
       console.log(err);
     });
     console.log(cov_ncrit);
@@ -264,6 +268,9 @@ const StaticCovidData = (props) => {
   useEffect(() => {
     chart();
   }, [])
+
+  const [loadingprosses, setLoadingprosses] = useState(true)
+  const [someerrors, setSomeerrors] = useState(false)
 
   const lasts = [
     {id: 1, lastData: lastData, lastDatadate: lastDatadate, name: "случаев заражения"},
@@ -314,7 +321,13 @@ const StaticCovidData = (props) => {
       <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart3(e)}><FiDownload/></Button>
     </Col>
     </Row>
-      <Line id="chart3" options={chartOptions} data={chartData} height="90%" />
+    {loadingprosses ? <div style={{
+            height: '400px'}}><Spinner style={{position: 'absolute', top: '50%'}} animation="border" variant="info"  /></div> :
+    someerrors ?   <div style={{
+            height: '350px' }}><Alert variant="danger" className="my-5"> <Alert.Heading>Ошибка загрузки</Alert.Heading>
+    Сервер временно не отвечает, пожалуйста, <Alert.Link href="/modeling">обновите страницу</Alert.Link> или повторите попытку позже.
+    <hr /> </Alert> </div> :
+      <Line id="chart3" options={chartOptions} data={chartData} height="90%" />}
     </div>
     </div>
   );

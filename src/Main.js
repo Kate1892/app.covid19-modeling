@@ -47,7 +47,6 @@ export function Main() {
         </Card>
             <Main_conferences />
       </Container>
-      <Footer />
     </>
 )
 }

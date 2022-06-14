@@ -101,7 +101,7 @@ export const Covid= () => (
       </Tab.Content>
   </Tab.Container>
     </Container>
-<Footer />
+
 
      </>
 )

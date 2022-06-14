@@ -2034,7 +2034,7 @@ COVID-19, в основе которой лежат обработка непо�
             </Row>
             </ListGroup.Item>
         </ListGroup>
-        <CollapseModelSettings />
+        <CollapseModelSettings modelID = {0}/>
             </Col>
             <Col sm={12} xs={12} md={12} lg={8}>
             <Container>

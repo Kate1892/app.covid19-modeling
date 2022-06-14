@@ -10,6 +10,7 @@ import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
 import {BsFillFileEarmarkPdfFill, BsFillArrowUpRightSquareFill, BsFillCaretRightFill, BsFillCaretDownFill,
 BsFillPersonLinesFill, BsExclamationLg} from 'react-icons/bs'
 import { Formik } from "formik";
+import CollapseModelSettings from './Components/CollapseModelSettings'
 
 import Description_SEIRHCD from './Components/Description_SEIRHCD'
 
@@ -1241,13 +1242,9 @@ function ModelingSEIR_HCD() {
    </Row>
    </ListGroup.Item>
    </ListGroup>
-   <ListGroup className = "mx-3 my-1">
-<ListGroup.Item align="left" className="bg-secondary text-white">Данные
- </ListGroup.Item>
-  <ListGroup.Item variant="light">
 
-</ListGroup.Item>
-</ListGroup>
+   <CollapseModelSettings modelID = {1} />
+
    </Col>
    <Col xs={12} md={8}>
    <Row >

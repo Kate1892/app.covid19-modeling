@@ -23,31 +23,25 @@ import {Helmet} from "react-helmet";
 
 import "./styles.css";
 
-import { animated, useTransition } from 'react-spring'
-
-
 function App() {
 
 return (
     <>
     <div className="bg-light">
+      <Helmet>
+         <meta charSet="utf-8" />
+         <title>Обратные задачи</title>
+         <link rel="canonical" href="http://app-covid19-modeling.ru" />
+       </Helmet>
 
-     <Helmet>
-        <meta charSet="utf-8" />
-        <title>Обратные задачи</title>
-        <link rel="canonical" href="http://app.covid19-modeling/main.ru" />
-      </Helmet>
-
-
-          <Routes >
+          <Routes>
             <Route exact path="/covid19" element={<Covid />} />
             <Route exact path="/" element={<Main />} />
             <Route exact path="/modeling" element={<Modeling />} />
             <Route path="*" element={<Main />} />
           </Routes>
-
-      <Footer />
-    </div>
+            <Footer />
+      </div>
     </>
   )
 }

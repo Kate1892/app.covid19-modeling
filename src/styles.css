@@ -2,14 +2,102 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.fade-enter {
+  opacity: 1;
+  transform: translateX(100%);
+}
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+
+  transition: opacity 250ms ease-out, transform 1000ms ease;
+}
+.fade-exit {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.fade-exit.fade-exit-active {
+  opacity: 0;
+  transform: translateX(0%);
+
+  transition: opacity 250ms ease-out, transform 1000ms ease;
+}
+
 .nav-pills .nav-link.active {
     background-color: #39C0ED;
-
 }
 
 .nav-link {
 color:  #39C0ED;
 }
+
+.support {
+  display: flex;
+  padding: 20px;
+  border: 1px solid white;
+  margin-bottom: 40px;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+
+.mp_info {
+  margin-left: 15px;
+  margin-right: 15px;
+
+}
+
+.active-link {
+    color: white;
+    cursor: grey;
+    text-decoration: none;
+}
+
+.active-dropdown {
+  text-decoration: none;
+  color: grey;
+}
+.active-dropdown:hover {
+  text-decoration: none;
+  color: grey;
+}
+.non-active-dropdown {
+  text-decoration: none;
+  color: black;
+}
+
+.non-active-dropdown:hover {
+  color: grey !important;
+  text-decoration: underline;
+}
+
+.active-link:hover {
+    color: white !important;
+}
+.non-active:hover {
+    color: white !important;
+    text-decoration: underline !important;
+}
+
+.non-active {
+    color: grey;
+    text-decoration: none;
+}
+.fdrop:hover {
+  color: white  !important;
+  text-decoration: underline !important;
+}
+.active-fdrop {
+  color: white;
+}
+.active-fdrop:hover {
+  color: white  !important;
+  text-decoration: underline !important;
+}
+.fdrop {
+    color: grey;
+}
+
 .header {
     position: fixed;
     height: 90px;

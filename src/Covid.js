@@ -8,7 +8,8 @@ OverlayTrigger, Popover} from 'react-bootstrap';
 
 import StaticCovidData from './Components/StaticCovidData'
 
-export const Covid= () => (
+export function Covid(){
+  return (
   <>
   <NaviBarv2 />
   <Container className="my-3" style={{
@@ -104,4 +105,5 @@ export const Covid= () => (
 
 
      </>
-)
+   )
+}

@@ -21,6 +21,7 @@ import ModelingSEIR_HCD from './ModelingSEIR_HCD'
 import Description_AOM from './Components/Description_AOM'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./styles.css";
 
 import Footer from './Components/Footer'
 

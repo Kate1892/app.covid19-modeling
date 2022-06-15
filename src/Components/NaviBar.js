@@ -5,10 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ".././styles.css";
 import Modals from "./../Modal"
 import ".././styles.css";
-import MMA from "./../images/MMA.png"
-import rnf from "./../images/rnf.png"
-import MCA2 from "./../images/MCA2.png"
-import RFFI from "./../images/RFFI.png"
 
 export default function NaviBar() {
 
@@ -28,11 +24,10 @@ export default function NaviBar() {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/" className="text-white"><u>Главная</u></Nav.Link>
-            <Nav.Link href="/modeling" className="text-white"><u>Моделирование</u></Nav.Link>
+            <Nav.Link><Link to="/" className="text-white"><u>Главная</u></Link></Nav.Link>
+            <Nav.Link><Link to="/modeling" className="text-white"><u>Моделирование</u></Link></Nav.Link>
             <NavDropdown text-white title={<span className="text-white"><u>Статистика</u></span>} id="collasible-nav-dropdown">
-              <NavDropdown.Item href="/covid19" >Коронавирус</NavDropdown.Item>
-
+              <NavDropdown.Item> <Link to="/covid19" className="text-black">Коронавирус</Link></NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

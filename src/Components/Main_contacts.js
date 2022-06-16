@@ -10,23 +10,23 @@ const Main_contacts = () => {
         <Row className="justify-content-md-center" style={{
                 width: "100%" }}>
           <Col xs= {6} md={4}>
-          <Container  className="my-3">
-          < BsFillGeoAltFill size={25} className="my-3"/>
+          <Container  className="">
+          < BsFillGeoAltFill size={25} className="my-1"/>
             <h5 className="text-center"> Адрес</h5>
           </Container>
             <p className="text-center"> ул.Лавреньтева 6, ком.2-431,
              ИВМиМГ СО РАН, г.Новосибирск </p>
           </Col>
           <Col xs= {6} md={4}>
-          <Container  className="my-3">
-          <BsFillTelephoneFill size={25} className="my-3"/>
+          <Container  className="">
+          <BsFillTelephoneFill size={25} className="my-1"/>
             <h5 className="text-center"> Телефон</h5>
             </Container>
             <p className="text-center"> +7 (383) 330-84-60 </p>
           </Col>
           <Col xs= {6} md={4}>
-          <Container  className="my-3">
-          <BsFillEnvelopeFill size={25} className="my-3"/>
+          <Container  className="">
+          <BsFillEnvelopeFill size={25} className="my-1"/>
             <h5 className="text-center"> Email</h5>
             </Container>
             <p className="text-center"> info@covid19-modeling.ru </p>

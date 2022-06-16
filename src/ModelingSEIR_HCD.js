@@ -271,7 +271,7 @@ function ModelingSEIR_HCD() {
         console.log("this")
         console.log(res)
         for (const dataObj of res.data) {
-          data.push(dataObj.date);
+          data.push(dataObj.Date);
           if (stype == 1){
             name = "Новые выявленные случаи"
             tr.push(dataObj.new_diagnoses)
@@ -400,21 +400,16 @@ function ModelingSEIR_HCD() {
     axios
     .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
-      console.log("!")
-      //console.log(res)
       for (const dataObj of res.data) {
         dataBS.push(dataObj.Date);
         r0_mean.push(dataObj.R0_mean)
         r0_max.push(dataObj.R0_max)
         r0_min.push(dataObj.R0_min)
-
       }
       console.log(dataBS)
-
       setChartData({
         labels: dataBS,
         datasets: [
-
           {
             label: "R0 min",
             data: r0_min,
@@ -740,8 +735,6 @@ function ModelingSEIR_HCD() {
     axios
     .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
-      console.log("!!!")
-      //console.log(res)
       for (const dataObj of res.data) {
         dataSEIRHCD.push(dataObj.Date);
         mean_data.push(dataObj[mean])
@@ -863,7 +856,6 @@ function ModelingSEIR_HCD() {
     axios
     .get("http://89.253.218.66:4000/api/res_valid")
     .then(res => {
-      console.log("!")
       for (const dataObj of res.data) {
         dataSEIRHCD.push(dataObj.Date);
         ae_data.push(dataObj.alpha_e_mean)

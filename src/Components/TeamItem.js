@@ -3,7 +3,7 @@ import {Container, Card, Image, Col} from 'react-bootstrap';
 
 const TeamItem = (props) => {
     return (
-      <Col xs= {20} md={6} lg={4} className="my-1">
+      <Col xs= {12} md={6} lg={4} className="my-1" >
       <Card border="light" style={{height: '15rem'}} className="mx-auto" >
       <Container style={{ width: '10rem' }, {height: '10rem'}} className="my-1 text-center">
         <Image variant="bottom"

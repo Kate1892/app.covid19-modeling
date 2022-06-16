@@ -24,26 +24,25 @@ export function Main() {
         <Container >
             <div>
           <Card className="text-center bg-secondary text-white my-3" >
-            <Card.Title> <h3 className="my-1">Команда</h3> </Card.Title>
+            <Card.Title> <h4 className="my-1 ">Команда</h4> </Card.Title>
           </Card>
-
           <Container>
-            <Row xs={1} md={2} className="justify-content-md-center" style={{width: "100%" }}>
+            <Row xs={1} md={2} className="justify-content-md-center" >
               {posts.map(post =>
                   <TeamItem post = {post}/>
               )}
             </Row>
           </Container>
           </div>
-
-          <h3 className="text-center text-secondary">Наши контакты</h3>
+          <div className="my-3"><hr /></div>
+          <h4 className="text-left mx-5 text-secondary">Kонтакты</h4>
             <Main_contacts />
-
-          <h3 className="text-center my-3 text-secondary">Публикации</h3>
+            <div className="my-3"><hr /></div>
+          <h4 className="text-left mx-5 text-secondary">Публикации</h4>
             <Main_publications />
 
         <Card className="text-center bg-secondary text-white my-3">
-          <Card.Title> <h3 className="my-1">Конференции</h3> </Card.Title>
+          <Card.Title> <h4 className="my-1 ">Конференции</h4> </Card.Title>
         </Card>
             <Main_conferences />
       </Container>

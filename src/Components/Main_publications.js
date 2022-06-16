@@ -3,7 +3,7 @@ import {Container, Card, ListGroup} from 'react-bootstrap';
 
 const Main_publications = () => {
     return (
-      <Card border="secondary" className="my-1">
+      <Card border="secondary" className="my-3">
       <Container className="mx-1 my-1">
     <ListGroup as="ol" variant="flush" numbered>
       <ListGroup.Item as="li">

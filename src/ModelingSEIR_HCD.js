@@ -1102,7 +1102,7 @@ function ModelingSEIR_HCD() {
   }
 
   const [prognose_type, setPrognose_type] = useState(1)
-  const [prognose_data, setPrognose_data] = useState("2021-07-20")
+  const [prognose_data, setPrognose_data] = useState("2022-01-10")
 
 //1 - новые выявленные случаи
 //2 - критически больные
@@ -1137,10 +1137,10 @@ function ModelingSEIR_HCD() {
      res_trainP();
   }, [])
   useEffect(() => {
-     forecasts_new(1, "2021-07-20");
+     forecasts_new(1, "2022-01-10");
   }, [])
   useEffect(() => {
-     forecasts_R0("2021-07-20");
+     forecasts_R0("2022-01-10");
   }, [])
 
   const [openSEIRHCD, setOpenSEIRHCD] = useState(false);
@@ -1217,8 +1217,8 @@ function ModelingSEIR_HCD() {
              forecasts_R0(selected)
            }}
            >
-              <option value="2021-07-20">20.07.2021</option>
-              <option value="2021-07-21">21.07.2021</option>
+              <option value="2022-01-10">10.01.2022</option>
+              <option value="2022-01-09">09.01.2022</option>
          </Form.Select>
          <Form.Select aria-label="Default select example"
            type="number"

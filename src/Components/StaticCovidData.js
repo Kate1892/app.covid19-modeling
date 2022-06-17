@@ -2,9 +2,10 @@ import React, { useState, useEffect} from "react";
 import axios from "axios";
 import {FiDownload } from 'react-icons/fi'
 import {Container, Row, Col, Card, Button,
-  Image, Dropdown, OverlayTrigger, Popover, Spinner, Alert} from 'react-bootstrap';
+  Image, Dropdown, OverlayTrigger, Popover, Spinner, Alert, Placeholder} from 'react-bootstrap';
 import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
-import StaticCovidDataItem from './StaticCovidDataItem'
+import MSCDItem from './StaticCovidDataItem'
+import { motion } from "framer-motion"
 
 import {
     Chart as ChartJS,
@@ -39,7 +40,18 @@ import scales from 'chartjs-plugin-zoom';
 
   ChartJS.register(zoomPlugin,  scales);
 
-
+  const variants = {
+    visible: custom => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: custom * 0.2}
+    }),
+    hidden: {
+      opacity: 0,
+      y: 100,
+   },
+  }
 
 const StaticCovidData = (props) => {
 
@@ -71,6 +83,7 @@ const StaticCovidData = (props) => {
   const [chartOptions, setChartOptions] = useState({})
 
   const chart = () => {
+    setLoadingprosses(true)
     let cov_nd = [];
     let cov_data = [];
     let cov_last_nd = [];
@@ -283,8 +296,10 @@ const StaticCovidData = (props) => {
     <Container>
       <Row style={{
               width: "100%" }}>
-              {lasts.map(last =>
-                  <StaticCovidDataItem last = {last}/>
+              {lasts.map((last,index) =>
+                  <MSCDItem initial="hidden" whileInView="visible" viewport={{amount: 0.05}}
+                     custom={index + 1}
+                    variants={variants} last = {last}/>
               )}
       </Row>
     </Container>
@@ -293,6 +308,9 @@ const StaticCovidData = (props) => {
       <Col  xs={12} sm={9}>
      </Col>
     <Col xs={12} sm={3}>
+    <motion.div initial="hidden"
+         custom={2}
+        variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
     <OverlayTrigger
      placement="left"
      overlay={
@@ -319,15 +337,19 @@ const StaticCovidData = (props) => {
       </OverlayTrigger>
        <Button variant="outline-secondary" size="sm" className="mx-1" onClick={chart}><BsZoomOut/></Button>
       <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart3(e)}><FiDownload/></Button>
+      </motion.div>
     </Col>
     </Row>
+    <div style={{
+            height: '400px'}}>
     {loadingprosses ? <div style={{
             height: '400px'}}><Spinner style={{position: 'absolute', top: '50%'}} animation="border" variant="info"  /></div> :
     someerrors ?   <div style={{
             height: '350px' }}><Alert variant="danger" className="my-5"> <Alert.Heading>Ошибка загрузки</Alert.Heading>
     Сервер временно не отвечает, пожалуйста, <Alert.Link href="/modeling">обновите страницу</Alert.Link> или повторите попытку позже.
     <hr /> </Alert> </div> :
-      <Line id="chart3" options={chartOptions} data={chartData} height="90%" />}
+     <Line id="chart3" options={chartOptions} data={chartData} height="90%" /> }
+     </div>
     </div>
     </div>
   );

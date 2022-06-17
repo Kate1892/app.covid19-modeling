@@ -14,6 +14,7 @@ BsFillPersonLinesFill, BsExclamationLg, BsInfo} from 'react-icons/bs'
 import {FcSearch} from 'react-icons/fc'
 import NaviBarv2 from './Components/NaviBarv2';
 import {BsZoomIn} from 'react-icons/bs'
+import { motion } from "framer-motion"
 
 import { DownloadCount } from 'axios-progress-bar'
 
@@ -56,6 +57,7 @@ ChartJS.register(
 );
 
 ChartJS.register(zoomPlugin);
+
 
 
 const download_article=(e)=>{
@@ -1706,12 +1708,38 @@ export function Modeling(){
   const [open, setOpen] = useState(false);
   const [reset, setReset] = useState(true);
 
+  const variants = {
+    visible: custom => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: custom * 0.2}
+    }),
+    hidden: {
+      opacity: 0,
+      x: -100,
+   },
+  }
+
+  const variants2 = {
+    visible: custom => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: custom * 0.2}
+    }),
+    hidden: {
+      opacity: 0,
+      y: 100,
+   },
+  }
+
   return(
   <>
   <NaviBarv2 />
       <Container className="my-3"   style={{
               height: "120%" }}>
-        <Tabs justify defaultActiveKey="AOM" id="uncontrolled-tab-example" >
+        <Tabs  justify defaultActiveKey="AOM" id="uncontrolled-tab-example" >
           <Tab eventKey="AOM" title="Агентная модель">
           <Card className="text-center mx-auto" border="light" bg="light">
           <Row >
@@ -1719,7 +1747,7 @@ export function Modeling(){
             <Row >
               <Col xs= {12}  lg={12}>    <Button
                     variant="outline-primary"
-                    className="bg-white text-primary my-2 mx-2"
+                    className="bg-white shadow1 text-primary my-2 mx-2"
                     onClick={() => setOpen(!open)}
                     aria-controls="example-fade-text"
                     aria-expanded={open}
@@ -1732,7 +1760,7 @@ export function Modeling(){
                  placement="bottom"
                  ref={(ref) => this.overlay = ref}
                  overlay={
-                   <Popover>
+                   <Popover className="shadow1">
                      <Popover.Body>
                      <div align="center" className="text-black">
                      Моделирование сценариев распространения Covid-19 в Республике Казахстан на основе регуляризации агентной модели.</div>
@@ -1755,7 +1783,7 @@ export function Modeling(){
                      placement="bottom"
                      ref={(ref) => this.overlay = ref}
                      overlay={
-                       <Popover>
+                       <Popover className="shadow1">
                          <Popover.Body>
                          <div align="center" className="text-success">
                          <div><small>Публикация в журнале Моделирование инфекционных заболеваний.</small></div>
@@ -1779,7 +1807,7 @@ export function Modeling(){
                       ref={(ref) => this.overlay = ref}
                          placement="bottom"
                          overlay={
-                           <Popover>
+                           <Popover className="shadow1">
                              <Popover.Body>
                              <div align="center" className="text-success">
                              <div><small>Препринт 300 СО РАН, института математики им. С.Л.Соболева.</small></div>
@@ -1799,7 +1827,7 @@ export function Modeling(){
                           </Row>
           </Col>
           <Col md={10} >
-        <Card className="my-3">  <p align="justify" className="mx-3 my-1"><small>Прогнозирование производится посредством агентной модели расчета сценариев динамики выявленных случаев
+        <Card className="my-3 shadow1">  <p align="justify" className="mx-3 my-1"><small>Прогнозирование производится посредством агентной модели расчета сценариев динамики выявленных случаев
 COVID-19, в основе которой лежат обработка неполных эпидемиологических данных и решение обратной задачи восстановления параметров агентной
 модели по совокупности доступных эпидемиологических данных. Основным инструментом построения модели является открытая библиотека <a href="https://docs.idmod.org/projects/covasim/en/latest/index.html" >COVASIM</a>. </small></p></Card>
 <div className="mx-2"><hr /></div>
@@ -1812,7 +1840,10 @@ COVID-19, в основе которой лежат обработка непо�
           </Collapse>
           <Row >
             <Col sm={12} xs={12} md={12} lg={4}>
-              <ListGroup className = "mx-3 my-1">
+            <motion.div initial="hidden"
+               custom={1}
+              variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+              <ListGroup className = "mx-3 my-1 shadow1">
               <OverlayTrigger
                placement="right"
                overlay={
@@ -1920,7 +1951,7 @@ COVID-19, в основе которой лежат обработка непо�
                 </Stack>
                 <Row >
                       <Col sm={6}></Col>
-                      <Col sm={6}>  <Button variant="secondary" align="end" className=" my-3 text-white" disabled={!isrunning} onClick={break_get}>Прервать</Button></Col>
+                      <Col sm={6}>  <Button variant="secondary" align="end" className=" my-3 text-white shadow1" disabled={!isrunning} onClick={break_get}>Прервать</Button></Col>
                 </Row>
                     </div>
                   </Stack>
@@ -2013,7 +2044,7 @@ COVID-19, в основе которой лежат обработка непо�
                         />
                       </Form.Group>
 
-                        <Button  type="submit"  variant="success"
+                        <Button  type="submit"  variant="success" className="shadow1"
                           disabled={!isValid || isrunning}
                           onSubmit={handleSubmit}
                           onClick={(e) => run_msim_(e)}
@@ -2035,7 +2066,7 @@ COVID-19, в основе которой лежат обработка непо�
             </Row>
             </ListGroup.Item>
         </ListGroup>
-        <CollapseModelSettings modelID = {0}/>
+        <CollapseModelSettings modelID = {0}/> </motion.div>
             </Col>
             <Col sm={12} xs={12} md={12} lg={8}>
             <Container>
@@ -2043,6 +2074,9 @@ COVID-19, в основе которой лежат обработка непо�
               <Col  sm={8}>
             </Col>
               <Col sm={4}>
+              <motion.div initial="hidden"
+                 custom={1}
+                variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
             {chartnum == 1 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data1(e)}>Показать данные</Button> : null}
             {chartnum == 2 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data2(e)}>Показать данные</Button> : null}
             {chartnum == 3 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data3(e)}>Показать данные</Button> : null}
@@ -2079,6 +2113,7 @@ COVID-19, в основе которой лежат обработка непо�
               <Button variant="outline-secondary" size="sm"  className=" mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
               </OverlayTrigger>
               <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e)}><FiDownload/></Button>
+              </motion.div>
               </Col>
               </Row>
               {loadingprosses ? <div style={{
@@ -2089,59 +2124,61 @@ COVID-19, в основе которой лежат обработка непо�
               <hr /> </Alert> </div> :
 
    newChart? <div style={{ width: '50rem' }}><Line  id="chart" data={chartData_all} options={chartOptions} /></div> : <div style={{ width: '50rem' }}><Line id="chart" options={chartOptions} data={initchartData_all}/></div>}
-
+   <motion.div initial="hidden"
+      custom={2}
+     variants={variants2} animate="visible" viewport={{amount: 0.1, once: true}}>
    {newChart? <Nav variant="pills" defaultActiveKey="1"className="my-2" >
      <Nav.Item >
-     <Button size="sm" variant="outline-info" onClick = {chart} style={{color:"#FFFFFF"}}>
-       <Nav.Link eventKey="1">Заражения</Nav.Link>
+     <Button className="shadow3" size="sm" variant="outline-info" onClick = {chart} style={{color:"#FFFFFF"}}>
+       <Nav.Link className="hoverWhite"  eventKey="1">Заражения</Nav.Link>
      </Button>
      </Nav.Item>
      <Nav.Item>
-     <Button  size="sm" variant="outline-info" onClick = {chart_cumdiag} className="mx-1">
-       <Nav.Link eventKey="2">Суммарная заболеваемость</Nav.Link>
+     <Button size="sm" variant="outline-info" onClick = {chart_cumdiag} className="mx-1 shadow3">
+       <Nav.Link className="hoverWhite" eventKey="2">Суммарная заболеваемость</Nav.Link>
        </Button>
      </Nav.Item>
      <Nav.Item>
-     <Button size="sm" variant="outline-info"  onClick = {chart_newdeath} className="mx-1">
-       <Nav.Link eventKey="3">Смертность</Nav.Link>
+     <Button size="sm" variant="outline-info"  onClick = {chart_newdeath} className="mx-1 shadow3">
+       <Nav.Link className="hoverWhite" eventKey="3">Смертность</Nav.Link>
        </Button>
      </Nav.Item>
      <Nav.Item>
-     <Button  size="sm" variant="outline-info" onClick = {chart_new_rec} className="mx-1">
-       <Nav.Link eventKey="4">Выздоровления</Nav.Link>
+     <Button size="sm" variant="outline-info" onClick = {chart_new_rec} className="mx-1 shadow3">
+       <Nav.Link className="hoverWhite"  eventKey="4">Выздоровления</Nav.Link>
        </Button>
      </Nav.Item>
      <Nav.Item>
-     <Button  size="sm" variant="outline-info" onClick = {chart_new_crit} className="mx-1">
-       <Nav.Link eventKey="5">Критические</Nav.Link>
+     <Button  size="sm" variant="outline-info" onClick = {chart_new_crit} className="mx-1 shadow3">
+       <Nav.Link className="hoverWhite"  eventKey="5">Критические</Nav.Link>
        </Button>
      </Nav.Item>
-   </Nav> : null}
+   </Nav> : null} </motion.div>
 
-   {newChart? null : <Nav variant="pills" defaultActiveKey="1" className="my-2">
+   {newChart? null : <Nav variant="pills" defaultActiveKey="1" className="my-2 ">
      <Nav.Item >
-     <Button size="sm" variant="outline-info" onClick = {initchart} style={{color:"#FFFFFF"}}>
-       <Nav.Link eventKey="1">Заражения</Nav.Link>
+     <Button className="shadow3" className="chart3" size="sm" variant="outline-info" onClick = {initchart} style={{color:"#FFFFFF"}}>
+       <Nav.Link className="hoverWhite"  eventKey="1">Заражения</Nav.Link>
      </Button>
      </Nav.Item>
      <Nav.Item>
-     <Button  size="sm" variant="outline-info" onClick = {initchart_cumdiag} className="mx-1">
-       <Nav.Link eventKey="2">Суммарная заболеваемость</Nav.Link>
+     <Button  size="sm" variant="outline-info" onClick = {initchart_cumdiag} className="mx-1 shadow3">
+       <Nav.Link className="hoverWhite"  eventKey="2">Суммарная заболеваемость</Nav.Link>
        </Button>
      </Nav.Item>
      <Nav.Item>
-     <Button size="sm" variant="outline-info"  onClick = {initchart_newdeath} className="mx-1">
-       <Nav.Link eventKey="3">Смертность</Nav.Link>
+     <Button  size="sm" variant="outline-info"  onClick = {initchart_newdeath} className="mx-1 shadow3">
+       <Nav.Link className="hoverWhite"  eventKey="3">Смертность</Nav.Link>
        </Button>
      </Nav.Item>
      <Nav.Item>
-     <Button  size="sm" variant="outline-info" onClick = {initchart_new_rec} className="mx-1">
-       <Nav.Link eventKey="4">Выздоровления</Nav.Link>
+     <Button size="sm" variant="outline-info" onClick = {initchart_new_rec} className="mx-1 shadow3">
+       <Nav.Link className="hoverWhite"  eventKey="4">Выздоровления</Nav.Link>
        </Button>
      </Nav.Item>
      <Nav.Item>
-     <Button  size="sm" variant="outline-info" onClick = {initchart_new_crit} className="mx-1">
-       <Nav.Link eventKey="5">Критические</Nav.Link>
+     <Button size="sm" variant="outline-info" onClick = {initchart_new_crit} className="mx-1 shadow3">
+       <Nav.Link className="hoverWhite"  eventKey="5">Критические</Nav.Link>
        </Button>
      </Nav.Item>
    </Nav>}

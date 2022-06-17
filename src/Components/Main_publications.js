@@ -3,9 +3,9 @@ import {Container, Card, ListGroup} from 'react-bootstrap';
 
 const Main_publications = () => {
     return (
-      <Card border="secondary" className="my-3">
+      <Card border="secondary" className="my-3 shadow1">
       <Container className="mx-1 my-1">
-    <ListGroup as="ol" variant="flush" numbered>
+    <ListGroup as="ol" variant="flush" numbered >
       <ListGroup.Item as="li">
       <a href="https://arxiv.org/pdf/2112.05315.pdf" className="nav-link d-inline text-black" target="_blank" rel="noopener noreferrer">О. И. Криворотько, С. И. Кабанихин. Математические модели распространения COVID-19. Препринт 300 СО РАН, института математики им. С.Л.Соболева. 63с.</a>
       </ListGroup.Item>

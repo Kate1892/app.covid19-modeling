@@ -19,7 +19,7 @@ function CollapseModelSettings(id) {
   return (
     <>
     <div className="d-grid gap-2">
-      <ListGroup className = "mx-3 my-1">
+      <ListGroup className = "mx-3 my-1 shadow1">
         <ListGroup.Item  align="left" className="bg-secondary text-white"
           onClick={() => setOpen(!open)}
           aria-controls="example-fade-text"

@@ -5,7 +5,7 @@ import { BsFillTelephoneFill, BsFillEnvelopeFill, BsFillGeoAltFill} from "react-
 
 const Main_contacts = () => {
     return (
-      <Card border="light" className="text-center bg-secondary text-white my-3">
+      <Card border="light" className="text-center bg-secondary text-white my-3 shadow1">
       <Card.Body>
         <Row className="justify-content-md-center" style={{
                 width: "100%" }}>

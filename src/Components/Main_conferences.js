@@ -1,6 +1,7 @@
 import React from "react";
 import {Container, Card, Image, Col, Row} from 'react-bootstrap';
-import ConferenseItem from './ConferenseItem'
+import MConferenseItem from './ConferenseItem'
+import { motion } from "framer-motion"
 
 const Main_conferences = () => {
   const confs = [
@@ -25,23 +26,40 @@ const Main_conferences = () => {
     //{id: 10, name: 'Quasilinear Equations, Inverse Problems and Their Applications', image:  "https://covid19-modeling.ru/wp-content/uploads/2021/08/QIPA_conference.png",
     //                  href: "https://qipa2021.mipt.ru/home", width: '4rem' , height: '4rem', rounded: false}
   ]
+
+  const variants = {
+    visible: custom => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: custom * 0.2}
+    }),
+    hidden: {
+      opacity: 0,
+      y: 100,
+   },
+  }
+
     return (
       <>
       <Container className="my-3 mx-2">
         <Row className="justify-content-md-center" style={{
                 width: "100%" }}>
-              {confs.map(conf =>
-                  <ConferenseItem conf = {conf}/>
+              {confs.map((conf,index) =>
+                  <MConferenseItem initial="hidden" whileInView="visible" viewport={{amount: 0.05, once: true}}
+                     custom={index + 1}
+                    variants={variants}conf = {conf}/>
               )}
         </Row>
       </Container>
-
-
+      <motion.div  initial="hidden"
+         custom={3}
+        variants={variants} whileInView="visible" viewport={{amount: 0.5, once: true}}>
       <Container className="my-2">
         <Row className="justify-xs-center">
         <Col xs= {12} md={6} className="justify-xs-center">
         <a href="https://siriusmathcenter.ru/all-russian-conference">
-        <Card border="light"  className="mx-auto align-center" style={{ minWidth: '20rem' }} >
+        <Card border="light"  className="mx-auto align-center shadow1" style={{ minWidth: '20rem' }} >
         <Container  className=" text-center" style={{height: '9rem'}}>
         <Image variant="top" className="my-5" style={{ width: '5rem' }, {height: '5rem'}}
         src="https://covid19-modeling.ru/wp-content/uploads/2021/08/Sirius_conference.png"
@@ -57,7 +75,7 @@ const Main_conferences = () => {
         </Col >
         <Col xs= {12} md={6}>
         <a href="https://qipa2021.mipt.ru/home">
-        <Card border="light" className="mx-auto" style={{ minWidth: '20rem' }}>
+        <Card border="light" className="mx-auto shadow1" style={{ minWidth: '20rem' }}>
         <Container  className=" text-center" style={{height: '9rem'}}>
         <Image variant="top" className="my-5" style={{ width: '4rem' }, {height: '4rem'}}
         src="https://covid19-modeling.ru/wp-content/uploads/2021/08/QIPA_conference.png"
@@ -73,6 +91,7 @@ const Main_conferences = () => {
         </Col>
        </Row>
       </Container>
+      </motion.div>
       </>
     )}
 

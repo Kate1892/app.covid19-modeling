@@ -1,11 +1,13 @@
-import React from "react";
+import React, {forwardRef} from "react";
 import {Container, Card, Image, Col, Row} from 'react-bootstrap';
+import { motion } from "framer-motion"
 
-const ConferenseItem = (props) => {
+
+const ConferenseItem = forwardRef((props, ref) => {
     return (
-      <Col className="my-3">
+      <Col className="my-3" ref={ref}>
       <a href={props.conf.href}>
-        <Card border="light" style={{ width: '18rem' }} className="mx-auto align-center"  >
+        <Card border="light" style={{ width: '18rem' }} className="mx-auto shadow1 align-center"  >
         <Container style={{ width: '9rem' }, {height: '9rem'}} className=" text-center">
         <Image variant="top"  className="my-5" style={{ width:  props.conf.width}, {height: props.conf.height}}
         src={props.conf.image}
@@ -19,6 +21,8 @@ const ConferenseItem = (props) => {
         </Card>
         </a>
       </Col>
-    )}
+    )})
 
-export default ConferenseItem;
+const MConferenseItem = motion(ConferenseItem);
+export default MConferenseItem;
+export {ConferenseItem}

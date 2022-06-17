@@ -4,9 +4,22 @@ import "./styles.css";
 import NaviBarv2 from './Components/NaviBarv2';
 import Footer from './Components/Footer'
 import {Container, Row, Col, Card, ListGroup, ListGroupItem, Button, Tab, Nav,
-OverlayTrigger, Popover} from 'react-bootstrap';
-
+OverlayTrigger, Popover, Placeholder} from 'react-bootstrap';
+import { motion } from "framer-motion"
 import StaticCovidData from './Components/StaticCovidData'
+
+const variants = {
+  visible: custom => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: custom * 0.2}
+  }),
+  hidden: {
+    opacity: 0,
+    y: 30,
+ },
+}
 
 export function Covid(){
   return (
@@ -17,7 +30,10 @@ export function Covid(){
         {  width: "100%"}}>
 
   <Container>
-    <h3 className="text-center my-3 text-secondary">Коронавирус</h3>
+    <motion.h3 initial="hidden"
+       custom={1}
+      variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}} className="text-center my-3 text-secondary">Коронавирус
+    </motion.h3>
   </Container>
 
   <Tab.Container style={{
@@ -38,9 +54,13 @@ export function Covid(){
                </Popover.Body>
              </Popover>
            }>
-        <Button size="sm" variant="outline-info"  style={{color:"#FFFFFF"}}>
-          <Nav.Link eventKey="novosibirsk">Новосибирская область</Nav.Link>
+           <motion.div  initial="hidden"
+              custom={1}
+             variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+        <Button  className="shadow3" size="sm" variant="outline-info"  style={{color:"#FFFFFF"}}>
+      <Nav.Link  eventKey="novosibirsk">Новосибирская область</Nav.Link>
         </Button>
+        </motion.div>
         </OverlayTrigger>
         </Nav.Item>
         <Nav.Item>
@@ -57,9 +77,13 @@ export function Covid(){
                </Popover.Body>
              </Popover>
            }>
-        <Button size="sm" variant="outline-info"  className="mx-1">
+           <motion.div  initial="hidden"
+              custom={2}
+             variants={variants} whileInView="visible" viewport={{amount: 0.2, once: true}}>
+        <Button size="sm" variant="outline-info"  className="mx-1 shadow3">
           <Nav.Link eventKey="omsk">Омская область</Nav.Link>
           </Button>
+            </motion.div>
           </OverlayTrigger>
         </Nav.Item>
         <Nav.Item>
@@ -76,32 +100,36 @@ export function Covid(){
                </Popover.Body>
              </Popover>
            }>
-        <Button  size="sm" variant="outline-info" className="mx-1">
+           <motion.div  initial="hidden"
+              custom={3}
+             variants={variants} whileInView="visible" viewport={{amount: 0.3, once: true}}>
+        <Button  size="sm" variant="outline-info" className="mx-1 shadow3">
           <Nav.Link eventKey="altay">Алтайский край</Nav.Link>
           </Button>
+          </motion.div>
           </OverlayTrigger>
         </Nav.Item>
       </Nav>
+
     <Tab.Content>
       <Tab.Pane eventKey="novosibirsk">
-      <div className="mx-3 my-3">
-            <StaticCovidData prop={1}/>
-      </div>
-
+        <div className="mx-3 my-3">
+            <StaticCovidData prop={1} key={1}/>
+        </div>
       </Tab.Pane>
       <Tab.Pane eventKey="altay">
           <div className="mx-3 my-3">
-            <StaticCovidData prop={2}/>
-            </div>
+            <StaticCovidData prop={2} key={2}/>
+          </div>
         </Tab.Pane>
         <Tab.Pane eventKey="omsk">
-            <div className="mx-3 my-3">
-            <StaticCovidData prop={3}/>
-              </div>
+          <div className="mx-3 my-3">
+            <StaticCovidData prop={3} key={3}/>
+          </div>
           </Tab.Pane>
       </Tab.Content>
   </Tab.Container>
-    </Container>
+</Container>
 
 
      </>

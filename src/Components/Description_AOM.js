@@ -3,6 +3,7 @@ import {Container, Card, Image, Col, Row, Table, Modal, Button, Popover, Overlay
 import fblok from "./../images/fblok.png"
 import model from "./../images/model.png"
 import sblok from "./../images/sblok.png"
+import { motion } from "framer-motion"
 
 import {BsFillPersonLinesFill} from 'react-icons/bs'
 
@@ -15,10 +16,26 @@ const Description_AOM = () => {
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
 
+  const variants = {
+    visible: custom => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: custom * 0.2}
+    }),
+    hidden: {
+      opacity: 0,
+      y: -100,
+   },
+  }
+
     return (
       <>
       <Row >
-         <Col sm={12} xs={12} md={12} lg={6}><Card className="border mx-3 my-1">
+         <Col sm={12} xs={12} md={12} lg={6}>
+         <motion.div  initial="hidden" custom={1}
+           variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+         <Card className="border mx-3 my-1 shadow1">
            <Card.Header className="text-success">1. Инициация популяции</Card.Header>
            <Card.Body>
            <p align="justify"><small >Формируются четыре структуры контактов, в которых могут находиться агенты в зависимости от возраста 0-9,10-19, …, 80+ лет.</small></p>
@@ -35,8 +52,10 @@ const Description_AOM = () => {
            fluid
            />
             </Modal>
-           </Card.Body></Card>
-           <Card className="border mx-3 my-1">
+           </Card.Body></Card> </motion.div>
+           <motion.div  initial="hidden" custom={1}
+             variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+           <Card className="border mx-3 my-1 shadow1">
              <Card.Header className="text-white bg-success">2. Заражение</Card.Header>
              <Card.Body align="justify">
              <div><small> Предполагается, что вирус передается между агентами, соединенными ребром графа. Заражение при близком контакте описывается кусочно-постоянным параметром <i className="text-danger">{'\u03B2'}</i>.</small></div>
@@ -48,9 +67,12 @@ const Description_AOM = () => {
              /></div>
                 <div><small><div className="text-success">Пример:</div> Домохозяйства - заполняются агентами согласно статистическим данным о
            среднем размере семьи в регионе.</small></div>
-             </Card.Body></Card>
+             </Card.Body></Card></motion.div>
            </Col>
-         <Col sm={12} xs={12} md={12}  lg={6}><Card className="border my-1 mx-3">
+         <Col sm={12} xs={12} md={12}  lg={6}>
+         <motion.div  initial="hidden" custom={1}
+           variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+         <Card className="border my-1 mx-3 shadow1">
            <Card.Header className="text-white bg-success"><BsFillPersonLinesFill size={30}/>   Параметры агентов</Card.Header>
            <Card.Body align="left">
            <Row >
@@ -89,8 +111,10 @@ const Description_AOM = () => {
           </Row>
           <div align="justify"><small>В зависимости от возраста агенты
           контактируют друг с другом в контактных сетях, представляющие собой полносвязные графы.</small></div>
-           </Card.Body></Card>
-           <Card className="border  my-1 mx-3">
+           </Card.Body></Card></motion.div>
+           <motion.div  initial="hidden" custom={1}
+             variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+           <Card className="border shadow1 my-1 mx-3">
              <Card.Header className="text-success">3. Прогрессирование заболевания</Card.Header>
              <Card.Body>
              <Image
@@ -108,8 +132,10 @@ const Description_AOM = () => {
              fluid
              />
               </Modal>
-             </Card.Body></Card>
-             <Card className="border my-1 mx-3">
+             </Card.Body></Card></motion.div>
+             <motion.div  initial="hidden" custom={1}
+               variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+             <Card className="border my-1 shadow1 mx-3">
                <Card.Header className="text-success bg-light">4. Тестирование агентов</Card.Header>
                <Card.Body align="justify">
                <div><small>Проводится согласно ежедневным статистическим данным о количестве проведенных тестов в регионе. Шанс быть протестированным
@@ -117,17 +143,20 @@ const Description_AOM = () => {
 могут получить агенты, статус которых обведен в оранжевую рамку. В модели предполагается, что вероятность
 тестирования агентов с симптомами выше, чем у бессимптомных больных.</small></div>
 
-               </Card.Body></Card>
+               </Card.Body></Card></motion.div>
            </Col>
            <Col sm={12} xs={12} md={12} lg={12}>
-           <Card className="border my-1 mx-3">
+           <motion.div  initial="hidden" custom={1}
+             variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+           <Card className="border shadow1 my-1 mx-3">
              <Card.Header className="text-white bg-success">5. Введение сдерживающих эпидемию мер</Card.Header>
              <Card.Body align="justify">
                <div><small>В модели возможно введение карантинных мер как для всех контактных слоев, так и для каждого в отдельности.
 Это может быть сделано двумя способами: либо изменением значения параметра контагиозности вируса <i className="text-danger">{'\u03B2'}</i> (в случае введения обязательной меры ношения масок или социального дистанцирования), либо удалением ребер в графах сетей контактов (в случае введения самоизоляции
 и дистанционной работы).</small></div>
 
-             </Card.Body></Card></Col>
+             </Card.Body></Card></motion.div>
+             </Col>
        </Row>
       </>
     )

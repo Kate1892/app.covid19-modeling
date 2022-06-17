@@ -1,6 +1,7 @@
 import React, {useState, useRef} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Collapse, Card, Nav, NavDropdown, Table, Container, Fade, Stack, Overlay} from 'react-bootstrap';
+import "./../styles.css";
 
 function CollapseParamCSV() {
   const [open, setOpen] = useState(false);
@@ -13,7 +14,7 @@ function CollapseParamCSV() {
 
     <div className="d-grid gap-2">
 
-      <Button  size="sm" variant="outline-secondary" ref={target} onClick={() => setShow(!show)}>
+      <Button  size="sm" variant="outline-secondary" ref={target} onClick={() => setShow(!show)} className="shadow1">
         Описание данных
       </Button>
 

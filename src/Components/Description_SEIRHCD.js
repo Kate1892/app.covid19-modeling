@@ -4,12 +4,28 @@ import sfblok from "./../images/sfblok.png"
 import sfifblok from "./../images/sfifblok.png"
 import firdblok from "./../images/firdblok.png"
 import blokd from "./../images/blokd.png"
+import { motion } from "framer-motion"
 
 const Description_SEIRHCD = () => {
+  const variants = {
+    visible: custom => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: custom * 0.2}
+    }),
+    hidden: {
+      opacity: 0,
+      y: -100,
+   },
+  }
     return (
       <>
       <Row >
-         <Col sm={12} xs={12} md={12} lg={6}><Card className="border mx-3 my-1">
+         <Col sm={12} xs={12} md={12} lg={6}>
+         <motion.div  initial="hidden" custom={1}
+           variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+         <Card className="border shadow1 mx-3 my-1">
            <Card.Header className=" text-center text-success">Структура модели</Card.Header>
            <Card.Body>
            <Image
@@ -17,8 +33,10 @@ const Description_SEIRHCD = () => {
            rounded
            fluid
            />
-           </Card.Body></Card>
-           <Card className="border mx-3 my-1">
+           </Card.Body></Card></motion.div>
+           <motion.div  initial="hidden" custom={1}
+             variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+           <Card className="border shadow1 mx-3 my-1">
              <Card.Header className=" text-center text-white bg-success">Математическая модель</Card.Header>
              <Card.Body align="justify">
              <div><small>Описывается системой 7 обыкновенных дифференциальных уравнений, удовлетворяющих закону баланса масс:</small></div>
@@ -29,9 +47,12 @@ const Description_SEIRHCD = () => {
              fluid
              />
              </div>
-             </Card.Body></Card>
+             </Card.Body></Card></motion.div>
            </Col>
-         <Col sm={12} xs={12} md={12}  lg={6}><Card className="border my-1 mx-3">
+         <Col sm={12} xs={12} md={12}  lg={6}>
+         <motion.div  initial="hidden" custom={1}
+           variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+         <Card className="border shadow1 my-1 mx-3">
            <Card.Header className=" text-center text-white bg-success">Параметры модели</Card.Header>
            <Card.Body align="left">
            <small>
@@ -120,8 +141,10 @@ const Description_SEIRHCD = () => {
       </tbody>
       </Table>
       </small>
-           </Card.Body></Card>
-           <Card className="border  my-1 mx-3">
+           </Card.Body></Card></motion.div>
+           <motion.div  initial="hidden" custom={1}
+             variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+           <Card className="border shadow1 my-1 mx-3">
              <Card.Header className="text-center text-success">Обратная задача</Card.Header>
              <Card.Body>
              <small>
@@ -141,8 +164,10 @@ const Description_SEIRHCD = () => {
   <div><i>b<sub>k</sub></i> – процент бессимптомных выявленных в день <i>k</i>,</div>
    <div><i>C<sub>k</sub></i> – количество критических случаев COVID-19 в день <i>k</i>, нуждающихся в подключении аппарата ИВЛ,</div>
   <div><i>g<sub>k</sub></i> – количество умерших в результате COVID-19 в день <i>k</i>.</div></small>
-             </Card.Body></Card>
-             <Card className="border my-1 mx-3">
+             </Card.Body></Card></motion.div>
+             <motion.div  initial="hidden" custom={1}
+               variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+             <Card className="border shadow1 my-1 mx-3">
                <Card.Header className="text-center text-success bg-light">Алгоритм усвоения данных</Card.Header>
                <Card.Body align="center">
                <Image
@@ -150,7 +175,7 @@ const Description_SEIRHCD = () => {
                rounded
                fluid
                />
-               </Card.Body></Card>
+               </Card.Body></Card></motion.div>
            </Col>
        </Row>
       </>

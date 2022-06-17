@@ -14,6 +14,8 @@ import CollapseModelSettings from './Components/CollapseModelSettings'
 
 import Description_SEIRHCD from './Components/Description_SEIRHCD'
 
+import { motion } from "framer-motion"
+
 import {
   Chart as ChartJS,
   PointElement,
@@ -1136,6 +1138,33 @@ function ModelingSEIR_HCD() {
   }, [])
 
   const [openSEIRHCD, setOpenSEIRHCD] = useState(false);
+
+  const variants = {
+    visible: custom => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: custom * 0.2}
+    }),
+    hidden: {
+      opacity: 0,
+      x: -100,
+   },
+  }
+
+  const variants2 = {
+    visible: custom => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: custom * 0.2}
+    }),
+    hidden: {
+      opacity: 0,
+      y: 100,
+   },
+  }
+
   return (
     <>
     <Card className=" mx-auto" border="light" bg="light">
@@ -1144,7 +1173,7 @@ function ModelingSEIR_HCD() {
       <Row >
         <Col xs= {12}  lg={12}>    <Button
               variant="outline-primary"
-              className="bg-white text-primary my-2 mx-2"
+              className="bg-white text-primary  shadow1 my-2 mx-2"
               onClick={() => setOpenSEIRHCD(!openSEIRHCD)}
             > {openSEIRHCD? <BsFillCaretDownFill size = {15}/> : <BsFillCaretRightFill size = {15}/>} Описание модели
             </Button></Col>
@@ -1153,7 +1182,7 @@ function ModelingSEIR_HCD() {
                     </Row>
     </Col>
     <Col md={10} >
-    <Card className="my-3"><p align="justify" className="mx-3 my-1"><small></small></p> </Card>
+    <Card className="my-3 shadow1"><p align="justify" className="mx-3 my-1"><small></small></p> </Card>
 <div className="mx-2"><hr /></div>
 </Col>
   </Row>
@@ -1180,9 +1209,13 @@ function ModelingSEIR_HCD() {
      </OverlayTrigger>
      <Collapse in={openBS}>
        <div id="example-collapse-text">
+
        <Row>
-<Col xs={12} md={4}>
-       <ListGroup className = "mx-3 my-1">
+       <Col xs={12} md={4}>
+       <motion.div initial="hidden"
+          custom={2}
+         variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+       <ListGroup className = "mx-3 shadow1 my-1">
        <ListGroup.Item align="left" className="bg-secondary text-secondary">.
         </ListGroup.Item>
       <ListGroup.Item variant="light">
@@ -1234,15 +1267,17 @@ function ModelingSEIR_HCD() {
    </Row>
    </ListGroup.Item>
    </ListGroup>
-
    <CollapseModelSettings modelID = {1} />
-
+</motion.div>
    </Col>
    <Col xs={12} md={8}>
    <Row >
    <Col  xs={12} sm={12} md={12} lg={8}>
  </Col>
    <Col xs={12} sm={12} md={12} lg={4}>
+   <motion.div initial="hidden"
+      custom={1}
+     variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
    <OverlayTrigger
     placement="left"
     overlay={
@@ -1271,15 +1306,22 @@ function ModelingSEIR_HCD() {
          forecasts_new(prognose_type, prognose_data)
      }}><BsZoomOut/></Button>
      <Button variant="outline-secondary" size="sm" className="mx-1" onClick={(e)=>download_chart(e, "chart2")}><FiDownload/></Button>
+     </motion.div>
    </Col>
    </Row>
 <div style={{ width: '55rem' }}><Bar id="chart2" options={chartOptions_pred} data={chartData_pred} height="100%" /></div>
    </Col>
  </Row>
- <div className="mx-3"><hr /></div>
-  <h4 className="mx-5 text-secondary">Текущие параметры модели и их доверительный интервал</h4>
+ <motion.div initial="hidden"
+      custom={2}
+     variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3"><hr />
+  <h4 className="mx-5 text-secondary">Текущие параметры модели и их доверительный интервал</h4></motion.div>
  <Row className="mx-5 my-3">
- <Col xs= {12} md={6} lg={3}><Card border="light"  className="">
+ <Col xs= {12} md={6} lg={3}>
+ <motion.div initial="hidden"
+      custom={2}
+     variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+ <Card border="light"  className="shadow1">
    <Card.Body>
    <OverlayTrigger
     placement="bottom"
@@ -1304,8 +1346,12 @@ function ModelingSEIR_HCD() {
     </Card.Text></Col>
   </Row></OverlayTrigger>
    </Card.Body>
- </Card></Col>
- <Col xs= {12} md={6} lg={3}><Card border="light" className="">
+ </Card></motion.div></Col>
+ <Col xs= {12} md={6} lg={3}>
+ <motion.div initial="hidden"
+      custom={3}
+     variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+ <Card border="light" className="shadow1">
    <Card.Body>
    <OverlayTrigger
     placement="bottom"
@@ -1330,8 +1376,12 @@ function ModelingSEIR_HCD() {
     </Card.Text></Col>
   </Row></OverlayTrigger>
    </Card.Body>
- </Card></Col>
- <Col xs= {12} md={6} lg={3}><Card border="light"  className="">
+ </Card></motion.div></Col>
+ <Col xs= {12} md={6} lg={3}>
+ <motion.div initial="hidden"
+      custom={4}
+     variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+ <Card border="light"  className="shadow1">
    <Card.Body>
    <OverlayTrigger
     placement="bottom"
@@ -1357,8 +1407,12 @@ function ModelingSEIR_HCD() {
     </Card.Text></Col>
   </Row></OverlayTrigger>
    </Card.Body>
- </Card></Col>
- <Col xs= {12} md={6} lg={3}><Card border="light"  className="">
+ </Card></motion.div></Col>
+ <Col xs= {12} md={6} lg={3}>
+ <motion.div initial="hidden"
+      custom={4}
+     variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+ <Card border="light"  className="shadow1">
    <Card.Body>
    <OverlayTrigger
     placement="bottom"
@@ -1383,10 +1437,16 @@ function ModelingSEIR_HCD() {
     </Card.Text></Col>
   </Row></OverlayTrigger>
    </Card.Body>
- </Card></Col>
+ </Card></motion.div></Col>
 </Row>
-<div className="mx-3"><hr /></div>
+<motion.div initial="hidden"
+     custom={2}
+    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3"><hr />
  <h4 className="mx-5 text-secondary">Базовый индекс репродукции COVID-19 в Новосибирской области и прогноз</h4>
+ </motion.div>
+ <motion.div initial="hidden"
+      custom={2}
+     variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
  <Container className="mx-2">
  <Row >
  <Col  xs={12} sm={12} md={12} lg={8}>
@@ -1421,7 +1481,10 @@ function ModelingSEIR_HCD() {
  </Col>
  </Row>
 </Container>
-<Container style={{ width: '80rem' }}><Line id="chart9" options={chartOptions_bsR0} data={chartData_bsR0} height="90%" /></Container>
+<Container style={{ width: '80rem' }}>
+<Line id="chart9" options={chartOptions_bsR0} data={chartData_bsR0} height="90%" />
+</Container>
+</motion.div>
        </div>
      </Collapse>
      <OverlayTrigger
@@ -1441,7 +1504,13 @@ function ModelingSEIR_HCD() {
     </OverlayTrigger>
     <Collapse in={openM}>
       <div id="example-collapse-text">
-      <h4 className="mx-5 my-2 text-secondary">Кривые SEIRHCD и реальные данные</h4>
+      <motion.div initial="hidden"
+           custom={2}
+          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+      <h4 className="mx-5 my-2 text-secondary">Кривые SEIRHCD и реальные данные</h4> </motion.div>
+      <motion.div initial="hidden"
+           custom={2}
+          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
       <Nav variant="pills" defaultActiveKey="1"className="my-2" >
         <Nav.Item >
         <Button className="mx-3" size="sm" variant="outline-info" onClick={(e) => {
@@ -1556,7 +1625,10 @@ function ModelingSEIR_HCD() {
           <Nav.Link eventKey="8"><b>D</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
-      </Nav>
+      </Nav></motion.div>
+      <motion.div initial="hidden"
+           custom={2}
+          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
       <Row >
       <Col  xs={12} sm={12} md={12} lg={8}>
      </Col>
@@ -1589,9 +1661,14 @@ function ModelingSEIR_HCD() {
         <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart4")}><FiDownload/></Button>
       </Col>
       </Row>
-<Container style={{ width: '80rem' }}><Line id="chart4" options={chartOptionsSEIRHCD} data={chartDataSEIRHCD} height="90%" /></Container>
-<div className="mx-3"><hr /></div>
-       <h4 className="mx-5 text-secondary">Базовый индекс репродукции COVID-19 в Новосибирской области</h4>
+<Container style={{ width: '80rem' }}><Line id="chart4" options={chartOptionsSEIRHCD} data={chartDataSEIRHCD} height="90%" /></Container></motion.div>
+<motion.div initial="hidden"
+     custom={2}
+    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3"><hr />
+       <h4 className="mx-5 text-secondary">Базовый индекс репродукции COVID-19 в Новосибирской области</h4></motion.div>
+       <motion.div initial="hidden"
+            custom={2}
+           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
        <Row >
        <Col  xs={12} sm={12} md={12} lg={8}>
       </Col>
@@ -1624,9 +1701,15 @@ function ModelingSEIR_HCD() {
          <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart5")}><FiDownload/></Button>
        </Col>
        </Row>
-       <Container style={{ width: '80rem' }}><Line id="chart5" options={chartOptionsTrain} data={chartDataTrain} height="100%" /></Container>
+       <Container style={{ width: '80rem' }}><Line id="chart5" options={chartOptionsTrain} data={chartDataTrain} height="100%" /></Container></motion.div>
+       <motion.div initial="hidden"
+            custom={2}
+           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
        <hr />
-       <h4 className="mx-5 text-secondary">Восстановленные параметры модели COVID-19 для Новосибирской области</h4>
+       <h4 className="mx-5 text-secondary">Восстановленные параметры модели COVID-19 для Новосибирской области</h4></motion.div>
+       <motion.div initial="hidden"
+            custom={2}
+           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
        <Row >
        <Col  xs={12} sm={12} md={12} lg={8}>
       </Col>
@@ -1660,6 +1743,7 @@ function ModelingSEIR_HCD() {
        </Col>
        </Row>
        <Container style={{ width: '80rem' }}><Line id="chart8" options={chartOptions_pm} data={chartData_pm} height="90%" /></Container>
+       </motion.div>
       </div>
     </Collapse>
     <OverlayTrigger
@@ -1679,7 +1763,13 @@ function ModelingSEIR_HCD() {
     </OverlayTrigger>
     <Collapse in={openV}>
       <div id="example-collapse-text">
-      <h4 className="mx-5 my-2 text-secondary">Кривые SEIRHCD и реальные данные</h4>
+      <motion.div initial="hidden"
+           custom={2}
+          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+      <h4 className="mx-5 my-2 text-secondary">Кривые SEIRHCD и реальные данные</h4></motion.div>
+      <motion.div initial="hidden"
+           custom={2}
+          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
       <Nav variant="pills" defaultActiveKey="1"className="my-2" >
         <Nav.Item >
         <Button className="mx-3" size="sm" variant="outline-info" onClick={(e) => {res_valid("fk_mean", "fk_max", "fk_min", "new_diagnoses")}} style={{color:"#FFFFFF"}}>
@@ -1793,7 +1883,10 @@ function ModelingSEIR_HCD() {
           <Nav.Link eventKey="8"><b>D</b></Nav.Link>
           </Button></OverlayTrigger>
         </Nav.Item>
-      </Nav>
+      </Nav> </motion.div>
+      <motion.div initial="hidden"
+           custom={2}
+          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
       <Row >
       <Col  xs={12} sm={12} md={12} lg={8}>
     </Col>
@@ -1825,9 +1918,14 @@ function ModelingSEIR_HCD() {
         <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart6")}><FiDownload/></Button>
       </Col>
       </Row>
-<Container style={{ width: '80rem' }}><Line id="chart6"options={chartOptionsSEIRHCD_v} data={chartDataSEIRHCD_v} height="90%" /></Container>
-<hr />
-<h4 className="mx-5 text-secondary">Базовый индекс репродукции COVID-19 в Новосибирской области</h4>
+<Container style={{ width: '80rem' }}><Line id="chart6"options={chartOptionsSEIRHCD_v} data={chartDataSEIRHCD_v} height="90%" /></Container></motion.div>
+<motion.div initial="hidden"
+     custom={2}
+    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}> <hr />
+<h4 className="mx-5 text-secondary">Базовый индекс репродукции COVID-19 в Новосибирской области</h4></motion.div>
+<motion.div initial="hidden"
+     custom={2}
+    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
 <Row >
 <Col  xs={12} sm={12} md={12} lg={8}>
 </Col>
@@ -1859,9 +1957,14 @@ function ModelingSEIR_HCD() {
   <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart3")}><FiDownload/></Button>
 </Col>
 </Row>
-<Container style={{ width: '80rem' }}><Line id="chart3" options={chartOptions} data={chartData} height="90%" /></Container>
-<hr />
-<h4 className="mx-5 text-secondary">Восстановленные параметры модели COVID-19 для Новосибирской области</h4>
+<Container style={{ width: '80rem' }}><Line id="chart3" options={chartOptions} data={chartData} height="90%" /></Container></motion.div>
+<motion.div initial="hidden"
+     custom={2}
+    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}> <hr />
+<h4 className="mx-5 text-secondary">Восстановленные параметры модели COVID-19 для Новосибирской области</h4> </motion.div>
+<motion.div initial="hidden"
+     custom={2}
+    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
 <Row >
 <Col  xs={12} sm={12} md={12} lg={8}>
 </Col>
@@ -1894,7 +1997,7 @@ function ModelingSEIR_HCD() {
   <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart7")}><FiDownload/></Button>
 </Col>
 </Row>
-<Container style={{ width: '80rem' }}><Line id="chart7" options={chartOptions_p} data={chartData_p} height="90%" /></Container>
+<Container style={{ width: '80rem' }}><Line id="chart7" options={chartOptions_p} data={chartData_p} height="90%" /></Container></motion.div>
       </div>
     </Collapse>
     </Card>

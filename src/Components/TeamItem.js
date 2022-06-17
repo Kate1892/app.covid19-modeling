@@ -1,16 +1,17 @@
-import React from "react";
+import React, {forwardRef} from "react";
 import {Container, Card, Image, Col} from 'react-bootstrap';
+import { motion } from "framer-motion"
 
-const TeamItem = (props) => {
+const TeamItem = forwardRef((props, ref) => {
     return (
-      <Col xs= {12} md={6} lg={4} className="my-1" >
-      <Card border="light" style={{height: '15rem'}} className="mx-auto" >
+      <Col xs= {12} md={6} lg={4} className="my-1" ref={ref}>
+      <Card border="light" style={{height: '15rem'}} className="mx-auto shadow1" >
       <Container style={{ width: '10rem' }, {height: '10rem'}} className="my-1 text-center">
         <Image variant="bottom"
         src={props.post.image}
         roundedCircle
         fluid
-        style={{ maxWidth: '9rem' } }
+        style={{ maxWidth: props.post.wid } }
         />
       </Container>
         <Card.Body>
@@ -21,7 +22,8 @@ const TeamItem = (props) => {
         </Card.Body>
       </Card>
       </Col>
-    )
-}
-
-export default TeamItem;
+    )}
+  )
+const MTeamItem = motion(TeamItem);
+export default MTeamItem;
+export {TeamItem};

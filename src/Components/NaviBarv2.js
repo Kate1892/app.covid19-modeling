@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Navbar, Nav, Button, Container, NavDropdown, OverlayTrigger, Tooltip, Modal, Image, Stack} from 'react-bootstrap';
 import {NavLink} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,7 +12,7 @@ function NaviBarv2() {
   return (
 
     <>
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className = "">
+      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" >
         <Container className="py-1">
         <Navbar.Brand className="text-white">
         <Stack direction="horizontal" gap={3}>

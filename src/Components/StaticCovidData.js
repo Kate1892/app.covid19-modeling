@@ -98,11 +98,11 @@ const StaticCovidData = (props) => {
     let cov_cumchild = []
     let url;
     if(props.prop == 1) {
-      url="http://89.253.218.66:4000/api/csvCovid/nd"
+      url="https://89.253.218.66/api/csvCovid/nd"
     } else if (props.prop == 2) {
-      url="http://89.253.218.66:4000/api/csvCovid/altay"
+      url="https://89.253.218.66/api/csvCovid/altay"
     } else if (props.prop == 3) {
-      url="http://89.253.218.66:4000/api/csvCovid/omsk"
+      url="https://89.253.218.66/api/csvCovid/omsk"
     }
     axios
     .get(url)

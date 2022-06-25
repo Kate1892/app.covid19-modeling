@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Modals from "./../Modal"
 import ".././styles.css";
+import ip_head from "../images/ip_head.png"
 
 const setActive=({isActive}) => isActive ? 'active-link' : 'non-active';
 
@@ -17,8 +18,7 @@ function NaviBarv2() {
         <Navbar.Brand className="text-white">
         <Stack direction="horizontal" gap={3}>
         <Image variant="bottom" className = ""
-          src="https://covid19-modeling.ru/wp-content/uploads/2020/11/ip_head_with_trans-55x55.png"
-          roundedCircle
+          src={ip_head}
           fluid
           style={{ width: '3rem' }, {height: '3rem'}}
           />{' '}

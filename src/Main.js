@@ -7,7 +7,13 @@ import Main_contacts from './Components/Main_contacts'
 import Main_publications from './Components/Main_publications'
 import Main_conferences from './Components/Main_conferences'
 import { motion } from "framer-motion"
-import Zvonareva from "./images/Zvonareva.jpg"
+import Zvonareva from "./images/team/Zvonareva.jpg"
+import Krivorotko from "./images/team/Krivorotko.png"
+import Zyatkov from "./images/team/Zyatkov.png"
+import Sosnovskaya from "./images/team/Sosnovskaya.png"
+import Neverov from "./images/team/Neverov.png"
+import Petrakova from "./images/team/Petrakova.jpg"
+
 
 const variants = {
   visible: custom => ({
@@ -38,12 +44,12 @@ const itemAnimation = {
 export function Main() {
 
   const posts = [
-    {id: 1, wid: '9rem', name: 'Криворотько Ольга', institution: 'к.ф.-м.н., c.н.с. ИВМиМГ СО РАН', image: "https://covid19-modeling.ru/data/Krivorotko.png"},
-    {id: 2, wid: '9rem', name: 'Зятьков Николай', institution: 'к.т.н., м.н.с. ИВМиМГ СО РАН', image: "https://covid19-modeling.ru/wp-content/uploads/2022/02/Zyatkov1.png"},
+    {id: 1, wid: '9rem', name: 'Криворотько Ольга', institution: 'к.ф.-м.н., c.н.с. ИВМиМГ СО РАН', image: Krivorotko},
+    {id: 2, wid: '9rem', name: 'Зятьков Николай', institution: 'к.т.н., м.н.с. ИВМиМГ СО РАН', image: Zyatkov},
     {id: 3, wid: '8rem', name: 'Звонарева Татьяна', institution: 'аспирант НГУ, инженер ИВМиМГ СО РАН', image: Zvonareva},
-    {id: 4, wid: '9rem', name: 'Сосновская Мария', institution: 'инженер ЛМСИИММЕ НГУ', image: "https://covid19-modeling.ru/wp-content/uploads/2020/11/Sosnovskaya.png"},
-    {id: 5, wid: '9rem', name: 'Неверов Андрей', institution: 'магистрант НГУ, инженер ИВМиМГ СО РАН', image: "https://covid19-modeling.ru/wp-content/uploads/2020/11/Neverov.png"},
-    {id: 6, wid: '9rem', name: 'Петракова Виктория', institution: 'к.ф.-м.н., м.н.с. ИВМ СО РАН', image:  "https://covid19-modeling.ru/wp-content/uploads/2022/02/Petrakova1.jpg"}
+    {id: 4, wid: '9rem', name: 'Сосновская Мария', institution: 'инженер ЛМСИИММЕ НГУ', image: Sosnovskaya},
+    {id: 5, wid: '9rem', name: 'Неверов Андрей', institution: 'магистрант НГУ, инженер ИВМиМГ СО РАН', image: Neverov},
+    {id: 6, wid: '9rem', name: 'Петракова Виктория', institution: 'к.ф.-м.н., м.н.с. ИВМ СО РАН', image: Petrakova}
   ]
   return(
       <>

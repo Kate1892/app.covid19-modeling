@@ -31,7 +31,7 @@ return (
       <Helmet>
          <meta charSet="utf-8" />
          <title>Обратные задачи</title>
-         <link rel="canonical" href="http://app-covid19-modeling.ru" />
+         <link rel="canonical" href="http://covid19-modeling.ru" />
        </Helmet>
           <Routes>
             <Route exact path="/covid19" element={<Covid />} />

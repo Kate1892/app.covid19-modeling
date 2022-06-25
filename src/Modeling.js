@@ -1225,7 +1225,7 @@ export function Modeling(){
     const chart = () => {
       setChartnum(1)
       axios
-        .get("http://89.253.218.66:4000/getMsim")
+        .get("https://89.253.218.66/getMsim")
         .then(res => {
           setLoadingprosses(false)
           setSomeerrors(false)

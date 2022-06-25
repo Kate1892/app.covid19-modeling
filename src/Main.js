@@ -38,7 +38,7 @@ const itemAnimation = {
 export function Main() {
 
   const posts = [
-    {id: 1, wid: '9rem', name: 'Криворотько Ольга', institution: 'к.ф.-м.н., c.н.с. ИВМиМГ СО РАН', image: "https://covid19-modeling.ru/wp-content/uploads/2020/11/Krivorotko.png"},
+    {id: 1, wid: '9rem', name: 'Криворотько Ольга', institution: 'к.ф.-м.н., c.н.с. ИВМиМГ СО РАН', image: "https://covid19-modeling.ru/data/Krivorotko.png"},
     {id: 2, wid: '9rem', name: 'Зятьков Николай', institution: 'к.т.н., м.н.с. ИВМиМГ СО РАН', image: "https://covid19-modeling.ru/wp-content/uploads/2022/02/Zyatkov1.png"},
     {id: 3, wid: '8rem', name: 'Звонарева Татьяна', institution: 'аспирант НГУ, инженер ИВМиМГ СО РАН', image: Zvonareva},
     {id: 4, wid: '9rem', name: 'Сосновская Мария', institution: 'инженер ЛМСИИММЕ НГУ', image: "https://covid19-modeling.ru/wp-content/uploads/2020/11/Sosnovskaya.png"},
@@ -51,7 +51,7 @@ export function Main() {
         <Container >
           <motion.div initial="hidden"
              custom={2}
-            variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+            variants={variants} whileInView="visible" viewport={{amount: 0.05, once: true}}>
           <Card className="text-center bg-secondary text-white my-3" >
             <Card.Title> <h4 className="my-1 ">Команда</h4> </Card.Title>
           </Card>
@@ -61,7 +61,7 @@ export function Main() {
           <Container>
             <Row xs={1} md={2} className="justify-content-md-center" >
               {posts.map((post, index) =>
-                  <MTeamItem  initial="hidden" whileInView="visible" viewport={{amount: 0.1, once: true}}
+                  <MTeamItem  initial="hidden" whileInView="visible" viewport={{amount: 0.05, once: true}}
                      custom={index + 1}
                     variants={variants} post = {post}/>
               )}
@@ -70,32 +70,32 @@ export function Main() {
           </motion.div>
           <motion.div initial="hidden"
              custom={2}
-            variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}} className="my-3"><hr />
+            variants={variants} whileInView="visible" viewport={{amount: 0.05, once: true}} className="my-3"><hr />
           <h4 className="text-left mx-5 text-secondary">Kонтакты</h4>
             </motion.div>
             <motion.div initial="hidden"
                custom={2}
-              variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+              variants={variants} whileInView="visible" viewport={{amount: 0.05, once: true}}>
             <Main_contacts />
           </motion.div>
             <motion.div initial="hidden"
                custom={2}
-              variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}} className="my-3"><hr />
+              variants={variants} whileInView="visible" viewport={{amount: 0.05, once: true}} className="my-3"><hr />
           <h4 className="text-left mx-5 text-secondary">Публикации</h4></motion.div>
           <motion.div initial="hidden"
              custom={2}
-            variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+            variants={variants} whileInView="visible" viewport={{amount: 0.05, once: true}}>
             <Main_publications />
             </motion.div>
             <motion.div initial="hidden"
                custom={2}
-              variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+              variants={variants} whileInView="visible" viewport={{amount: 0.05, once: true}}>
         <Card className="text-center bg-secondary text-white my-3">
           <Card.Title> <h4 className="my-1 ">Конференции</h4> </Card.Title>
         </Card></motion.div>
         <motion.div initial="hidden"
            custom={2}
-          variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variants} whileInView="visible" viewport={{amount: 0.05, once: true}}>
             <Main_conferences /> </motion.div>
       </Container>
     </>

@@ -49,38 +49,38 @@ export function Data (){
       <motion.div initial="hidden"
            custom={2}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-      <Card className="shadow1 my-1 datacardcol">
+    <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">  <Card className="shadow1 my-1 datacardcol">
         <Card.Body>
           <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Полные</h5></Card.Title>
         </Card.Body>
-      </Card></motion.div></Col>
+      </Card></a></motion.div></Col>
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={3}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-      <Card className="shadow1 my-1 datacardcol">
+    <a href="https://covid19-modeling.ru/data/novosibirsk-region-data-small.csv" style={{'text-decoration': 'none'}}  className="">  <Card className="shadow1 my-1 datacardcol">
         <Card.Body>
 <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Сокращенные</h5></Card.Title>
         </Card.Body>
-      </Card></motion.div></Col>
+      </Card></a></motion.div></Col>
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={4}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-      <Card className="shadow1 my-1 datacardcol">
+        <a href="https://covid19-modeling.ru/data/novosibirsk-invitro.csv" style={{'text-decoration': 'none'}}  className=""><Card className="shadow1 my-1 datacardcol">
         <Card.Body>
 <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Вакцинация</h5></Card.Title>
         </Card.Body>
-      </Card></motion.div></Col>
+      </Card></a></motion.div></Col>
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={4}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-      <Card className="shadow1 my-1 datacardcol">
+      <a href="https://covid19-modeling.ru/data/new_deaths_Nsk_form_burial_statistics.csv" style={{'text-decoration': 'none'}}  className=""> <Card className="shadow1 my-1 datacardcol">
         <Card.Body>
 <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Смертность</h5></Card.Title>
         </Card.Body>
-      </Card></motion.div></Col>
+      </Card></a></motion.div></Col>
      </Row>
      <motion.div initial="hidden"
           custom={2}
@@ -100,11 +100,12 @@ export function Data (){
       <motion.div initial="hidden"
            custom={2}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          <a href="https://covid19-modeling.ru/data/omsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
       <Card className="shadow1 my-1 datacardcol">
         <Card.Body>
 <Card.Title><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Полные</h5></Card.Title>
         </Card.Body>
-      </Card></motion.div></Col>
+      </Card></a></motion.div></Col>
      </Row>
      <motion.div initial="hidden"
           custom={2}
@@ -124,20 +125,21 @@ export function Data (){
       <motion.div initial="hidden"
            custom={2}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-      <Card className="shadow1 my-1 datacardcol">
+          <a href="https://covid19-modeling.ru/data/altay-region-data.csv" style={{'text-decoration': 'none'}} > <Card className="shadow1 my-1 datacardcol">
         <Card.Body>
 <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Полные</h5></Card.Title>
         </Card.Body>
-      </Card></motion.div></Col>
+      </Card></a></motion.div></Col>
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={3}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          <a href="https://covid19-modeling.ru/data/altay-region-data-smoothed.csv" style={{'text-decoration': 'none'}} >
       <Card className="shadow1 my-1 datacardcol">
         <Card.Body>
 <Card.Title><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Сглаженные</h5></Card.Title>
         </Card.Body>
-      </Card></motion.div></Col>
+      </Card></a></motion.div></Col>
      </Row>
 
      <motion.div initial="hidden"

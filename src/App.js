@@ -15,6 +15,7 @@ import {Covid} from './Covid';
 import {Main} from './Main';
 import {Registration} from './Registration';
 import {Modeling} from './Modeling';
+import {Data} from './Data';
 import axios from "axios"
 
 
@@ -37,6 +38,7 @@ return (
             <Route exact path="/covid19" element={<Covid />} />
             <Route exact path="/" element={<Main />} />
             <Route exact path="/modeling" element={<Modeling />} />
+            <Route exact path="/data" element={<Data />} />
           </Routes>
       <Footer />
       </div>

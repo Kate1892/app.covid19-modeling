@@ -30,6 +30,8 @@ export default function NaviBar() {
             className={setActive}><h5>Главная</h5></NavLink></Nav.Link>
             <Nav.Link><NavLink to="/modeling"
             className={setActive}><h5>Моделирование</h5></NavLink></Nav.Link>
+            <Nav.Link><NavLink to="/data"
+            className={setActive}><h5>Данные</h5></NavLink></Nav.Link>
             <h5><NavDropdown title={<span className="fdrop">Статистика</span>} id="collasible-nav-dropdown">
               <NavDropdown.Item> <NavLink to="/covid19" className={({isActive}) => isActive ? 'active-link' : 'text-secondary'}>Коронавирус</NavLink></NavDropdown.Item>
             </NavDropdown></h5>

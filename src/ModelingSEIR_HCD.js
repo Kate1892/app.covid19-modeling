@@ -91,8 +91,7 @@ function ModelingSEIR_HCD() {
     let datatype = selected
     let dataT = selected
     axios({
-        url:'http://89.253.218.66:4000/api/forecasts_train',
-        //url:'http://localhost:4000/api/forecasts_train',
+        url:'https://server.covid19-modeling.ru/api/forecasts_train',
         method: "POST",
         data: {dataT},
       })
@@ -109,8 +108,7 @@ function ModelingSEIR_HCD() {
           min.push(dataObj.R0_min)
         }
         axios({
-            url:'http://89.253.218.66:4000/api/forecasts',
-            //url:'http://localhost:4000/api/forecasts',
+            url:'https://server.covid19-modeling.ru/api/forecasts',
             method: "POST",
             data: {datatype},
           })
@@ -264,8 +262,7 @@ function ModelingSEIR_HCD() {
     let tr = []
     let name = "Новые выявленные случаи";
     axios({
-        url:'http://89.253.218.66:4000/api/forecasts_true',
-        //url:'http://localhost:4000/api/forecasts_true',
+        url:'https://server.covid19-modeling.ru/api/forecasts_true',
         method: "POST",
         data: {datatype},
       })
@@ -287,8 +284,7 @@ function ModelingSEIR_HCD() {
           mean.push(0)
         }
         axios({
-            url:'http://89.253.218.66:4000/api/forecasts',
-            //url:'http://localhost:4000/api/forecasts',
+            url:'https://server.covid19-modeling.ru/api/forecasts',
             method: "POST",
             data: {datatype},
           })
@@ -400,7 +396,7 @@ function ModelingSEIR_HCD() {
   const res_validR0=()=>{
     let dataBS = [];
     axios
-    .get("http://89.253.218.66:4000/api/res_valid")
+    .get("https://server.covid19-modeling.ru/api/res_valid")
     .then(res => {
       for (const dataObj of res.data) {
         dataBS.push(dataObj.Date);
@@ -502,7 +498,7 @@ function ModelingSEIR_HCD() {
   const res_trainR0=()=>{
       let dataBS = [];
     axios
-    .get("http://89.253.218.66:4000/api/res_train")
+    .get("https://server.covid19-modeling.ru/api/res_train")
     .then(res => {
       console.log("!!")
       console.log(res)
@@ -611,7 +607,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://89.253.218.66:4000/api/res_train")
+    .get("https://server.covid19-modeling.ru/api/res_train")
     .then(res => {
       console.log("!")
       //console.log(res)
@@ -622,7 +618,7 @@ function ModelingSEIR_HCD() {
         min_data.push(dataObj[min])
       }
       axios
-      .get("http://89.253.218.66:4000/api/csvCovid/nd")
+      .get("https://server.covid19-modeling.ru/api/csvCovid/nd")
       .then(res2 => {
         for (const dataObj of res2.data) {
           r_data.push(parseInt(dataObj[param]));
@@ -735,7 +731,7 @@ function ModelingSEIR_HCD() {
     let min_data = []
     let r_data = []
     axios
-    .get("http://89.253.218.66:4000/api/res_valid")
+    .get("https://server.covid19-modeling.ru/api/res_valid")
     .then(res => {
       for (const dataObj of res.data) {
         dataSEIRHCD.push(dataObj.Date);
@@ -744,7 +740,7 @@ function ModelingSEIR_HCD() {
         min_data.push(dataObj[min])
       }
       axios
-      .get("http://89.253.218.66:4000/api/csvCovid/nd")
+      .get("https://server.covid19-modeling.ru/api/csvCovid/nd")
       .then(res2 => {
         for (const dataObj of res2.data) {
           r_data.push(parseInt(dataObj[param]));
@@ -856,7 +852,7 @@ function ModelingSEIR_HCD() {
     let e_data = []
     let m_data = []
     axios
-    .get("http://89.253.218.66:4000/api/res_valid")
+    .get("https://server.covid19-modeling.ru/api/res_valid")
     .then(res => {
       for (const dataObj of res.data) {
         dataSEIRHCD.push(dataObj.Date);
@@ -980,7 +976,7 @@ function ModelingSEIR_HCD() {
     let e_data = []
     let m_data = []
     axios
-    .get("http://89.253.218.66:4000/api/res_train")
+    .get("https://server.covid19-modeling.ru/api/res_train")
     .then(res => {
       console.log("!")
       for (const dataObj of res.data) {
@@ -1267,7 +1263,6 @@ function ModelingSEIR_HCD() {
    </Row>
    </ListGroup.Item>
    </ListGroup>
-   <CollapseModelSettings modelID = {1} />
 </motion.div>
    </Col>
    <Col xs={12} md={8}>
@@ -1441,12 +1436,12 @@ function ModelingSEIR_HCD() {
 </Row>
 <motion.div initial="hidden"
      custom={2}
-    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3"><hr />
+    variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}} className="mx-3"><hr />
  <h4 className="mx-5 text-secondary">Базовый индекс репродукции COVID-19 в Новосибирской области и прогноз</h4>
  </motion.div>
  <motion.div initial="hidden"
       custom={2}
-     variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+     variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
  <Container className="mx-2">
  <Row >
  <Col  xs={12} sm={12} md={12} lg={8}>
@@ -1506,11 +1501,11 @@ function ModelingSEIR_HCD() {
       <div id="example-collapse-text">
       <motion.div initial="hidden"
            custom={2}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
       <h4 className="mx-5 my-2 text-secondary">Кривые SEIRHCD и реальные данные</h4> </motion.div>
       <motion.div initial="hidden"
            custom={2}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
       <Nav variant="pills" defaultActiveKey="1"className="my-2" >
         <Nav.Item >
         <Button className="mx-3" size="sm" variant="outline-info" onClick={(e) => {
@@ -1628,7 +1623,7 @@ function ModelingSEIR_HCD() {
       </Nav></motion.div>
       <motion.div initial="hidden"
            custom={2}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
       <Row >
       <Col  xs={12} sm={12} md={12} lg={8}>
      </Col>
@@ -1664,11 +1659,11 @@ function ModelingSEIR_HCD() {
 <Container style={{ width: '80rem' }}><Line id="chart4" options={chartOptionsSEIRHCD} data={chartDataSEIRHCD} height="90%" /></Container></motion.div>
 <motion.div initial="hidden"
      custom={2}
-    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3"><hr />
+    variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}} className="mx-3"><hr />
        <h4 className="mx-5 text-secondary">Базовый индекс репродукции COVID-19 в Новосибирской области</h4></motion.div>
        <motion.div initial="hidden"
             custom={2}
-           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+           variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
        <Row >
        <Col  xs={12} sm={12} md={12} lg={8}>
       </Col>
@@ -1704,12 +1699,12 @@ function ModelingSEIR_HCD() {
        <Container style={{ width: '80rem' }}><Line id="chart5" options={chartOptionsTrain} data={chartDataTrain} height="100%" /></Container></motion.div>
        <motion.div initial="hidden"
             custom={2}
-           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+           variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
        <hr />
        <h4 className="mx-5 text-secondary">Восстановленные параметры модели COVID-19 для Новосибирской области</h4></motion.div>
        <motion.div initial="hidden"
             custom={2}
-           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+           variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
        <Row >
        <Col  xs={12} sm={12} md={12} lg={8}>
       </Col>
@@ -1765,11 +1760,11 @@ function ModelingSEIR_HCD() {
       <div id="example-collapse-text">
       <motion.div initial="hidden"
            custom={2}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
       <h4 className="mx-5 my-2 text-secondary">Кривые SEIRHCD и реальные данные</h4></motion.div>
       <motion.div initial="hidden"
            custom={2}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
       <Nav variant="pills" defaultActiveKey="1"className="my-2" >
         <Nav.Item >
         <Button className="mx-3" size="sm" variant="outline-info" onClick={(e) => {res_valid("fk_mean", "fk_max", "fk_min", "new_diagnoses")}} style={{color:"#FFFFFF"}}>
@@ -1886,7 +1881,7 @@ function ModelingSEIR_HCD() {
       </Nav> </motion.div>
       <motion.div initial="hidden"
            custom={2}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
       <Row >
       <Col  xs={12} sm={12} md={12} lg={8}>
     </Col>
@@ -1921,11 +1916,11 @@ function ModelingSEIR_HCD() {
 <Container style={{ width: '80rem' }}><Line id="chart6"options={chartOptionsSEIRHCD_v} data={chartDataSEIRHCD_v} height="90%" /></Container></motion.div>
 <motion.div initial="hidden"
      custom={2}
-    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}> <hr />
+    variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}> <hr />
 <h4 className="mx-5 text-secondary">Базовый индекс репродукции COVID-19 в Новосибирской области</h4></motion.div>
 <motion.div initial="hidden"
      custom={2}
-    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+    variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
 <Row >
 <Col  xs={12} sm={12} md={12} lg={8}>
 </Col>
@@ -1960,11 +1955,11 @@ function ModelingSEIR_HCD() {
 <Container style={{ width: '80rem' }}><Line id="chart3" options={chartOptions} data={chartData} height="90%" /></Container></motion.div>
 <motion.div initial="hidden"
      custom={2}
-    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}> <hr />
+    variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}> <hr />
 <h4 className="mx-5 text-secondary">Восстановленные параметры модели COVID-19 для Новосибирской области</h4> </motion.div>
 <motion.div initial="hidden"
      custom={2}
-    variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+    variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
 <Row >
 <Col  xs={12} sm={12} md={12} lg={8}>
 </Col>

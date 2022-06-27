@@ -1,6 +1,5 @@
-import React, {useMemo} from "react";
-import {Container, Card, CardGroup, Image, Row, Col, ListGroup, NavLink, Button} from 'react-bootstrap';
-import Footer from './Components/Footer'
+import React from "react";
+import {Container, Card, Row } from 'react-bootstrap';
 import MTeamItem from './Components/TeamItem'
 import Main_picture from './Components/Main_picture'
 import Main_contacts from './Components/Main_contacts'

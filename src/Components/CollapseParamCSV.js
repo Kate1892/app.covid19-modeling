@@ -14,11 +14,11 @@ function CollapseParamCSV() {
 
     <div className="d-grid gap-2">
 
-      <Button  size="sm" variant="outline-secondary" ref={target} onClick={() => setShow(!show)} className="shadow1">
+      <Button  size="sm" variant="outline-success" ref={target} onClick={() => setShow(!show)} className="shadow1">
         Описание данных
       </Button>
 
-      <Overlay target={target.current} show={show} placement="right">
+      <Overlay target={target.current} show={show} placement="top">
         {({ placement, arrowProps, show: _show, popper, ...props }) => (
           <div
             {...props}

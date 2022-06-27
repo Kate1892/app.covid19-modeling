@@ -4,11 +4,12 @@ import {Container, Card, Row, Col, Image, Button, Nav, NavDropdown, Table, Stack
 import Axios from "axios"
 import FileDownload from "js-file-download"
 import CollapseParamCSV from './CollapseParamCSV'
+import HSKG from ".././images/gerbs/Novosibirsk_region_gerb.png"
 
 const download=(e, region_name)=>{
    e.preventDefault()
    Axios({
-      url:'http://89.253.218.66:4000/api/CovidStaticFiles',
+      url:'https://server.covid19-modeling.ru/api/CovidStaticFiles',
        method: "POST",
        data: {region_name},
      })
@@ -21,7 +22,7 @@ const download=(e, region_name)=>{
 const dwnAntibodies=(e)=>{
    e.preventDefault()
    Axios
-   .get("http://89.253.218.66:4000/api/CovidStaticFilesAntibodies")
+   .get("https://server.covid19-modeling.ru/api/CovidStaticFilesAntibodies")
      .then((res)=>{
      console.log(res);
      FileDownload(res.data, "invitro-antibodies-novosibirsk-region.csv")
@@ -43,7 +44,7 @@ function CovidDataFilesSEIR_HCD() {
         <Stack direction="horizontal" gap={3}>
         <div className=" " >
           <Image variant="top" style={{ width: '3rem' }, {height: '3rem'}} className="my-1"
-          src="https://covid19-modeling.ru/wp-content/uploads/2021/06/Novosibirsk_region_gerb.png"
+          src={HSKG}
           rounded
           fluid
           />
@@ -59,7 +60,7 @@ function CovidDataFilesSEIR_HCD() {
           <Stack direction="horizontal" gap={3}>
           <div className=" " >
             <Image variant="top" style={{ width: '3rem' }, {height: '3rem'}} className="my-1"
-            src="https://covid19-modeling.ru/wp-content/uploads/2021/06/Novosibirsk_region_gerb.png"
+            src={HSKG}
             rounded
             fluid
             />

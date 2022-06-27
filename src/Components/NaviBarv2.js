@@ -28,6 +28,8 @@ function NaviBarv2() {
         <Nav className="me-auto" className="justify-content-end flex-grow-1 pe-4">
           <Nav.Link><NavLink to="/" className={setActive} ><h5>Главная</h5></NavLink></Nav.Link>
           <Nav.Link><NavLink to="/modeling" className={setActive}><h5>Моделирование</h5></NavLink></Nav.Link>
+          <Nav.Link><NavLink to="/data"
+          className={setActive}><h5>Данные</h5></NavLink></Nav.Link>
           <h5><NavDropdown title={<span className="fdrop">Статистика</span>} id="collasible-nav-dropdown">
             <NavDropdown.Item> <NavLink to="/covid19" className={({isActive}) => isActive ? 'active-dropdown' : 'non-active-dropdown'} >Коронавирус</NavLink></NavDropdown.Item>
           </NavDropdown></h5>

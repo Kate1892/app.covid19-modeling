@@ -4,13 +4,16 @@ import {Container, Card, Row, Col, Image, Button, Nav, NavDropdown, Table, Stack
 import Axios from "axios"
 import FileDownload from "js-file-download"
 import CollapseParamCSV from './CollapseParamCSV'
+import AltayG from ".././images/gerbs/Altay_region_gerb.png"
+import OmskG from ".././images/gerbs/Omsk_region_gerb.png"
+import HSKG from ".././images/gerbs/Novosibirsk_region_gerb.png"
 
 
 
 const download=(e, region_name)=>{
    e.preventDefault()
    Axios({
-      url:'http://89.253.218.66:4000/api/CovidStaticFiles',
+      url:'https://server.covid19-modeling.ru/api/CovidStaticFiles',
        method: "POST",
        data: {region_name},
      })
@@ -36,7 +39,7 @@ function CovidDataFiles() {
         <Stack direction="horizontal" gap={3}>
         <div className=" " >
           <Image variant="top" style={{ width: '3rem' }, {height: '3rem'}} className="my-1"
-          src="https://covid19-modeling.ru/wp-content/uploads/2021/06/Novosibirsk_region_gerb.png"
+          src={HSKG}
           rounded
           fluid
           />
@@ -52,7 +55,7 @@ function CovidDataFiles() {
           <Stack direction="horizontal" gap={3}>
           <div className=" " >
             <Image variant="top" style={{ width: '3rem' }, {height: '3rem'}} className="my-1"
-            src="https://covid19-modeling.ru/wp-content/uploads/2021/06/Novosibirsk_region_gerb.png"
+            src={HSKG}
             rounded
             fluid
             />
@@ -68,7 +71,7 @@ function CovidDataFiles() {
           <Stack direction="horizontal" gap={3}>
           <div className="">
             <Image variant="top" style={{ width: '3rem' }, {height: '3rem'}} className="my-1"
-            src="https://covid19-modeling.ru/wp-content/uploads/2021/06/Omsk_region_gerb-255x300.png"
+            src={OmskG}
             rounded
             fluid
             />
@@ -84,7 +87,7 @@ function CovidDataFiles() {
             <Stack direction="horizontal" gap={3}>
             <div className="">
               <Image variant="top" style={{ width: '3rem' }, {height: '3rem'}} className="my-1"
-              src="https://covid19-modeling.ru/wp-content/uploads/2021/06/Omsk_region_gerb-255x300.png"
+              src={OmskG}
               rounded
               fluid
               />
@@ -100,7 +103,7 @@ function CovidDataFiles() {
             <Stack direction="horizontal" gap={3}>
             <div className="">
               <Image variant="top" style={{ width: '3rem' }, {height: '3rem'}} className="my-1"
-              src="https://covid19-modeling.ru/wp-content/uploads/2021/06/Altay_region_gerb-289x300.png"
+              src={AltayG}
               roundedCircle
               fluid
               />
@@ -119,7 +122,7 @@ function CovidDataFiles() {
             <Stack direction="horizontal" gap={3}>
             <div className="bg-light ">
               <Image variant="top" style={{ width: '3rem' }, {height: '3rem'}} className="my-1"
-              src="https://covid19-modeling.ru/wp-content/uploads/2021/06/Altay_region_gerb-289x300.png"
+              src={AltayG}
               roundedCircle
               fluid
               />

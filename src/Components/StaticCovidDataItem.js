@@ -6,7 +6,7 @@ const StaticCovidDataItem = forwardRef((props, ref) => {
 
     return (
       <Col xs= {12} md={4} ref={ref}>
-      <Card border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2 shadow1">
+      <Card border="light" style={{ width: '5rem' }, {height: '8rem'}} className="mx-2 my-2 shadow1">
         <Card.Body>
         <Card.Title className="text-center text-info">{props.last.lastData ? <h3>{props.last.lastData} </h3> : <Spinner style={{position: 'absolute', top: '10%'}} size="sm" animation="border" variant="info" />}</Card.Title>
         <Card.Text className="text-center">

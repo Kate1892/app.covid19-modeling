@@ -5,6 +5,7 @@ import sfifblok from "./../images/sfifblok.png"
 import firdblok from "./../images/firdblok.png"
 import blokd from "./../images/blokd.png"
 import { motion } from "framer-motion"
+import CovidDataFilesSEIR_HCD from './CovidDataFilesSEIR_HCD'
 
 const Description_SEIRHCD = () => {
   const variants = {
@@ -48,6 +49,13 @@ const Description_SEIRHCD = () => {
              />
              </div>
              </Card.Body></Card></motion.div>
+             <motion.div  initial="hidden" custom={1}
+               variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
+             <Card className="border shadow1 my-1 mx-3">
+               <Card.Header className="text-center text-white bg-success">Данные</Card.Header>
+               <Card.Body align="center">
+    <CovidDataFilesSEIR_HCD />
+               </Card.Body></Card></motion.div>
            </Col>
          <Col sm={12} xs={12} md={12}  lg={6}>
          <motion.div  initial="hidden" custom={1}

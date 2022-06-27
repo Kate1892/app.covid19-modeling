@@ -2,6 +2,17 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.datacardcol {
+  background: white;
+  color: #198754;
+}
+.datacardcol:hover{
+  background-color: #198754;
+  color: white;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3), 0 20px 24px rgba(0,0,0,0.15);
+
+}
 .shadow1 {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.1);
 }
@@ -114,6 +125,7 @@ color:  #39C0ED;
   color: white  !important;
   text-decoration: underline !important;
 }
+
 .fdrop {
     color: grey;
 }

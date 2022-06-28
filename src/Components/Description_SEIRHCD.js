@@ -67,9 +67,9 @@ const Description_SEIRHCD = () => {
            variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
          <Card className="border shadow1 my-1 mx-3">
            <Card.Header className=" text-center text-white bg-success">Параметры модели</Card.Header>
-           <Card.Body align="left">
+           <Card.Body>
            <small>
-           <Table striped bordered hover>
+           <Table striped bordered size="sm" responsive>
     <thead>
       <tr>
         <th>#</th>

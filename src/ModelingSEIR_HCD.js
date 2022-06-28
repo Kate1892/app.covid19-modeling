@@ -211,6 +211,7 @@ function ModelingSEIR_HCD() {
             ],
             });
             setChartOptions_bsR0({
+              maintainAspectRatio : false,
               responsive: true,
                 plugins: {
                   zoom: {
@@ -350,6 +351,7 @@ function ModelingSEIR_HCD() {
             ],
             });
             setChartOptions_pred({
+               maintainAspectRatio : false,
               responsive: true,
                 plugins: {
                   zoom: {
@@ -450,6 +452,7 @@ function ModelingSEIR_HCD() {
       ],
       });
       setChartOptions({
+        maintainAspectRatio : false,
         responsive: true,
           plugins: {
             zoom: {
@@ -556,6 +559,7 @@ function ModelingSEIR_HCD() {
       ],
       });
       setChartOptionsTrain({
+        maintainAspectRatio : false,
         responsive: true,
           plugins: {
             zoom: {
@@ -681,6 +685,7 @@ function ModelingSEIR_HCD() {
         ],
         });
         setChartOptionsSEIRHCD({
+          maintainAspectRatio : false,
           responsive: true,
             plugins: {
               zoom: {
@@ -803,6 +808,7 @@ function ModelingSEIR_HCD() {
         ],
         });
         setChartOptionsSEIRHCD_v({
+          maintainAspectRatio : false,
           responsive: true,
             plugins: {
               zoom: {
@@ -919,6 +925,7 @@ function ModelingSEIR_HCD() {
       ],
       });
       setChartOptions_p({
+        maintainAspectRatio : false,
         responsive: true,
           plugins: {
             zoom: {
@@ -1044,6 +1051,7 @@ function ModelingSEIR_HCD() {
       ],
       });
       setChartOptions_pm({
+        maintainAspectRatio : false,
         responsive: true,
           plugins: {
             zoom: {
@@ -1165,7 +1173,7 @@ function ModelingSEIR_HCD() {
     <>
     <Card className=" mx-auto" border="light" bg="light">
     <Row >
-      <Col md={2} >
+      <Col md={2}  className="text-center">
       <Row >
         <Col xs= {12}  lg={12}>    <Button
               variant="outline-primary"
@@ -1367,7 +1375,7 @@ function ModelingSEIR_HCD() {
      </motion.div>
    </Col>
    </Row>
-<div style={{ width: '55rem' }}><Bar id="chart2" options={chartOptions_pred} data={chartData_pred} height="100%" /></div>
+<div style={{ height: '20rem' }}><Bar id="chart2" options={chartOptions_pred} data={chartData_pred} height="90%" /></div>
    </Col>
  </Row>
  <motion.div initial="hidden"
@@ -1539,7 +1547,7 @@ function ModelingSEIR_HCD() {
  </Col>
  </Row>
 </Container>
-<Container style={{ width: '80rem' }}>
+<Container style={{ height: '20rem' }}>
 <Line id="chart9" options={chartOptions_bsR0} data={chartData_bsR0} height="90%" />
 </Container>
 </motion.div>
@@ -1719,7 +1727,7 @@ function ModelingSEIR_HCD() {
         <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart4")}><FiDownload/></Button>
       </Col>
       </Row>
-<Container style={{ width: '80rem' }}><Line id="chart4" options={chartOptionsSEIRHCD} data={chartDataSEIRHCD} height="90%" /></Container></motion.div>
+<Container style={{ height: '20rem' }}><Line id="chart4" options={chartOptionsSEIRHCD} data={chartDataSEIRHCD} height="90%" /></Container></motion.div>
 <motion.div initial="hidden"
      custom={2}
     variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}} className="mx-3"><hr />
@@ -1759,7 +1767,7 @@ function ModelingSEIR_HCD() {
          <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart5")}><FiDownload/></Button>
        </Col>
        </Row>
-       <Container style={{ width: '80rem' }}><Line id="chart5" options={chartOptionsTrain} data={chartDataTrain} height="100%" /></Container></motion.div>
+       <Container style={{ height: '20rem' }}><Line id="chart5" options={chartOptionsTrain} data={chartDataTrain} height="100%" /></Container></motion.div>
        <motion.div initial="hidden"
             custom={2}
            variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}>
@@ -1800,7 +1808,7 @@ function ModelingSEIR_HCD() {
          <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart8")}><FiDownload/></Button>
        </Col>
        </Row>
-       <Container style={{ width: '80rem' }}><Line id="chart8" options={chartOptions_pm} data={chartData_pm} height="90%" /></Container>
+       <Container style={{ height: '20rem' }}><Line id="chart8" options={chartOptions_pm} data={chartData_pm} height="90%" /></Container>
        </motion.div>
       </div>
     </Collapse>
@@ -1976,7 +1984,7 @@ function ModelingSEIR_HCD() {
         <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart6")}><FiDownload/></Button>
       </Col>
       </Row>
-<Container style={{ width: '80rem' }}><Line id="chart6"options={chartOptionsSEIRHCD_v} data={chartDataSEIRHCD_v} height="90%" /></Container></motion.div>
+<Container style={{ height: '20rem' }}><Line id="chart6"options={chartOptionsSEIRHCD_v} data={chartDataSEIRHCD_v} height="90%" /></Container></motion.div>
 <motion.div initial="hidden"
      custom={2}
     variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}> <hr />
@@ -2015,7 +2023,7 @@ function ModelingSEIR_HCD() {
   <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart3")}><FiDownload/></Button>
 </Col>
 </Row>
-<Container style={{ width: '80rem' }}><Line id="chart3" options={chartOptions} data={chartData} height="90%" /></Container></motion.div>
+<Container style={{ height: '20rem' }}><Line id="chart3" options={chartOptions} data={chartData} height="90%" /></Container></motion.div>
 <motion.div initial="hidden"
      custom={2}
     variants={variants2} whileInView="visible" viewport={{amount: 0.05, once: true}}> <hr />
@@ -2055,7 +2063,7 @@ function ModelingSEIR_HCD() {
   <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart7")}><FiDownload/></Button>
 </Col>
 </Row>
-<Container style={{ width: '80rem' }}><Line id="chart7" options={chartOptions_p} data={chartData_p} height="90%" /></Container></motion.div>
+<Container style={{ height: '20rem' }}><Line id="chart7" options={chartOptions_p} data={chartData_p} height="90%" /></Container></motion.div>
       </div>
     </Collapse>
     </Card>

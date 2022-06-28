@@ -797,6 +797,7 @@ export function Modeling(){
           ],
           });
           setChartOptions({
+             maintainAspectRatio : false,
             responsive: true,
               plugins: {
                 zoom: {
@@ -893,6 +894,7 @@ export function Modeling(){
           ],
           });
           setChartOptions({
+            maintainAspectRatio : false,
             responsive: true,
               plugins: {
                 zoom: {
@@ -988,6 +990,7 @@ export function Modeling(){
           ],
           });
           setChartOptions({
+            maintainAspectRatio : false,
             responsive: true,
               plugins: {
                 zoom: {
@@ -1083,6 +1086,7 @@ export function Modeling(){
           ],
           });
           setChartOptions({
+            maintainAspectRatio : false,
             responsive: true,
               plugins: {
                 zoom: {
@@ -1178,6 +1182,7 @@ export function Modeling(){
           ],
           });
           setChartOptions({
+            maintainAspectRatio : false,
             responsive: true,
               plugins: {
                 zoom: {
@@ -1273,6 +1278,7 @@ export function Modeling(){
             },],
           });
           setChartOptions({
+            maintainAspectRatio : false,
             responsive: true,
               plugins: {
                 pan: {
@@ -1375,6 +1381,7 @@ export function Modeling(){
           ],
           });
           setChartOptions({
+            maintainAspectRatio : false,
             responsive: true,
               plugins: {
                 zoom: {
@@ -1467,6 +1474,7 @@ export function Modeling(){
           ],
           });
           setChartOptions({
+            maintainAspectRatio : false,
             responsive: true,
               plugins: {
                 zoom: {
@@ -1559,6 +1567,7 @@ export function Modeling(){
           ],
           });
           setChartOptions({
+            maintainAspectRatio : false,
             responsive: true,
               plugins: {
                 zoom: {
@@ -1651,6 +1660,7 @@ export function Modeling(){
           ],
           });
           setChartOptions({
+            maintainAspectRatio : false,
             responsive: true,
               plugins: {
                 zoom: {
@@ -2120,7 +2130,7 @@ COVID-19, в основе которой лежат обработка непо�
               Сервер временно не отвечает, пожалуйста, <Alert.Link href="/modeling">обновите страницу</Alert.Link> или повторите попытку позже.
               <hr /> </Alert> </div> :
 
-   newChart? <div style={{ width: '50rem' }}><Line  id="chart" data={chartData_all} options={chartOptions} /></div> : <div style={{ width: '50rem' }}><Line id="chart" options={chartOptions} data={initchartData_all}/></div>}
+   newChart? <div style={{ height: '25rem' }}><Line id="chart" data={chartData_all} options={chartOptions} height="150%" /></div> : <div ><Line id="chart" options={chartOptions} data={initchartData_all} height="150%" /></div>}
    <motion.div initial="hidden"
       custom={2}
      variants={variants2} animate="visible" viewport={{amount: 0.1, once: true}}>

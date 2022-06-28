@@ -155,7 +155,7 @@ const StaticCovidData = (props) => {
             yAxisID: 'y'
           },
           {
-          label: "суммарная заболеваемость, шк.2",
+          label: "сум. заболеваемость, шк.2",
           data: cov_nd_all,
           borderColor: "rgb(0, 0, 0)",
           backgroundColor: "rgb(0, 0, 0)",
@@ -168,7 +168,7 @@ const StaticCovidData = (props) => {
           yAxisID: 'y'
         },
         {
-        label: "заболеваемость детей, шк.2",
+        label: "заражения детей, шк.2",
         data: cov_cumchild,
         borderColor: "rgb(255, 192, 203)",
         backgroundColor: "rgb(255, 192, 203)",
@@ -181,7 +181,7 @@ const StaticCovidData = (props) => {
         yAxisID: 'y'
       },
         {
-        label: "cлучаи выздоровления, шк.2",
+        label: "выздоровления, шк.2",
         data: cov_nrec,
         borderColor: "rgb(252,141,214)",
         backgroundColor: "rgb(252,141,214)",
@@ -194,7 +194,7 @@ const StaticCovidData = (props) => {
         yAxisID: 'y'
       },
       {
-        label: "в критическом состоянии, шк.1",
+        label: "критические, шк.1",
         data: cov_ncrit,
         borderColor: "rgb(128, 0, 255)",
         backgroundColor: "rgb(128,0,255)",
@@ -210,6 +210,7 @@ const StaticCovidData = (props) => {
       });
 
       setChartOptions({
+         maintainAspectRatio : false,
         responsive: true,
         plugins: {
           zoom: {
@@ -233,8 +234,7 @@ const StaticCovidData = (props) => {
            },
         },
           legend: {
-            maxWidth: 250,
-            position: "left",
+            position: "top",
           },
           title: {
             display: true,
@@ -303,7 +303,7 @@ const StaticCovidData = (props) => {
               )}
       </Row>
     </Container>
-    <div  align="center" style={{ width: '80rem' }} className ="my-4">
+    <div  align="center" className ="my-4">
     <Row className="my-2">
       <Col  xs={12} sm={9}>
      </Col>
@@ -340,17 +340,16 @@ const StaticCovidData = (props) => {
       </motion.div>
     </Col>
     </Row>
-    <div style={{
-            height: '400px'}}>
     {loadingprosses ? <div style={{
-            height: '400px'}}><Spinner style={{position: 'absolute', top: '50%'}} animation="border" variant="info"  /></div> :
-    someerrors ?   <div style={{
-            height: '350px' }}><Alert variant="danger" className="my-5"> <Alert.Heading>Ошибка загрузки</Alert.Heading>
+            height: '400px'}}><Spinner relative style={{position: 'absolute', top: '50%'}} animation="border" variant="info"  /></div> :
+    someerrors ?  <div style={{
+            height: '350px' }}><Alert relative variant="danger" className="my-5"> <Alert.Heading>Ошибка загрузки</Alert.Heading>
     Сервер временно не отвечает, пожалуйста, <Alert.Link href="/modeling">обновите страницу</Alert.Link> или повторите попытку позже.
     <hr /> </Alert> </div> :
-     <Line id="chart3" options={chartOptions} data={chartData} height="90%" /> }
+    <div style={{ height: '25rem' }}><Line id="chart3" data={chartData} options={chartOptions}  height="90%" /></div> }
+
+
      </div>
-    </div>
     </div>
   );
 };

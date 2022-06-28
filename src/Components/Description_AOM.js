@@ -94,7 +94,7 @@ const Description_AOM = () => {
             <small>
             <div>• эпид. статус:</div>
             <div>𝑆, 𝐸, 𝐼, 𝑅, 𝐻, 𝐶, 𝐷, 𝐴, 𝑀<OverlayTrigger
-               placement="right"
+               placement="bottom"
                overlay={
                  <Popover>
                    <Popover.Body>

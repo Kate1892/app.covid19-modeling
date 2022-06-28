@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Collapse, Card, Nav, NavDropdown, Table, Container, Fade, Stack, Overlay} from 'react-bootstrap';
 import "./../styles.css";
 
-function CollapseParamCSV() {
+function CollapseParamAltaysmoothed() {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const target = useRef(null);
@@ -45,103 +45,13 @@ function CollapseParamCSV() {
             </Stack></div>
             <div className="">
             <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>cum_diagnoses_article:</small></div>
-              <div className=""><small>официальное общее число выявленных случаев заражения коронавирусом за всё время пандемии</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>cum_diagnoses:</small></div>
-              <div className=""><small>общее число выявленных случаев заражения коронавирусом за всё время пандемии</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>new_recoveries:</small></div>
-              <div className=""><small>количество новых случаев выздоровления человек с начала пандемии</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>cum_recoveries:</small></div>
-              <div className=""><small>всего выздоровело человек с начала пандемии</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
               <div className="mx-1"><small>new_deaths:</small></div>
               <div className=""><small>количество новых смертей от коронавируса</small></div>
             </Stack></div>
             <div className="">
             <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>cum_deaths:</small></div>
-              <div className=""><small>всего умерших от коронавируса  с начала пандемии</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>cum_tests:</small></div>
-              <div className=""><small>всего проведённых тестов на коронавирус в регионе</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
               <div className="mx-1"><small>new_tests:</small></div>
               <div className=""><small>количество новых проведённых тестов на коронавирус в регионе</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>adults:</small></div>
-              <div className=""><small>текущее количество взрослых пациентов с диагнозом COVID-19 и с подозрением на него в инфекционных стационарах</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>cum_children:</small></div>
-              <div className=""><small>всего зафиксировано случаев заражения коронавирусом у детей с начала пандемии</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>new_children:</small></div>
-              <div className=""><small>новое количество инфицированных детей</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>cur_children:</small></div>
-              <div className=""><small>текущее число госпитализированы детей с подозрением на коронавирус и подтвержденным диагнозом</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>n_critical:</small></div>
-              <div className=""><small>текущее количество человек, находящихся в отделениях реанимации</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>ventilation:</small></div>
-              <div className=""><small>текущее количество человек, находящихся под аппаратом ИВЛ</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>hospitalised:</small></div>
-              <div className=""><small>текущее количество госпитализированных человек</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>1vac:</small></div>
-              <div className=""><small>текущее количество человек, получивших одну дозу вакцины</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>2vac:</small></div>
-              <div className=""><small>текущее количество человек, получивших две дозы вакцины</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>positive_percent:</small></div>
-              <div className=""><small>доля инфицированных, имеющая антитела IgG к SARS-CoV-2</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>yandex_index:</small></div>
-              <div className=""><small>индекс самоизоляции</small></div>
-            </Stack></div>
-            <div className="">
-            <Stack direction="horizontal" gap={2}>
-              <div className="mx-1"><small>asympt_percent:</small></div>
-              <div className=""><small>текущий процент бессимптомных выявленных случаев</small></div>
             </Stack></div>
             </Stack>
           </div>
@@ -244,4 +154,4 @@ function CollapseParamCSV() {
   );
 }
 
-export default CollapseParamCSV;
+export default CollapseParamAltaysmoothed;

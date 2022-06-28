@@ -1,10 +1,11 @@
 import React from "react";
-import {Container, Card, Image, Col, Row, Table} from 'react-bootstrap';
+import {Container, Card, Image, Col, Row, Table, Stack, OverlayTrigger, Popover} from 'react-bootstrap';
 import sfblok from "./../images/sfblok.png"
 import sfifblok from "./../images/sfifblok.png"
 import firdblok from "./../images/firdblok.png"
 import blokd from "./../images/blokd.png"
 import { motion } from "framer-motion"
+import {BsDownload} from 'react-icons/bs'
 import CovidDataFilesSEIR_HCD from './CovidDataFilesSEIR_HCD'
 
 const Description_SEIRHCD = () => {
@@ -51,11 +52,15 @@ const Description_SEIRHCD = () => {
              </Card.Body></Card></motion.div>
              <motion.div  initial="hidden" custom={1}
                variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
-             <Card className="border shadow1 my-1 mx-3">
-               <Card.Header className="text-center text-white bg-success">Данные</Card.Header>
-               <Card.Body align="center">
-    <CovidDataFilesSEIR_HCD />
-               </Card.Body></Card></motion.div>
+            <Card className="border shadow1 my-1 mx-3">
+              <Card.Header className="text-center text-success bg-light">Алгоритм усвоения данных</Card.Header>
+              <Card.Body align="center">
+              <Image
+              src={sfifblok}
+              rounded
+              fluid
+              />
+              </Card.Body></Card></motion.div>
            </Col>
          <Col sm={12} xs={12} md={12}  lg={6}>
          <motion.div  initial="hidden" custom={1}
@@ -96,7 +101,7 @@ const Description_SEIRHCD = () => {
         <td>4</td>
         <td><i>{'\u03B2'}(t)</i></td>
         <td>Доля инфицированных, имеющая антитела IgG к SARS-CoV-2</td>
-        <td><a href="https://away.vk.com/away.php">Инвитро</a></td>
+        <td><a href="https://covid19-modeling.ru/data/novosibirsk-invitro.csv">Инвитро</a></td>
       </tr>
       <tr>
         <td>5</td>
@@ -167,23 +172,127 @@ const Description_SEIRHCD = () => {
              />
              <small>
   методом глобальной оптимизации на основе древовидных оценок Парзена <a href="https://optuna.org">OPTUNA</a>.
-  <div className="text-success">Реальные данные:</div>
-   <div><i>f<sub>k</sub></i> – количество выявленных случаев COVID-19 в день <i>k</i>,</div>
-  <div><i>b<sub>k</sub></i> – процент бессимптомных выявленных в день <i>k</i>,</div>
-   <div><i>C<sub>k</sub></i> – количество критических случаев COVID-19 в день <i>k</i>, нуждающихся в подключении аппарата ИВЛ,</div>
-  <div><i>g<sub>k</sub></i> – количество умерших в результате COVID-19 в день <i>k</i>.</div></small>
+</small>
              </Card.Body></Card></motion.div>
              <motion.div  initial="hidden" custom={1}
                variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
-             <Card className="border shadow1 my-1 mx-3">
-               <Card.Header className="text-center text-success bg-light">Алгоритм усвоения данных</Card.Header>
-               <Card.Body align="center">
-               <Image
-               src={sfifblok}
-               rounded
-               fluid
-               />
-               </Card.Body></Card></motion.div>
+               <Card className="border shadow1 my-1 mx-3">
+                 <Card.Header className="text-center text-white bg-success">Реальные данные</Card.Header>
+                 <Card.Body align="">
+                  <Stack direction="horizontal" gap={3}>
+                    <div className=""> <div><i>f<sub>k</sub></i> – количество выявленных случаев COVID-19 в день <i>k</i></div></div>
+                    <OverlayTrigger
+                     placement="left"
+                     overlay={
+                       <Popover className="shadow1">
+                         <Popover.Body>
+                          <small className="text-muted">2 столбец - new_diagnoses</small>
+                         </Popover.Body>
+                       </Popover>
+                     }
+                     >
+                    <div className=" ms-auto">2</div>
+                    </OverlayTrigger>
+                    <div className="vr" />
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+                    <div className=""><BsDownload/></div></a>
+                  </Stack>
+                  <hr />
+                  <Stack direction="horizontal" gap={3}>
+                    <div className=""> <div><i>b<sub>k</sub></i> – процент бессимптомных выявленных в день <i>k</i></div></div>
+                    <OverlayTrigger
+                     placement="left"
+                     overlay={
+                       <Popover className="shadow1">
+                         <Popover.Body>
+                          <small className="text-muted">22 столбец - asympt_percent</small>
+                         </Popover.Body>
+                       </Popover>
+                     }
+                     >
+                    <div className=" ms-auto">22</div>
+                    </OverlayTrigger>
+                    <div className="vr" />
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+                    <div className=""><BsDownload/></div></a>
+                  </Stack>
+                  <hr />
+                  <Stack direction="horizontal" gap={3}>
+                    <div className=""> <div><i>C<sub>k</sub></i> – количество критических случаев COVID-19 в день <i>k</i>, нуждающихся в подключении аппарата ИВЛ</div></div>
+                    <OverlayTrigger
+                     placement="left"
+                     overlay={
+                       <Popover className="shadow1">
+                         <Popover.Body>
+                          <small className="text-muted">16 столбец - ventilation</small>
+                         </Popover.Body>
+                       </Popover>
+                     }
+                     >
+                    <div className=" ms-auto">16</div>
+                    </OverlayTrigger>
+                    <div className="vr" />
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+                    <div className=""><BsDownload/></div></a>
+                  </Stack>
+                  <hr />
+                  <Stack direction="horizontal" gap={3}>
+                    <div className="">  <div><i>g<sub>k</sub></i> – количество умерших в результате COVID-19 в день <i>k</i></div></div>
+                    <OverlayTrigger
+                     placement="left"
+                     overlay={
+                       <Popover className="shadow1">
+                         <Popover.Body>
+                          <small className="text-muted">7 столбец - new_deaths</small>
+                         </Popover.Body>
+                       </Popover>
+                     }
+                     >
+                    <div className=" ms-auto">7</div>
+                    </OverlayTrigger>
+                    <div className="vr" />
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+                    <div className=""><BsDownload/></div></a>
+                  </Stack>
+                  <hr />
+                  <Stack direction="horizontal" gap={3}>
+                    <div className="">  <div><i>{'\u03B1'}(t)</i> – индекс самоизоляции</div></div>
+                    <OverlayTrigger
+                     placement="left"
+                     overlay={
+                       <Popover className="shadow1">
+                         <Popover.Body>
+                          <small className="text-muted">21 столбец - yandex_index</small>
+                         </Popover.Body>
+                       </Popover>
+                     }
+                     >
+                    <div className=" ms-auto">21</div>
+                    </OverlayTrigger>
+                    <div className="vr" />
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+                    <div className=""><BsDownload/></div></a>
+                  </Stack>
+                  <hr />
+                  <Stack direction="horizontal" gap={3}>
+                    <div className="">  <div><i>{'\u03B2'}(t)</i> – доля инфицированных, имеющая антитела IgG к SARS-CoV-2</div></div>
+                    <OverlayTrigger
+                     placement="left"
+                     overlay={
+                       <Popover className="shadow1">
+                         <Popover.Body>
+                          <small className="text-muted">2 столбец - positive_percent</small>
+                         </Popover.Body>
+                       </Popover>
+                     }
+                     >
+                    <div className=" ms-auto">2</div>
+                    </OverlayTrigger>
+                    <div className="vr" />
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-invitro.csv" style={{'text-decoration': 'none'}}>
+                    <div className=""><BsDownload/></div></a>
+                  </Stack>
+                 </Card.Body></Card></motion.div>
            </Col>
        </Row>
       </>

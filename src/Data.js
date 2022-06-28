@@ -1,9 +1,15 @@
 import React, {useState} from "react";
 import axios from "axios";
 import NaviBarv2 from './Components/NaviBarv2';
-import {Container, Row, Col, Card, Stack, Popover, OverlayTrigger, Image} from 'react-bootstrap';
+import {Container, Row, Col, Card, Stack, Popover, OverlayTrigger, Image, Button } from 'react-bootstrap';
 import { motion } from "framer-motion"
 import CollapseParamCSV from './Components/CollapseParamCSV'
+import CollapseParamInvitro from './Components/CollapseParamInvitro'
+import CollapseParamOmsk from './Components/CollapseParamOmsk'
+import CollapseParamAltay from './Components/CollapseParamAltay'
+import CollapseParamNSKsmall from './Components/CollapseParamNSKsmall'
+import CollapseParamAltaysmoothed from './Components/CollapseParamAltaysmoothed'
+import CollapseMSDeath_data from './Components/CollapseMSDeath_data'
 import AltayG from "./images/gerbs/Altay_region_gerb.png"
 import OmskG from "./images/gerbs/Omsk_region_gerb.png"
 import HSKG from "./images/gerbs/Novosibirsk_region_gerb.png"
@@ -49,38 +55,46 @@ export function Data (){
       <motion.div initial="hidden"
            custom={2}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-    <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">  <Card className="shadow1 my-1 datacardcol">
-        <Card.Body>
+      <Card className="shadow1 my-1">
+      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+        <Card.Body className="datacardcol">
           <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Полные</h5></Card.Title>
-        </Card.Body>
-      </Card></a></motion.div></Col>
+        </Card.Body></a>
+        <Card.Footer><CollapseParamCSV/></Card.Footer>
+      </Card></motion.div></Col>
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={3}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-    <a href="https://covid19-modeling.ru/data/novosibirsk-region-data-small.csv" style={{'text-decoration': 'none'}}  className="">  <Card className="shadow1 my-1 datacardcol">
-        <Card.Body>
+    <Card className="shadow1 my-1">
+    <a href="https://covid19-modeling.ru/data/novosibirsk-region-data-small.csv" style={{'text-decoration': 'none'}}  className="">
+        <Card.Body className="datacardcol">
 <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Сокращенные</h5></Card.Title>
-        </Card.Body>
-      </Card></a></motion.div></Col>
+        </Card.Body></a>
+        <Card.Footer><CollapseParamNSKsmall /></Card.Footer>
+      </Card></motion.div></Col>
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={4}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-        <a href="https://covid19-modeling.ru/data/novosibirsk-invitro.csv" style={{'text-decoration': 'none'}}  className=""><Card className="shadow1 my-1 datacardcol">
-        <Card.Body>
-<Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Вакцинация</h5></Card.Title>
-        </Card.Body>
-      </Card></a></motion.div></Col>
+        <Card className="shadow1 my-1">
+        <a href="https://covid19-modeling.ru/data/novosibirsk-invitro.csv" style={{'text-decoration': 'none'}}>
+        <Card.Body className="datacardcol">
+<Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  IgG-Антитела</h5></Card.Title>
+        </Card.Body></a>
+        <Card.Footer><CollapseParamInvitro /></Card.Footer>
+      </Card></motion.div></Col>
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={4}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-      <a href="https://covid19-modeling.ru/data/new_deaths_Nsk_form_burial_statistics.csv" style={{'text-decoration': 'none'}}  className=""> <Card className="shadow1 my-1 datacardcol">
-        <Card.Body>
-<Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Смертность</h5></Card.Title>
-        </Card.Body>
-      </Card></a></motion.div></Col>
+       <Card className="shadow1 my-1">
+       <a href="https://covid19-modeling.ru/data/new_deaths_Nsk_form_burial_statistics.csv" style={{'text-decoration': 'none'}}>
+        <Card.Body className="datacardcol">
+<Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Захоронения</h5></Card.Title>
+        </Card.Body></a>
+        <Card.Footer> <CollapseMSDeath_data /></Card.Footer>
+      </Card></motion.div></Col>
      </Row>
      <motion.div initial="hidden"
           custom={2}
@@ -100,12 +114,13 @@ export function Data (){
       <motion.div initial="hidden"
            custom={2}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-          <a href="https://covid19-modeling.ru/data/omsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
-      <Card className="shadow1 my-1 datacardcol">
-        <Card.Body>
-<Card.Title><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Полные</h5></Card.Title>
-        </Card.Body>
-      </Card></a></motion.div></Col>
+      <Card className="shadow1 my-1 ">
+      <a href="https://covid19-modeling.ru/data/omsk-region-data.csv" style={{'text-decoration': 'none'}}  >
+        <Card.Body className="datacardcol">
+        <Card.Title><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Полные</h5></Card.Title>
+        </Card.Body></a>
+        <Card.Footer><CollapseParamOmsk /></Card.Footer>
+      </Card></motion.div></Col>
      </Row>
      <motion.div initial="hidden"
           custom={2}
@@ -125,27 +140,30 @@ export function Data (){
       <motion.div initial="hidden"
            custom={2}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-          <a href="https://covid19-modeling.ru/data/altay-region-data.csv" style={{'text-decoration': 'none'}} > <Card className="shadow1 my-1 datacardcol">
-        <Card.Body>
+          <Card className="shadow1 my-1">
+        <a href="https://covid19-modeling.ru/data/altay-region-data.csv" style={{'text-decoration': 'none'}} >
+        <Card.Body className="datacardcol">
 <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Полные</h5></Card.Title>
-        </Card.Body>
-      </Card></a></motion.div></Col>
+        </Card.Body></a>
+        <Card.Footer><CollapseParamAltay /></Card.Footer>
+      </Card></motion.div></Col>
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={3}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-          <a href="https://covid19-modeling.ru/data/altay-region-data-smoothed.csv" style={{'text-decoration': 'none'}} >
-      <Card className="shadow1 my-1 datacardcol">
-        <Card.Body>
+      <Card className="shadow1 my-1">
+      <a href="https://covid19-modeling.ru/data/altay-region-data-smoothed.csv" style={{'text-decoration': 'none'}} >
+        <Card.Body className="datacardcol">
 <Card.Title><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Сглаженные</h5></Card.Title>
-        </Card.Body>
-      </Card></a></motion.div></Col>
+        </Card.Body></a>
+        <Card.Footer><CollapseParamAltaysmoothed /></Card.Footer>
+      </Card></motion.div></Col>
      </Row>
 
      <motion.div initial="hidden"
           custom={2}
          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-auto my-5">
-         <Container><CollapseParamCSV/></Container></motion.div>
+         </motion.div>
       </Container>
 
     </>

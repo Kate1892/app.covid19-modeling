@@ -32,10 +32,11 @@ export function Covid(){
   <Container>
     <motion.h3 initial="hidden"
        custom={1}
-      variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}} className="text-center my-3 text-secondary">Коронавирус
+      variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}} className=" my-3 text-secondary">
+      <div ><h4 className="mx-5 text-secondary">Коронавирус</h4></div>
+      <hr/>
     </motion.h3>
   </Container>
-
   <Tab.Container style={{
           width: "100%" }} id="left-tabs-example" defaultActiveKey="novosibirsk" >
 

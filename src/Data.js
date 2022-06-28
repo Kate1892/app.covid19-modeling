@@ -39,16 +39,20 @@ export function Data (){
               <motion.div initial="hidden"
                    custom={2}
                   variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3 my-3">
-                  <Stack direction="horizontal" gap={3}>
-      <div ><h4 className="mx-5 text-secondary">Данные по Новосибирской области</h4></div>
-      <div className=" ms-auto">
-      <Image variant="top" style={{ width: '4rem' }, {height: '4rem'}} className="mx-5"
-      src={HSKG}
-      rounded
-      fluid
-      />
-      </div>
-    </Stack>
+                  <Row>
+                  <Col xs={8} md={10} lg={10}>
+                  <div ><h4 className="mx-5 text-secondary">Данные по Новосибирской области</h4></div>
+                  </Col>
+                  <Col xs={4} md={2} lg={2}>
+                  <div>
+                  <Image variant="top" style={{ width: '4rem' }, {height: '4rem'}} className="mx-5"
+                  src={HSKG}
+                  rounded
+                  fluid
+                  />
+                  </div>
+                  </Col>
+                  </Row>
     </motion.div>
       <Row className="mx-5 my-3">
       <Col xs= {12} md={6} lg={3}>
@@ -99,16 +103,21 @@ export function Data (){
      <motion.div initial="hidden"
           custom={2}
          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3"><hr />
-      <Stack direction="horizontal" gap={3}>
-         <div ><h4 className="mx-5 text-secondary">Данные по Омской области</h4></div>
-         <div className=" ms-auto">
+         <Row>
+         <Col xs={8} md={10} lg={10}>
+          <div ><h4 className="mx-5 text-secondary">Данные по Омской области</h4></div>
+         </Col>
+         <Col xs={4} md={2} lg={2}>
+         <div className="">
          <Image variant="top" style={{ width: '4rem' }, {height: '4rem'}} className="mx-5"
          src={OmskG}
          rounded
          fluid
          />
          </div>
-         </Stack></motion.div>
+         </Col>
+         </Row>
+         </motion.div>
       <Row className="mx-5 my-3">
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
@@ -125,16 +134,21 @@ export function Data (){
      <motion.div initial="hidden"
           custom={2}
          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3"><hr />
-         <Stack direction="horizontal" gap={3}>
-            <div ><h4 className="mx-5 text-secondary">Данные по Алтайскому краю</h4></div>
-            <div className=" ms-auto">
-            <Image variant="top" style={{ width: '4rem' }, {height: '4rem'}} className="mx-5"
-            src={AltayG}
-            rounded
-            fluid
-            />
-            </div>
-            </Stack></motion.div>
+         <Row>
+         <Col xs={8} md={10} lg={10}>
+          <div><h4 className="mx-5 text-secondary">Данные по Алтайскому краю</h4></div>
+         </Col>
+         <Col xs={4} md={2} lg={2}>
+           <div className="">
+           <Image variant="top" style={{ width: '4rem' }, {height: '4rem'}} className="mx-5"
+           src={AltayG}
+           rounded
+           fluid
+           />
+           </div>
+         </Col>
+         </Row>
+      </motion.div>
       <Row className="mx-5 my-3">
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"

@@ -9,20 +9,6 @@ import OmskG from ".././images/gerbs/Omsk_region_gerb.png"
 import HSKG from ".././images/gerbs/Novosibirsk_region_gerb.png"
 
 
-
-const download=(e, region_name)=>{
-   e.preventDefault()
-   Axios({
-      url:'https://server.covid19-modeling.ru/api/CovidStaticFiles',
-       method: "POST",
-       data: {region_name},
-     })
-     .then((res)=>{
-     console.log(res);
-     FileDownload(res.data, region_name+'-region-data.csv')
-   })
-}
-
 function CovidDataFiles() {
 
   const [first, setFirst] = useState(true)
@@ -32,7 +18,8 @@ function CovidDataFiles() {
   return (
     <div className="bg-white">
     <Stack gap={3}>
-    {first? <div className="" onClick={(e)=>download(e, "novosibirsk")} onMouseEnter = {()=>{setFirst(false)}} onMouseLeave={()=>{setFirst(true)}} >
+      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+    {first? <div className=""  onMouseEnter = {()=>{setFirst(false)}} onMouseLeave={()=>{setFirst(true)}} >
     <Row>
       <Stack direction="horizontal" gap={3}>
       <Col lg={8} md={8} xs={8} sm={8}>
@@ -44,11 +31,11 @@ function CovidDataFiles() {
           fluid
           />
           </div>
-        <div className=" "><small>Новосибирская область</small></div></Stack></Col>
+        <div className=""><small>Новосибирская область</small></div></Stack></Col>
         <Col lg={4} md={4} xs={4} sm={4}>
         <div className=" "><Button variant="link" className="text-secondary" ><small>Скачать csv</small></Button></div></Col></Stack></Row>
       </div> :
-      <div className="bg-light" onClick={(e)=>download(e, "novosibirsk")}  onMouseEnter = {()=>{setFirst(false)}} onMouseLeave={()=>setFirst(true)}>
+      <div className="bg-light"   onMouseEnter = {()=>{setFirst(false)}} onMouseLeave={()=>setFirst(true)}>
       <Row>
         <Stack direction="horizontal" gap={3}>
         <Col lg={8} md={8} xs={8} sm={8}>
@@ -64,7 +51,9 @@ function CovidDataFiles() {
           <Col lg={4} md={4} xs={4} sm={4}>
           <div className=" "><Button variant="link" className="text-secondary" ><small>Скачать csv</small></Button></div></Col></Stack></Row>
       </div>}
-      {second?   <div className=" " onClick={(e)=>download(e, "omsk")} onMouseEnter = {()=>{setSecond(false)}} onMouseLeave={()=>{setSecond(true)}} >
+      </a>
+      <a href="https://covid19-modeling.ru/data/omsk-region-data.csv" style={{'text-decoration': 'none'}}  >
+      {second?   <div className=" " onMouseEnter = {()=>{setSecond(false)}} onMouseLeave={()=>{setSecond(true)}} >
       <Row>
         <Stack direction="horizontal" gap={3}>
         <Col lg={8} md={8} xs={8} sm={8}>
@@ -80,7 +69,7 @@ function CovidDataFiles() {
           <Col lg={4} md={4} xs={4} sm={4}>
           <div className=""><Button variant="link" className="text-secondary"><small>Скачать csv</small></Button></div></Col></Stack></Row>
         </div> :
-        <div className="bg-light " onClick={(e)=>download(e, "omsk")} onMouseEnter = {()=>{setSecond(false)}} onMouseLeave={()=>{setSecond(true)}}>
+        <div className="bg-light "  onMouseEnter = {()=>{setSecond(false)}} onMouseLeave={()=>{setSecond(true)}}>
         <Row>
           <Stack direction="horizontal" gap={3}>
           <Col lg={8} md={8} xs={8} sm={8}>
@@ -95,8 +84,9 @@ function CovidDataFiles() {
             <div className=""><small>Омская область</small></div></Stack></Col>
             <Col lg={4} md={4} xs={4} sm={4}>
             <div className=""><Button variant="link" className="text-secondary"><small>Скачать csv</small></Button></div></Col></Stack></Row>
-        </div>}
-        {third? <div className="" onClick={(e)=>download(e, "altay")} onMouseEnter = {()=>{setThird(false)}} onMouseLeave={()=>{setThird(true)}}>
+        </div>}</a>
+        <a href="https://covid19-modeling.ru/data/altay-region-data.csv" style={{'text-decoration': 'none'}} >
+        {third? <div className="" onMouseEnter = {()=>{setThird(false)}} onMouseLeave={()=>{setThird(true)}}>
         <Row>
           <Stack direction="horizontal" gap={3}>
           <Col lg={8} md={8} xs={8} sm={8}>
@@ -115,7 +105,7 @@ function CovidDataFiles() {
             </Stack>
         </Row>
         </div> :
-        <div className="bg-light " onClick={(e)=>download(e, "altay")} onMouseEnter = {()=>{setThird(false)}} onMouseLeave={()=>{setThird(true)}}>
+        <div className="bg-light "  onMouseEnter = {()=>{setThird(false)}} onMouseLeave={()=>{setThird(true)}}>
         <Row>
           <Stack direction="horizontal" gap={3}>
           <Col lg={8} md={8} xs={8} sm={8}>
@@ -133,7 +123,7 @@ function CovidDataFiles() {
             <div className="bg-light "><Button variant="link" className="text-secondary"><small>Скачать csv</small></Button></div></Col>
               </Stack>
         </Row>
-        </div> }
+        </div> }</a>
 
     </Stack>
 <CollapseParamCSV/>

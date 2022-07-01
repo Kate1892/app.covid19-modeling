@@ -1196,7 +1196,8 @@ function ModelingSEIR_HCD() {
   }, [])
 
   useEffect(() => {
-     forecasts_new(1, lastData);
+    lastDate2();
+     forecasts_new(1, "2022-01-10");
   }, [lastData])
 
   useEffect(() => {

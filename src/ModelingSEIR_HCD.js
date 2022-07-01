@@ -10,9 +10,8 @@ import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
 import {BsFillFileEarmarkPdfFill, BsFillArrowUpRightSquareFill, BsFillCaretRightFill, BsFillCaretDownFill,
 BsFillPersonLinesFill, BsExclamationLg} from 'react-icons/bs'
 import { Formik } from "formik";
-import CollapseModelSettings from './Components/CollapseModelSettings'
-
 import Description_SEIRHCD from './Components/Description_SEIRHCD'
+import OptionItem from './Components/OptionItem'
 
 import { motion } from "framer-motion"
 
@@ -48,8 +47,26 @@ ChartJS.register(
 
 ChartJS.register(zoomPlugin);
 
+function lastDate(){
+  let lastd;
+  axios
+  .get("http://localhost:4000/datesSEIR") ////////!!!!!!!
+  .then(res => {
+    console.log("!!!!!!!!!!!!!!!!!!!!!")
+    return (res.data.dates[res.data.dates.length-1].data)
+  })
+}
 
 function ModelingSEIR_HCD() {
+
+  const lastDate2 = () => {
+    axios
+    .get("http://localhost:4000/datesSEIR") ////////!!!!!!!
+    .then(res => {
+      console.log("!!!!!!!!!!!!!!!!!!!!!")
+      setLastsData(res.data.dates[res.data.dates.length-1].data)
+    })
+  }
 
   const download_chart=(e, chart) => {
     e.preventDefault()
@@ -66,6 +83,26 @@ function ModelingSEIR_HCD() {
     img.plugins.scales.y.max = 100;
     img.update()
   }
+
+  const dates = []
+  const [dates2, setdates2] = useState(dates)
+  const [lastData, setLastsData] = useState(0)
+
+  const datesOption=()=>{
+    axios
+    .get("http://localhost:4000/datesSEIR") ////////!!!!!!!
+    .then(res => {
+      console.log("h")
+      for (const dataObj of res.data.dates) {
+        console.log(dataObj)
+        dates.push({date: dataObj.data})
+      }
+      dates.reverse()
+      setdates2(dates)
+      console.log(dates2)
+    })
+  }
+
   const [chartData, setChartData] = useState({
     datasets: [],
   })
@@ -1100,7 +1137,7 @@ function ModelingSEIR_HCD() {
   }
 
   const [prognose_type, setPrognose_type] = useState(1)
-  const [prognose_data, setPrognose_data] = useState("2022-01-10")
+  const [prognose_data, setPrognose_data] = useState(dates[0])
 
 //1 - новые выявленные случаи
 //2 - критически больные
@@ -1119,6 +1156,11 @@ function ModelingSEIR_HCD() {
   }, [])
 
   useEffect(() => {
+     datesOption();
+  }, [])
+
+
+  useEffect(() => {
      res_trainR0();
   }, [])
 
@@ -1135,11 +1177,13 @@ function ModelingSEIR_HCD() {
      res_trainP();
   }, [])
   useEffect(() => {
-     forecasts_new(1, "2022-01-10");
-  }, [])
+      lastDate2();
+     forecasts_new(1, lastData);
+  }, [lastData])
   useEffect(() => {
-     forecasts_R0("2022-01-10");
-  }, [])
+      lastDate2();
+     forecasts_R0(lastData);
+  }, [lastData])
 
   const [openSEIRHCD, setOpenSEIRHCD] = useState(false);
 
@@ -1309,8 +1353,9 @@ function ModelingSEIR_HCD() {
              forecasts_R0(selected)
            }}
            >
-              <option value="2022-01-10">10.01.2022</option>
-              <option value="2022-01-09">09.01.2022</option>
+           {dates2.map((dates) =>
+               <OptionItem dates = {dates}/>
+           )}
          </Form.Select>
          <Form.Select aria-label="Default select example"
            type="number"
@@ -1547,9 +1592,10 @@ function ModelingSEIR_HCD() {
  </Col>
  </Row>
 </Container>
+<div>
 <Container style={{ height: '20rem' }}>
-<Line id="chart9" options={chartOptions_bsR0} data={chartData_bsR0} height="90%" />
-</Container>
+  <Line id="chart9" options={chartOptions_bsR0} data={chartData_bsR0} height="90%" />
+</Container></div>
 </motion.div>
        </div>
      </Collapse>

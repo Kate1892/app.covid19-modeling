@@ -90,7 +90,7 @@ function ModelingSEIR_HCD() {
 
   const datesOption=()=>{
     axios
-    .get("https://server.covid19-modeling.ru/datesSEIR/") ////////!!!!!!!
+    .get("https://server.covid19-modeling.ru/datesSEIR") ////////!!!!!!!
     .then(res => {
       console.log("h")
       for (const dataObj of res.data.dates) {
@@ -1197,7 +1197,7 @@ function ModelingSEIR_HCD() {
 
   useEffect(() => {
     lastDate2();
-     forecasts_new(1, "2022-01-10");
+     forecasts_new(1, lastData);
   }, [lastData])
 
   useEffect(() => {

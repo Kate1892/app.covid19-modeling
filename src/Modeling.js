@@ -5,7 +5,6 @@ DropdownButton, Dropdown} from 'react-bootstrap';
 import { CLoadingButton } from '@coreui/react-pro'
 import axios from "axios"
 import FileDownload from "js-file-download"
-import CollapseModelSettings from './Components/CollapseModelSettings'
 import { Formik } from "formik";
 import * as yup from "yup";
 import {FiDownload } from 'react-icons/fi'
@@ -1230,7 +1229,8 @@ export function Modeling(){
     const chart = () => {
       setChartnum(1)
       axios
-        .get("https://server.covid19-modeling.ru/getMsim")
+        //.get("https://server.covid19-modeling.ru/getMsim")
+        .get("http://localhost:4000/getMsim")
         .then(res => {
           setLoadingprosses(false)
           setSomeerrors(false)

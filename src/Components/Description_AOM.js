@@ -1,10 +1,15 @@
 import React, {useState} from "react";
-import {Container, Card, Image, Col, Row, Table, Modal, Button, Popover, OverlayTrigger} from 'react-bootstrap';
+import {Container, Card, Image, Col, Row, Table, Modal, Button, Popover, OverlayTrigger, Stack} from 'react-bootstrap';
 import fblok from "./../images/fblok.png"
 import model from "./../images/model.png"
 import sblok from "./../images/sblok.png"
 import { motion } from "framer-motion"
 import CovidDataFiles from './CovidDataFiles'
+import CollapseParamCSV from './CollapseParamCSV'
+import AltayG from ".././images/gerbs/Altay_region_gerb.png"
+import OmskG from ".././images/gerbs/Omsk_region_gerb.png"
+import HSKG from ".././images/gerbs/Novosibirsk_region_gerb.png"
+
 
 import {BsFillPersonLinesFill} from 'react-icons/bs'
 
@@ -16,6 +21,12 @@ const Description_AOM = () => {
   const [show1, setShow1] = useState(false);
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
+
+  const files = [
+    {id: 1, name: 'Новосибирская область', hr: 'https://covid19-modeling.ru/data/novosibirsk-region-data.csv', img: HSKG },
+    {id: 2, name: 'Омская область', hr: 'https://covid19-modeling.ru/data/omsk-region-data.csv', img: OmskG},
+    {id: 3, name: 'Алтайский край', hr: 'https://covid19-modeling.ru/data/altay-region-data.csv', img: AltayG},
+  ]
 
   const variants = {
     visible: custom => ({
@@ -73,9 +84,15 @@ const Description_AOM = () => {
                variants={variants} whileInView="visible" viewport={{amount: 0.1}}>
              <Card className="border shadow1 my-1 mx-3">
                <Card.Header className="text-center text-white bg-success">Данные</Card.Header>
-               <Card.Body align="center">
-    <CovidDataFiles/>
-               </Card.Body></Card></motion.div>
+                 <Card.Body align="center">
+                 <Stack gap={3}>
+                   {files.map((file) =>
+                       <CovidDataFiles file = {file}/>
+                   )}
+                    <CollapseParamCSV/>
+                  </Stack>
+                 </Card.Body>
+               </Card></motion.div>
            </Col>
          <Col sm={12} xs={12} md={12}  lg={6}>
          <motion.div  initial="hidden" custom={1}

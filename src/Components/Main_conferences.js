@@ -18,10 +18,6 @@ const Main_conferences = () => {
     {id: 5, name: 'ОНЗ-2021', image: conf_ONZ, hreff: "http://conf.nsc.ru/tcmiip2021", width: '6rem', height: '6rem', rounded: true},
     {id: 7, name: 'Томск-2021', image: Tomsk_logo, hreff: "http://rmc.math.tsu.ru/matematika-v-meditsine/",  width: '6rem', height: '6rem', rounded: false},
     {id: 8, name: 'MOTOR-2021', image:  MOTOR_logo, hreff: "https://conference.icc.ru/event/3/", width: '4rem' , height: '4rem', rounded: false},
-    //{id: 9, name: 'Конференция международных математических центров мирового уровня - 2021', image:  "https://covid19-modeling.ru/wp-content/uploads/2021/08/Sirius_conference.png",
-    //            href: "https://conference.icc.ru/event/3/", width: '5rem' , height: '5rem', rounded: false},
-    //{id: 10, name: 'Quasilinear Equations, Inverse Problems and Their Applications', image:  "https://covid19-modeling.ru/wp-content/uploads/2021/08/QIPA_conference.png",
-    //                  href: "https://qipa2021.mipt.ru/home", width: '4rem' , height: '4rem', rounded: false}
   ]
 
   const variants = {

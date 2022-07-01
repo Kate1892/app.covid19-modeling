@@ -6,7 +6,7 @@ import firdblok from "./../images/firdblok.png"
 import blokd from "./../images/blokd.png"
 import { motion } from "framer-motion"
 import {BsDownload} from 'react-icons/bs'
-import CovidDataFilesSEIR_HCD from './CovidDataFilesSEIR_HCD'
+
 
 const Description_SEIRHCD = () => {
   const variants = {

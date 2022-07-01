@@ -13,7 +13,6 @@ import {
 
 import {Covid} from './Covid';
 import {Main} from './Main';
-import {Registration} from './Registration';
 import {Modeling} from './Modeling';
 import {Data} from './Data';
 import axios from "axios"

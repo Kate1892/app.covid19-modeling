@@ -22,6 +22,13 @@ const variants = {
 }
 
 export function Covid(){
+
+  const regions = [
+    {id: 1, hr: "https://server.covid19-modeling.ru/api/csvCovid/nd", eventKey: "novosibirsk" },
+    {id: 2, hr: "https://server.covid19-modeling.ru/api/csvCovid/altay", eventKey: "altay"},
+    {id: 3, hr: "https://server.covid19-modeling.ru/api/csvCovid/omsk", eventKey: "omsk"},
+  ]
+
   return (
   <>
   <NaviBarv2 />
@@ -113,21 +120,9 @@ export function Covid(){
       </Nav>
 
     <Tab.Content>
-      <Tab.Pane eventKey="novosibirsk">
-        <div className="mx-3 my-3">
-            <StaticCovidData prop={1} key={1}/>
-        </div>
-      </Tab.Pane>
-      <Tab.Pane eventKey="altay">
-          <div className="mx-3 my-3">
-            <StaticCovidData prop={2} key={2}/>
-          </div>
-        </Tab.Pane>
-        <Tab.Pane eventKey="omsk">
-          <div className="mx-3 my-3">
-            <StaticCovidData prop={3} key={3}/>
-          </div>
-          </Tab.Pane>
+      {regions.map((region) =>
+          <StaticCovidData region = {region}/>
+      )}
       </Tab.Content>
   </Tab.Container>
 </Container>

@@ -3,7 +3,6 @@ import {Navbar, Nav, Button, Container, NavDropdown, OverlayTrigger, Tooltip, Mo
 import {NavLink} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ".././styles.css";
-import Modals from "./../Modal"
 import ip_head from "../images/ip_head.png"
 
 const setActive=({isActive}) => isActive ? 'active-link' : 'non-active';

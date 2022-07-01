@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import axios from "axios";
 import {FiDownload } from 'react-icons/fi'
 import {Container, Row, Col, Card, Button,
-  Image, Dropdown, OverlayTrigger, Popover, Spinner, Alert, Placeholder} from 'react-bootstrap';
+  Image, Dropdown, OverlayTrigger, Popover, Spinner, Alert, Placeholder, Tab} from 'react-bootstrap';
 import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
 import MSCDItem from './StaticCovidDataItem'
 import { motion } from "framer-motion"
@@ -96,14 +96,7 @@ const StaticCovidData = (props) => {
     let cov_nrec = [];
     let cov_ncrit = []
     let cov_cumchild = []
-    let url;
-    if(props.prop == 1) {
-      url="https://server.covid19-modeling.ru/api/csvCovid/nd"
-    } else if (props.prop == 2) {
-      url="https://server.covid19-modeling.ru/api/csvCovid/altay"
-    } else if (props.prop == 3) {
-      url="https://server.covid19-modeling.ru/api/csvCovid/omsk"
-    }
+    let url = props.region.hr
     axios
     .get(url)
     .then(res => {
@@ -292,17 +285,19 @@ const StaticCovidData = (props) => {
   ]
 
   return (
-    <div>
-    <Container>
-      <Row style={{
-              width: "100%" }}>
-              {lasts.map((last,index) =>
-                  <MSCDItem initial="hidden" whileInView="visible" viewport={{amount: 0.05}}
-                     custom={index + 1}
-                    variants={variants} last = {last}/>
-              )}
-      </Row>
-    </Container>
+    <Tab.Pane eventKey={props.region.eventKey}>
+      <div className="mx-3 my-3">
+      <div>
+      <Container>
+        <Row style={{
+                width: "100%" }}>
+                {lasts.map((last,index) =>
+                    <MSCDItem initial="hidden" whileInView="visible" viewport={{amount: 0.05}}
+                       custom={index + 1}
+                      variants={variants} last = {last}/>
+                )}
+        </Row>
+      </Container>
     <div  align="center" className ="my-4">
     <Row className="my-2">
       <Col  xs={12} sm={9}>
@@ -351,6 +346,8 @@ const StaticCovidData = (props) => {
 
      </div>
     </div>
+    </div>
+  </Tab.Pane>
   );
 };
 export default StaticCovidData;

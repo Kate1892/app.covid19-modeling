@@ -50,7 +50,7 @@ ChartJS.register(zoomPlugin);
 function lastDate(){
   let lastd;
   axios
-  .get("http://localhost:4000/datesSEIR") ////////!!!!!!!
+  .get("https://server.covid19-modeling.ru/datesSEIR") ////////!!!!!!!
   .then(res => {
     console.log("!!!!!!!!!!!!!!!!!!!!!")
     return (res.data.dates[res.data.dates.length-1].data)
@@ -61,7 +61,7 @@ function ModelingSEIR_HCD() {
 
   const lastDate2 = () => {
     axios
-    .get("http://localhost:4000/datesSEIR") ////////!!!!!!!
+    .get("https://server.covid19-modeling.ru/datesSEIR") ////////!!!!!!!
     .then(res => {
       console.log("!!!!!!!!!!!!!!!!!!!!!")
       setLastsData(res.data.dates[res.data.dates.length-1].data)
@@ -90,7 +90,7 @@ function ModelingSEIR_HCD() {
 
   const datesOption=()=>{
     axios
-    .get("http://localhost:4000/datesSEIR") ////////!!!!!!!
+    .get("https://server.covid19-modeling.ru/datesSEIR") ////////!!!!!!!
     .then(res => {
       console.log("h")
       for (const dataObj of res.data.dates) {
@@ -1594,7 +1594,7 @@ function ModelingSEIR_HCD() {
 </Container>
 <div>
 <Container style={{ height: '20rem' }}>
-  <Line id="chart9" options={chartOptions_bsR0} data={chartData_bsR0} height="90%" />
+  <Line id="chart9" options={chartOptions_bsR0} data={chartData_bsR0} height="75%" />
 </Container></div>
 </motion.div>
        </div>

@@ -90,7 +90,7 @@ function ModelingSEIR_HCD() {
 
   const datesOption=()=>{
     axios
-    .get("https://server.covid19-modeling.ru/datesSEIR") ////////!!!!!!!
+    .get("https://server.covid19-modeling.ru/datesSEIR/") ////////!!!!!!!
     .then(res => {
       console.log("h")
       for (const dataObj of res.data.dates) {
@@ -128,7 +128,7 @@ function ModelingSEIR_HCD() {
     let datatype = selected
     let dataT = selected
     axios({
-        url:'https://server.covid19-modeling.ru/api/forecasts_train',
+        url:'https://server.covid19-modeling.ru/api/forecasts_train/',
         method: "POST",
         data: {dataT},
       })
@@ -145,7 +145,7 @@ function ModelingSEIR_HCD() {
           min.push(dataObj.R0_min)
         }
         axios({
-            url:'https://server.covid19-modeling.ru/api/forecasts',
+            url:'https://server.covid19-modeling.ru/api/forecasts/',
             method: "POST",
             data: {datatype},
           })
@@ -300,7 +300,7 @@ function ModelingSEIR_HCD() {
     let tr = []
     let name = "Новые выявленные случаи";
     axios({
-        url:'https://server.covid19-modeling.ru/api/forecasts_true',
+        url:'https://server.covid19-modeling.ru/api/forecasts_true/',
         method: "POST",
         data: {datatype},
       })
@@ -651,7 +651,8 @@ function ModelingSEIR_HCD() {
     .get("https://server.covid19-modeling.ru/api/res_train")
     .then(res => {
       console.log("!")
-      //console.log(res)
+      console.log("333333")
+      console.log(res)
       for (const dataObj of res.data) {
         dataSEIRHCD.push(dataObj.Date);
         mean_data.push(dataObj[mean])
@@ -659,8 +660,10 @@ function ModelingSEIR_HCD() {
         min_data.push(dataObj[min])
       }
       axios
-      .get("https://server.covid19-modeling.ru/api/csvCovid/nd")
+      .get("https://server.covid19-modeling.ru/api/csvCovid/nd/")
       .then(res2 => {
+        console.log("333333!")
+        console.log(res2)
         for (const dataObj of res2.data) {
           r_data.push(parseInt(dataObj[param]));
         }
@@ -755,9 +758,13 @@ function ModelingSEIR_HCD() {
             },
           }
         });
-      })
+      }).catch(err => {
+          console.log(err);
+          console.log("333333!")
+        });
     }).catch(err => {
         console.log(err);
+        console.log("333333")
       });
   }
 
@@ -895,7 +902,7 @@ function ModelingSEIR_HCD() {
     let e_data = []
     let m_data = []
     axios
-    .get("https://server.covid19-modeling.ru/api/res_valid")
+    .get("https://server.covid19-modeling.ru/api/res_valid/")
     .then(res => {
       for (const dataObj of res.data) {
         dataSEIRHCD.push(dataObj.Date);
@@ -1014,15 +1021,17 @@ function ModelingSEIR_HCD() {
     datasets: [],
   })
   const res_trainP=()=>{
+    console.log("2222222222222222")
     let dataSEIRHCD = []
     let ae_data = []
     let ai_data = []
     let e_data = []
     let m_data = []
+    console.log("kk")
     axios
-    .get("https://server.covid19-modeling.ru/api/res_train")
+    .get("https://server.covid19-modeling.ru/api/res_train/")
     .then(res => {
-      console.log("!")
+      console.log("kk")
       for (const dataObj of res.data) {
         dataSEIRHCD.push(dataObj.Date);
         ae_data.push(dataObj.alpha_e_mean)
@@ -1030,6 +1039,11 @@ function ModelingSEIR_HCD() {
         e_data.push(dataObj.eps_hc_mean)
         m_data.push(dataObj.mu_mean)
       }
+      console.log("2222222222222222")
+      console.log(ae_data)
+      console.log(ai_data)
+      console.log(e_data)
+      console.log(m_data)
       setChartData_pm({
         labels:   dataSEIRHCD,
         datasets: [
@@ -1133,6 +1147,7 @@ function ModelingSEIR_HCD() {
       });
     }).catch(err => {
         console.log(err);
+        console.log('2222222222222222222222222');
       });
   }
 
@@ -1151,6 +1166,7 @@ function ModelingSEIR_HCD() {
   const [ai_mean, setAI_mean] = useState()
   const [ehc_mean, setEhc_mean] = useState()
   const [m_mean, setM_mean] = useState()
+
   useEffect(() => {
      res_validR0();
   }, [])
@@ -1158,7 +1174,6 @@ function ModelingSEIR_HCD() {
   useEffect(() => {
      datesOption();
   }, [])
-
 
   useEffect(() => {
      res_trainR0();
@@ -1178,7 +1193,7 @@ function ModelingSEIR_HCD() {
   }, [])
   useEffect(() => {
       lastDate2();
-     forecasts_new(1, lastData);
+     forecasts_new(1, "2022-01-10");
   }, [lastData])
   useEffect(() => {
       lastDate2();

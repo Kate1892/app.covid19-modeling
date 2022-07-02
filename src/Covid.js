@@ -48,7 +48,7 @@ export function Covid(){
           width: "100%" }} id="left-tabs-example" defaultActiveKey="novosibirsk" >
 
       <Nav variant="pills" defaultActiveKey="/home" >
-        <Nav.Item >
+        <Nav.Item key={1}>
         <OverlayTrigger
            placement="bottom"
            overlay={
@@ -71,7 +71,7 @@ export function Covid(){
         </motion.div>
         </OverlayTrigger>
         </Nav.Item>
-        <Nav.Item>
+        <Nav.Item key={2}>
         <OverlayTrigger
            placement="bottom"
            overlay={
@@ -94,7 +94,7 @@ export function Covid(){
             </motion.div>
           </OverlayTrigger>
         </Nav.Item>
-        <Nav.Item>
+        <Nav.Item key={3}>
         <OverlayTrigger
            placement="bottom"
            overlay={
@@ -121,7 +121,7 @@ export function Covid(){
 
     <Tab.Content>
       {regions.map((region) =>
-          <StaticCovidData region = {region}/>
+          <StaticCovidData key={region.id} region = {region}/>
       )}
       </Tab.Content>
   </Tab.Container>

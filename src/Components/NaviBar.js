@@ -11,7 +11,7 @@ export default function NaviBar() {
   return (
 
     <>
-      <Navbar collapseOnSelect scrolling transparent expand="md" className="text-white">
+      <Navbar collapseOnSelect expand="md" className="text-white">
         <Container className="py-1">
         <Navbar.Brand className="text-white ">
         <Stack direction="horizontal" gap={3}>
@@ -32,7 +32,7 @@ export default function NaviBar() {
             <Nav.Link><NavLink to="/data"
             className={setActive}><h5>Данные</h5></NavLink></Nav.Link>
             <h5><NavDropdown title={<span className="fdrop">Статистика</span>} id="collasible-nav-dropdown">
-              <NavDropdown.Item> <NavLink to="/covid19" className={({isActive}) => isActive ? 'active-link' : 'text-secondary'}>Коронавирус</NavLink></NavDropdown.Item>
+              <NavDropdown.Item> <NavLink to="/statistics" className={({isActive}) => isActive ? 'active-link' : 'text-secondary'}>Коронавирус</NavLink></NavDropdown.Item>
             </NavDropdown></h5>
           </Nav>
         </Navbar.Collapse>

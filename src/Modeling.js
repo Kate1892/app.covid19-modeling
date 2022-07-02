@@ -66,7 +66,6 @@ const download_article=(e)=>{
      method: "GET",
      responseType:"blob"
    }).then((resA)=>{
-     console.log(resA);
      FileDownload(resA.data, "article.pdf")
    })
 }
@@ -107,7 +106,6 @@ export function Modeling(){
   const run_msim_ = (e) => {
     e.preventDefault()
     var now = new Date().toLocaleDateString();
-    console.log(now)
     setWithspinner(true)
     setIsrunning(true)
     cancelToken.current = axios.CancelToken.source();
@@ -461,7 +459,6 @@ export function Modeling(){
         for (const dataObj of res.data) {
           cov_nd_state.push(parseInt(dataObj.new_diagnoses));
         }
-        console.log(cov_nd_state)
         setINITChartData_all({
           labels: data,
           datasets: [
@@ -751,7 +748,6 @@ export function Modeling(){
           data: {population_data, region_data, n_future_day, init_inf},
         })
         .then(res => {
-          console.log(res.data)
           for (const dataObj of res.data.results.new_diagnoses) {
             cov_nd.push(parseInt(dataObj));
             setData_cov_nd(cov_nd)
@@ -1229,12 +1225,10 @@ export function Modeling(){
     const chart = () => {
       setChartnum(1)
       axios
-        //.get("https://server.covid19-modeling.ru/getMsim")
-        .get("http://localhost:4000/getMsim")
+        .get("https://server.covid19-modeling.ru/getMsim")
         .then(res => {
           setLoadingprosses(false)
           setSomeerrors(false)
-          console.log(res)
           for (const dataObj of res.data.results.new_diagnoses) {
             cov_nd.push(parseInt(dataObj));
             setData_cov_nd(cov_nd)
@@ -1330,7 +1324,6 @@ export function Modeling(){
           setSomeerrors(true)
           console.log(err);
         });
-      console.log(cov_nd, cov_data);
     };
     const chart_cumdiag = () => {
       setChartnum(2)
@@ -1984,7 +1977,7 @@ COVID-19, в основе которой лежат обработка непо�
                         }}
                       >
                         {({ handleSubmit, handleChange, handleBlur, values, touched, isValid, errors, resetForm, setFieldValue}) => (
-                <Form noValidate >
+                <Form noValidate>
                   <Stack gap={3}>
                       <Form.Select aria-label="Default select example"
                         type="number"
@@ -1998,17 +1991,14 @@ COVID-19, в основе которой лежат обработка непо�
                             setRegion_name("Новосибирская область")
                             setPopulation_data(2798170)
                             setFieldValue("population", 2798170)
-                            console.log(population_data)
                           } else if(sregion == 2) {
                             setRegion_name("Омская область")
                             setPopulation_data(578698)
                             setFieldValue("population", 1879548)
-                            console.log(population_data)
                           } else if(sregion == 3) {
                             setRegion_name("Алтайский край")
                             setPopulation_data(2268179)
                             setFieldValue("population", 2268179)
-                            console.log(population_data)
                           }
                         }}
                         >
@@ -2016,8 +2006,7 @@ COVID-19, в основе которой лежат обработка непо�
                             <option value="2">Омская область</option>
                             <option value="3">Алтайский край</option>
                       </Form.Select>
-
-                      <Form.Group as={Col} controlId="validationFormik01">
+                      <Form.Group key={1} as={Col} controlId="validationFormik01">
                         <Form.Control
                           type="number"
                           name="population"
@@ -2029,7 +2018,7 @@ COVID-19, в основе которой лежат обработка непо�
                           onSubmit={setPopulation_data(values.population)}
                         />
                       </Form.Group>
-                      <Form.Group as={Col} controlId="validationFormik04">
+                      <Form.Group key={2} as={Col} controlId="validationFormik04">
                         <Form.Control
                           type="number"
                           name="init_infected"
@@ -2041,7 +2030,7 @@ COVID-19, в основе которой лежат обработка непо�
                           onSubmit={setInit_inf(values.init_infected)}
                         />
                       </Form.Group>
-                      <Form.Group as={Col} controlId="validationFormik02">
+                      <Form.Group key={3} as={Col} controlId="validationFormik02">
                         <Form.Control
                           type="number"
                           name="n_future"

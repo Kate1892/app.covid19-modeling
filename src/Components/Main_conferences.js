@@ -41,7 +41,7 @@ const Main_conferences = () => {
               {confs.map((conf,index) =>
                   <MConferenseItem initial="hidden" whileInView="visible" viewport={{amount: 0.05, once: true}}
                      custom={index + 1}
-                    variants={variants}conf = {conf}/>
+                    variants={variants} key = {conf.id} conf = {conf}/>
               )}
         </Row>
       </Container>

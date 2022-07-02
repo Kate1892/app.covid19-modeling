@@ -68,7 +68,7 @@ export function Main() {
               {posts.map((post, index) =>
                   <MTeamItem  initial="hidden" whileInView="visible" viewport={{amount: 0.05, once: true}}
                      custom={index + 1}
-                    variants={variants} post = {post}/>
+                    variants={variants} key = {post.id} post = {post}/>
               )}
             </Row>
           </Container>

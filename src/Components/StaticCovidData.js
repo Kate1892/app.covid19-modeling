@@ -102,7 +102,6 @@ const StaticCovidData = (props) => {
     .then(res => {
       setLoadingprosses(false)
       setSomeerrors(false)
-      console.log(res);
       cov_last_nd.push(parseInt(res.data[res.data.length-1].new_diagnoses))
       cov_last_date.push(res.data[res.data.length-1].date)
       cov_last_ndeaths.push(parseInt(res.data[res.data.length-1].new_deaths)) //
@@ -267,8 +266,6 @@ const StaticCovidData = (props) => {
       setSomeerrors(true)
       console.log(err);
     });
-    console.log(cov_ncrit);
-
   };
 
   useEffect(() => {
@@ -294,7 +291,7 @@ const StaticCovidData = (props) => {
                 {lasts.map((last,index) =>
                     <MSCDItem initial="hidden" whileInView="visible" viewport={{amount: 0.05}}
                        custom={index + 1}
-                      variants={variants} last = {last}/>
+                      variants={variants} key = {last.id} last = {last}/>
                 )}
         </Row>
       </Container>
@@ -336,9 +333,9 @@ const StaticCovidData = (props) => {
     </Col>
     </Row>
     {loadingprosses ? <div style={{
-            height: '400px'}}><Spinner relative style={{position: 'absolute', top: '50%'}} animation="border" variant="info"  /></div> :
+            height: '400px'}}><Spinner relative="true" style={{position: 'absolute', top: '50%'}} animation="border" variant="info"  /></div> :
     someerrors ?  <div style={{
-            height: '350px' }}><Alert relative variant="danger" className="my-5"> <Alert.Heading>Ошибка загрузки</Alert.Heading>
+            height: '350px' }}><Alert relative="true" variant="danger" className="my-5"> <Alert.Heading>Ошибка загрузки</Alert.Heading>
     Сервер временно не отвечает, пожалуйста, <Alert.Link href="/modeling">обновите страницу</Alert.Link> или повторите попытку позже.
     <hr /> </Alert> </div> :
     <div style={{ height: '25rem' }}><Line id="chart3" data={chartData} options={chartOptions}  height="90%" /></div> }

@@ -26,7 +26,7 @@ function Footer() {
       <hr className="text-white mx-auto"/>
       <small align="left" className="text-center text-muted text-white mx-auto">© 2022 COVID-19 в Новосибирской области</small></div></Col>
       <Col  align="right" xs={12} md={12} lg={6}>
-      <Stack direction="horizontal" gap={3} style={{"margin-left": "33%" }}>
+      <Stack direction="horizontal" gap={3} style={{"marginLeft": "33%" }}>
 
         <div align="center">
         <Image variant="bottom" className = "my-1"

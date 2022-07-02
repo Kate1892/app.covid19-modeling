@@ -30,7 +30,7 @@ function NaviBarv2() {
           <Nav.Link><NavLink to="/data"
           className={setActive}><h5>Данные</h5></NavLink></Nav.Link>
           <h5><NavDropdown title={<span className="fdrop">Статистика</span>} id="collasible-nav-dropdown">
-            <NavDropdown.Item> <NavLink to="/covid19" className={({isActive}) => isActive ? 'active-dropdown' : 'non-active-dropdown'} >Коронавирус</NavLink></NavDropdown.Item>
+            <NavDropdown.Item> <NavLink to="/statistics" className={({isActive}) => isActive ? 'active-dropdown' : 'non-active-dropdown'} >Коронавирус</NavLink></NavDropdown.Item>
           </NavDropdown></h5>
         </Nav>
         </Navbar.Collapse>

@@ -194,7 +194,7 @@ const Description_SEIRHCD = () => {
                     <div className=" ms-auto">2</div>
                     </OverlayTrigger>
                     <div className="vr" />
-                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'textDecoration': 'none'}}  className="">
                     <div className=""><BsDownload/></div></a>
                   </Stack>
                   <hr />
@@ -213,7 +213,7 @@ const Description_SEIRHCD = () => {
                     <div className=" ms-auto">22</div>
                     </OverlayTrigger>
                     <div className="vr" />
-                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'textDecoration': 'none'}}  className="">
                     <div className=""><BsDownload/></div></a>
                   </Stack>
                   <hr />
@@ -232,7 +232,7 @@ const Description_SEIRHCD = () => {
                     <div className=" ms-auto">16</div>
                     </OverlayTrigger>
                     <div className="vr" />
-                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'textDecoration': 'none'}}  className="">
                     <div className=""><BsDownload/></div></a>
                   </Stack>
                   <hr />
@@ -251,7 +251,7 @@ const Description_SEIRHCD = () => {
                     <div className=" ms-auto">7</div>
                     </OverlayTrigger>
                     <div className="vr" />
-                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'textDecoration': 'none'}}  className="">
                     <div className=""><BsDownload/></div></a>
                   </Stack>
                   <hr />
@@ -270,7 +270,7 @@ const Description_SEIRHCD = () => {
                     <div className=" ms-auto">21</div>
                     </OverlayTrigger>
                     <div className="vr" />
-                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'textDecoration': 'none'}}  className="">
                     <div className=""><BsDownload/></div></a>
                   </Stack>
                   <hr />
@@ -289,7 +289,7 @@ const Description_SEIRHCD = () => {
                     <div className=" ms-auto">2</div>
                     </OverlayTrigger>
                     <div className="vr" />
-                      <a href="https://covid19-modeling.ru/data/novosibirsk-invitro.csv" style={{'text-decoration': 'none'}}>
+                      <a href="https://covid19-modeling.ru/data/novosibirsk-invitro.csv" style={{'textDecoration': 'none'}}>
                     <div className=""><BsDownload/></div></a>
                   </Stack>
                  </Card.Body></Card></motion.div>

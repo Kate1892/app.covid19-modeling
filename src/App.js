@@ -34,7 +34,7 @@ return (
          <link rel="canonical" href="http://covid19-modeling.ru" />
        </Helmet>
           <Routes>
-            <Route exact path="/covid19" element={<Covid />} />
+            <Route exact path="/statistics" element={<Covid />} />
             <Route exact path="/" element={<Main />} />
             <Route exact path="/modeling" element={<Modeling />} />
             <Route exact path="/data" element={<Data />} />

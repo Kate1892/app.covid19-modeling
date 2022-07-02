@@ -60,7 +60,7 @@ export function Data (){
            custom={2}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
       <Card className="shadow1 my-1">
-      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'text-decoration': 'none'}}  className="">
+      <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'textDecoration': 'none'}}  className="">
         <Card.Body className="datacardcol">
           <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Полные</h5></Card.Title>
         </Card.Body></a>
@@ -71,7 +71,7 @@ export function Data (){
            custom={3}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
     <Card className="shadow1 my-1">
-    <a href="https://covid19-modeling.ru/data/novosibirsk-region-data-small.csv" style={{'text-decoration': 'none'}}  className="">
+    <a href="https://covid19-modeling.ru/data/novosibirsk-region-data-small.csv" style={{'textDecoration': 'none'}}  className="">
         <Card.Body className="datacardcol">
 <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Сокращенные</h5></Card.Title>
         </Card.Body></a>
@@ -82,7 +82,7 @@ export function Data (){
            custom={4}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
         <Card className="shadow1 my-1">
-        <a href="https://covid19-modeling.ru/data/novosibirsk-invitro.csv" style={{'text-decoration': 'none'}}>
+        <a href="https://covid19-modeling.ru/data/novosibirsk-invitro.csv" style={{'textDecoration': 'none'}}>
         <Card.Body className="datacardcol">
 <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  IgG-Антитела</h5></Card.Title>
         </Card.Body></a>
@@ -93,7 +93,7 @@ export function Data (){
            custom={4}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
        <Card className="shadow1 my-1">
-       <a href="https://covid19-modeling.ru/data/new_deaths_Nsk_form_burial_statistics.csv" style={{'text-decoration': 'none'}}>
+       <a href="https://covid19-modeling.ru/data/new_deaths_Nsk_form_burial_statistics.csv" style={{'textDecoration': 'none'}}>
         <Card.Body className="datacardcol">
 <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Захоронения</h5></Card.Title>
         </Card.Body></a>
@@ -124,7 +124,7 @@ export function Data (){
            custom={2}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
       <Card className="shadow1 my-1 ">
-      <a href="https://covid19-modeling.ru/data/omsk-region-data.csv" style={{'text-decoration': 'none'}}  >
+      <a href="https://covid19-modeling.ru/data/omsk-region-data.csv" style={{'textDecoration': 'none'}}  >
         <Card.Body className="datacardcol">
         <Card.Title><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Полные</h5></Card.Title>
         </Card.Body></a>
@@ -155,7 +155,7 @@ export function Data (){
            custom={2}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
           <Card className="shadow1 my-1">
-        <a href="https://covid19-modeling.ru/data/altay-region-data.csv" style={{'text-decoration': 'none'}} >
+        <a href="https://covid19-modeling.ru/data/altay-region-data.csv" style={{'textDecoration': 'none'}} >
         <Card.Body className="datacardcol">
 <Card.Title ><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Полные</h5></Card.Title>
         </Card.Body></a>
@@ -166,7 +166,7 @@ export function Data (){
            custom={3}
           variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
       <Card className="shadow1 my-1">
-      <a href="https://covid19-modeling.ru/data/altay-region-data-smoothed.csv" style={{'text-decoration': 'none'}} >
+      <a href="https://covid19-modeling.ru/data/altay-region-data-smoothed.csv" style={{'textDecoration': 'none'}} >
         <Card.Body className="datacardcol">
 <Card.Title><h5 align='center' style={{fontSize:"20px", align:"left"}}><BsDownload />  Сглаженные</h5></Card.Title>
         </Card.Body></a>

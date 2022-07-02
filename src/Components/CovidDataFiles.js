@@ -8,7 +8,7 @@ function CovidDataFiles(files) {
   const [isActive, setIsActive] = useState(true)
 
   return (
-      <a href={files.file.hr} style={{'text-decoration': 'none'}}>
+      <a href={files.file.hr} style={{'textDecoration': 'none'}}>
         <div className={isActive ? '' : 'bg-light '}  onMouseEnter = {()=>{setIsActive(false)}}
           onMouseLeave={()=>{setIsActive(true)}}>
           <Row>

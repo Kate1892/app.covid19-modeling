@@ -87,7 +87,7 @@ const Description_AOM = () => {
                  <Card.Body align="center">
                  <Stack gap={3}>
                    {files.map((file) =>
-                       <CovidDataFiles file = {file}/>
+                       <CovidDataFiles key = {file.id} file = {file}/>
                    )}
                     <CollapseParamCSV/>
                   </Stack>

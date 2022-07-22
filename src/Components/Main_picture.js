@@ -1,20 +1,8 @@
-import React from "react";
 import {Container, Card, Image, Col, Row, Button} from 'react-bootstrap';
 import NaviBar from './NaviBar';
 import { motion } from "framer-motion"
 
-const variants = {
-  visible: custom => ({
-    opacity: 1,
-    x: 0,
-    transition: {
-      delay: custom * 0.2}
-  }),
-  hidden: {
-    opacity: 0,
-    x: -100,
- },
-}
+import { variantsX as variants } from "./Animation"
 
 const Main_picture = () => {
     return (

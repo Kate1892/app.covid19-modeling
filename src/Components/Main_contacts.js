@@ -1,4 +1,3 @@
-import React from "react";
 import {Container, Card, Image, Col, Row} from 'react-bootstrap';
 import { YMaps, Map, Placemark, ZoomControl} from 'react-yandex-maps';
 import { BsFillTelephoneFill, BsFillEnvelopeFill, BsFillGeoAltFill} from "react-icons/bs";

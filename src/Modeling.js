@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import { useState, useEffect, useRef } from "react";
 import {Container, Card, Row, Col, Image, Button, Nav, NavDropdown, Table, Form, ListGroup, FormControl, Stack,
 OverlayTrigger, Popover, InputGroup, ProgressBar, Spinner, Tabs, Tab, Collapse, Carousel, Alert, Modal, ButtonGroup,
 DropdownButton, Dropdown} from 'react-bootstrap';
@@ -11,20 +11,11 @@ import {FiDownload } from 'react-icons/fi'
 import {BsFillFileEarmarkPdfFill, BsFillArrowUpRightSquareFill, BsFillCaretRightFill, BsFillCaretDownFill,
 BsFillPersonLinesFill, BsExclamationLg, BsInfo} from 'react-icons/bs'
 import {FcSearch} from 'react-icons/fc'
-import NaviBarv2 from './Components/NaviBarv2';
 import {BsZoomIn} from 'react-icons/bs'
 import { motion } from "framer-motion"
-
 import { DownloadCount } from 'axios-progress-bar'
-
-import ModelingSEIR_HCD from './ModelingSEIR_HCD'
-import Description_AOM from './Components/Description_AOM'
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styles.css";
-
-import Footer from './Components/Footer'
-
 import {
   Chart as ChartJS,
   PointElement,
@@ -38,9 +29,15 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-
 import {Bar, Line} from 'react-chartjs-2'
 import zoomPlugin from 'chartjs-plugin-zoom';
+
+import NaviBarv2 from './Components/NaviBarv2';
+import ModelingSEIR_HCD from './ModelingSEIR_HCD'
+import Description_AOM from './Components/Description_AOM'
+import Footer from './Components/Footer'
+import { variantsX as variants, variantsY as variants2 } from './Components/Animation'
+import { download_chart, zoom_chart } from './Components/ChartFun'
 
 ChartJS.register(
   CategoryScale,
@@ -56,8 +53,6 @@ ChartJS.register(
 );
 
 ChartJS.register(zoomPlugin);
-
-
 
 const download_article=(e)=>{
    e.preventDefault()
@@ -83,23 +78,6 @@ export function Modeling(){
   const [region_name, setRegion_name] = useState("Новосибирская область")
   const [n_future_day, setN_future_day] = useState(45)
   const [init_inf, setInit_inf] = useState(20)
-
-  const download_chart=(e) => {
-    e.preventDefault()
-    const imageLink = document.createElement('a')
-    const img = document.getElementById('chart')
-    imageLink.download = 'scenario.png'
-    imageLink.href = img.toDataURL('image/png', 1)
-    imageLink.click()
-  }
-
-  const zoom_chart=(e) => {
-    e.preventDefault()
-    const img = document.getElementById('chart')
-    img.plugins.scales.y.min = 80;
-    img.plugins.scales.y.max = 100;
-    img.update()
-  }
 
   const cancelToken = useRef();
 
@@ -224,9 +202,10 @@ export function Modeling(){
         },
         ],
         });
-      }).catch(err => {
+      })
+      .catch(err => {
           console.log(err);
-        });
+      });
     }
     const real_data2=(e)=>{
       axios
@@ -1711,32 +1690,6 @@ export function Modeling(){
   const [open, setOpen] = useState(false);
   const [reset, setReset] = useState(true);
 
-  const variants = {
-    visible: custom => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        delay: custom * 0.2}
-    }),
-    hidden: {
-      opacity: 0,
-      x: -100,
-   },
-  }
-
-  const variants2 = {
-    visible: custom => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: custom * 0.2}
-    }),
-    hidden: {
-      opacity: 0,
-      y: 100,
-   },
-  }
-
   return(
   <>
   <NaviBarv2 />
@@ -2109,7 +2062,7 @@ COVID-19, в основе которой лежат обработка непо�
              >
               <Button variant="outline-secondary" size="sm"  className=" mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
               </OverlayTrigger>
-              <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e)}><FiDownload/></Button>
+              <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart")}><FiDownload/></Button>
               </motion.div>
               </div></Stack>
               {loadingprosses ? <div style={{

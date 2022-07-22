@@ -1,10 +1,9 @@
-import React, { useState, useEffect} from "react";
+import { useState, useEffect} from "react";
 import axios from "axios";
 import {FiDownload } from 'react-icons/fi'
 import {Container, Row, Col, Card, Button,
   Image, Dropdown, OverlayTrigger, Popover, Spinner, Alert, Placeholder, Tab} from 'react-bootstrap';
 import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
-import MSCDItem from './StaticCovidDataItem'
 import { motion } from "framer-motion"
 
 import {
@@ -24,6 +23,9 @@ import {Bar, Line} from 'react-chartjs-2'
 import zoomPlugin from 'chartjs-plugin-zoom';
 import scales from 'chartjs-plugin-zoom';
 
+import { variantsY as variants } from "./Animation"
+import MSCDItem from './StaticCovidDataItem'
+import {download_chart, zoom_chart} from './ChartFun'
 
   ChartJS.register(
     CategoryScale,
@@ -40,37 +42,8 @@ import scales from 'chartjs-plugin-zoom';
 
   ChartJS.register(zoomPlugin,  scales);
 
-  const variants = {
-    visible: custom => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: custom * 0.2}
-    }),
-    hidden: {
-      opacity: 0,
-      y: 100,
-   },
-  }
 
 const StaticCovidData = (props) => {
-
-  const zoom_chart=(e) => {
-    e.preventDefault()
-    const img = document.getElementById('chart')
-    img.plugins.scales.y.min = 80;
-    img.plugins.scales.y.max = 100;
-    img.update()
-  }
-
-  const download_chart3=(e) => {
-    e.preventDefault()
-    const imageLink = document.createElement('a')
-    const img = document.getElementById('chart3')
-    imageLink.download = 'scenario.png'
-    imageLink.href = img.toDataURL('image/png', 1)
-    imageLink.click()
-  }
 
   const [lastData, setLastsData] = useState(0)
   const [lastDatadate, setLastsDatadate] = useState(0)
@@ -328,7 +301,7 @@ const StaticCovidData = (props) => {
       <Button variant="outline-secondary" size="sm"  className="align-right mx-1" onClick={(e)=>zoom_chart(e)}><BsZoomIn /></Button>
       </OverlayTrigger>
        <Button variant="outline-secondary" size="sm" className="mx-1" onClick={chart}><BsZoomOut/></Button>
-      <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart3(e)}><FiDownload/></Button>
+      <Button variant="outline-secondary" size="sm" className="" onClick={(e)=>download_chart(e, "chart10")}><FiDownload/></Button>
       </motion.div>
     </Col>
     </Row>
@@ -338,7 +311,7 @@ const StaticCovidData = (props) => {
             height: '350px' }}><Alert relative="true" variant="danger" className="my-5"> <Alert.Heading>Ошибка загрузки</Alert.Heading>
     Сервер временно не отвечает, пожалуйста, <Alert.Link href="/modeling">обновите страницу</Alert.Link> или повторите попытку позже.
     <hr /> </Alert> </div> :
-    <div style={{ height: '25rem' }}><Line id="chart3" data={chartData} options={chartOptions}  height="90%" /></div> }
+    <div style={{ height: '25rem' }}><Line id="chart10" data={chartData} options={chartOptions}  height="90%" /></div> }
 
 
      </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import {Container, Card, Row, Col, Image, Button, Nav, NavDropdown, Table, Form, ListGroup, FormControl, Stack,
 OverlayTrigger, Popover, InputGroup, ProgressBar, Spinner, Tabs, Tab, Collapse, Carousel, Alert, Modal, ButtonGroup,
@@ -6,15 +6,10 @@ DropdownButton, Dropdown} from 'react-bootstrap';
 import {FcSearch} from 'react-icons/fc'
 import {FiDownload } from 'react-icons/fi'
 import {BsZoomOut, BsInfo, BsZoomIn} from 'react-icons/bs'
-
 import {BsFillFileEarmarkPdfFill, BsFillArrowUpRightSquareFill, BsFillCaretRightFill, BsFillCaretDownFill,
 BsFillPersonLinesFill, BsExclamationLg} from 'react-icons/bs'
 import { Formik } from "formik";
-import Description_SEIRHCD from './Components/Description_SEIRHCD'
-import OptionItem from './Components/OptionItem'
-
 import { motion } from "framer-motion"
-
 import {
   Chart as ChartJS,
   PointElement,
@@ -28,9 +23,13 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-
 import {Bar, Line} from 'react-chartjs-2'
 import zoomPlugin from 'chartjs-plugin-zoom';
+
+import Description_SEIRHCD from './Components/Description_SEIRHCD'
+import OptionItem from './Components/OptionItem'
+import { variantsX as variants, variantsY as variants2 } from "./Components/Animation"
+import { download_chart, zoom_chart } from './Components/ChartFun'
 
 ChartJS.register(
   CategoryScale,
@@ -55,22 +54,6 @@ function ModelingSEIR_HCD() {
     .then(res => {
       setLastsData(res.data.dates[res.data.dates.length-1].data)
     })
-  }
-
-  const download_chart=(e, chart) => {
-    e.preventDefault()
-    const imageLink = document.createElement('a')
-    const img = document.getElementById(chart)
-    imageLink.download = 'scenario.png'
-    imageLink.href = img.toDataURL('image/png', 1)
-    imageLink.click()
-  }
-  const zoom_chart=(e) => {
-    e.preventDefault()
-    const img = document.getElementById('chart')
-    img.plugins.scales.y.min = 80;
-    img.plugins.scales.y.max = 100;
-    img.update()
   }
 
   const dates = []
@@ -1163,31 +1146,6 @@ function ModelingSEIR_HCD() {
 
   const [openSEIRHCD, setOpenSEIRHCD] = useState(false);
 
-  const variants = {
-    visible: custom => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        delay: custom * 0.2}
-    }),
-    hidden: {
-      opacity: 0,
-      x: -100,
-   },
-  }
-
-  const variants2 = {
-    visible: custom => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: custom * 0.2}
-    }),
-    hidden: {
-      opacity: 0,
-      y: 100,
-   },
-  }
 
   return (
     <>

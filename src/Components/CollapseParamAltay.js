@@ -1,6 +1,7 @@
-import React, {useState, useRef} from "react";
+import {useState, useRef} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Collapse, Card, Nav, NavDropdown, Table, Container, Fade, Stack, Overlay} from 'react-bootstrap';
+
 import "./../styles.css";
 
 function CollapseParamAltay() {

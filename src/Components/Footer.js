@@ -1,6 +1,6 @@
-import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Row, Col, Image, Stack} from 'react-bootstrap';
+
 import MMA from "./../images/MMA.png"
 import RNF6 from "./../images/RNF6.png"
 import MCA2 from "./../images/MCA2.png"

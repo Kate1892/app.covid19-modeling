@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import axios from "axios";
-import NaviBarv2 from './Components/NaviBarv2';
 import {Container, Row, Col, Card, Stack, Popover, OverlayTrigger, Image, Button } from 'react-bootstrap';
 import { motion } from "framer-motion"
+import {BsDownload} from 'react-icons/bs'
+
+import NaviBarv2 from './Components/NaviBarv2';
 import CollapseParamCSV from './Components/CollapseParamCSV'
 import CollapseParamInvitro from './Components/CollapseParamInvitro'
 import CollapseParamOmsk from './Components/CollapseParamOmsk'
@@ -13,23 +15,11 @@ import CollapseMSDeath_data from './Components/CollapseMSDeath_data'
 import AltayG from "./images/gerbs/Altay_region_gerb.png"
 import OmskG from "./images/gerbs/Omsk_region_gerb.png"
 import HSKG from "./images/gerbs/Novosibirsk_region_gerb.png"
-import {BsDownload} from 'react-icons/bs'
+import { variantsY } from "./Components/Animation"
 
 
 export function Data (){
   const [open, setOpen] = useState(false);
-  const variants2 = {
-    visible: custom => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: custom * 0.2}
-    }),
-    hidden: {
-      opacity: 0,
-      y: 100,
-   },
-  }
 
   return(
     <>
@@ -38,7 +28,7 @@ export function Data (){
               height: "120%" }}>
               <motion.div initial="hidden"
                    custom={2}
-                  variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3 my-3">
+                  variants={variantsY} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3 my-3">
                   <Row>
                   <Col xs={8} md={10} lg={10}>
                   <div ><h4 className="mx-5 text-secondary">Данные по Новосибирской области</h4></div>
@@ -58,7 +48,7 @@ export function Data (){
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={2}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variantsY} whileInView="visible" viewport={{amount: 0.1, once: true}}>
       <Card className="shadow1 my-1">
       <a href="https://covid19-modeling.ru/data/novosibirsk-region-data.csv" style={{'textDecoration': 'none'}}  className="">
         <Card.Body className="datacardcol">
@@ -69,7 +59,7 @@ export function Data (){
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={3}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variantsY} whileInView="visible" viewport={{amount: 0.1, once: true}}>
     <Card className="shadow1 my-1">
     <a href="https://covid19-modeling.ru/data/novosibirsk-region-data-small.csv" style={{'textDecoration': 'none'}}  className="">
         <Card.Body className="datacardcol">
@@ -80,7 +70,7 @@ export function Data (){
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={4}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variantsY} whileInView="visible" viewport={{amount: 0.1, once: true}}>
         <Card className="shadow1 my-1">
         <a href="https://covid19-modeling.ru/data/novosibirsk-invitro.csv" style={{'textDecoration': 'none'}}>
         <Card.Body className="datacardcol">
@@ -91,7 +81,7 @@ export function Data (){
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={4}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variantsY} whileInView="visible" viewport={{amount: 0.1, once: true}}>
        <Card className="shadow1 my-1">
        <a href="https://covid19-modeling.ru/data/new_deaths_Nsk_form_burial_statistics.csv" style={{'textDecoration': 'none'}}>
         <Card.Body className="datacardcol">
@@ -102,7 +92,7 @@ export function Data (){
      </Row>
      <motion.div initial="hidden"
           custom={2}
-         variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3"><hr />
+         variants={variantsY} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3"><hr />
          <Row>
          <Col xs={8} md={10} lg={10}>
           <div ><h4 className="mx-5 text-secondary">Данные по Омской области</h4></div>
@@ -122,7 +112,7 @@ export function Data (){
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={2}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variantsY} whileInView="visible" viewport={{amount: 0.1, once: true}}>
       <Card className="shadow1 my-1 ">
       <a href="https://covid19-modeling.ru/data/omsk-region-data.csv" style={{'textDecoration': 'none'}}  >
         <Card.Body className="datacardcol">
@@ -133,7 +123,7 @@ export function Data (){
      </Row>
      <motion.div initial="hidden"
           custom={2}
-         variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3"><hr />
+         variants={variantsY} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-3"><hr />
          <Row>
          <Col xs={8} md={10} lg={10}>
           <div><h4 className="mx-5 text-secondary">Данные по Алтайскому краю</h4></div>
@@ -153,7 +143,7 @@ export function Data (){
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={2}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variantsY} whileInView="visible" viewport={{amount: 0.1, once: true}}>
           <Card className="shadow1 my-1">
         <a href="https://covid19-modeling.ru/data/altay-region-data.csv" style={{'textDecoration': 'none'}} >
         <Card.Body className="datacardcol">
@@ -164,7 +154,7 @@ export function Data (){
       <Col xs= {12} md={6} lg={3}>
       <motion.div initial="hidden"
            custom={3}
-          variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}}>
+          variants={variantsY} whileInView="visible" viewport={{amount: 0.1, once: true}}>
       <Card className="shadow1 my-1">
       <a href="https://covid19-modeling.ru/data/altay-region-data-smoothed.csv" style={{'textDecoration': 'none'}} >
         <Card.Body className="datacardcol">
@@ -176,7 +166,7 @@ export function Data (){
 
      <motion.div initial="hidden"
           custom={2}
-         variants={variants2} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-auto my-5">
+         variants={variantsY} whileInView="visible" viewport={{amount: 0.1, once: true}} className="mx-auto my-5">
          </motion.div>
       </Container>
 

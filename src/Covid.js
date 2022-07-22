@@ -1,25 +1,14 @@
-import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { motion } from "framer-motion"
+import {Container, Row, Col, Card, ListGroup, ListGroupItem, Button, Tab, Nav,
+OverlayTrigger, Popover, Placeholder} from 'react-bootstrap';
+
 import "./styles.css";
 import NaviBarv2 from './Components/NaviBarv2';
 import Footer from './Components/Footer'
-import {Container, Row, Col, Card, ListGroup, ListGroupItem, Button, Tab, Nav,
-OverlayTrigger, Popover, Placeholder} from 'react-bootstrap';
-import { motion } from "framer-motion"
 import StaticCovidData from './Components/StaticCovidData'
+import { variantsY as variants } from "./Components/Animation"
 
-const variants = {
-  visible: custom => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: custom * 0.2}
-  }),
-  hidden: {
-    opacity: 0,
-    y: 30,
- },
-}
 
 export function Covid(){
 

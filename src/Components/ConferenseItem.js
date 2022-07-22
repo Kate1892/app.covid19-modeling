@@ -1,4 +1,4 @@
-import React, {forwardRef} from "react";
+import {forwardRef} from "react";
 import {Container, Card, Image, Col, Row} from 'react-bootstrap';
 import { motion } from "framer-motion"
 

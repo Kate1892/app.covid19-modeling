@@ -1,44 +1,19 @@
-import React from "react";
-import {Container, Card, Row } from 'react-bootstrap';
+import {Container, Card, Row } from 'react-bootstrap'
+import { motion } from "framer-motion"
+
 import MTeamItem from './Components/TeamItem'
 import Main_picture from './Components/Main_picture'
 import Main_contacts from './Components/Main_contacts'
 import Main_publications from './Components/Main_publications'
 import Main_conferences from './Components/Main_conferences'
-import { motion } from "framer-motion"
 import Zvonareva from "./images/team/Zvonareva.jpg"
 import Krivorotko from "./images/team/Krivorotko.png"
 import Zyatkov from "./images/team/Zyatkov.png"
 import Sosnovskaya from "./images/team/Sosnovskaya.png"
 import Neverov from "./images/team/Neverov.png"
 import Petrakova from "./images/team/Petrakova.jpg"
+import { variantsY as variants } from "./Components/Animation"
 
-
-const variants = {
-  visible: custom => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: custom * 0.2}
-  }),
-  hidden: {
-    opacity: 0,
-    y: 100,
- },
-}
-
-const itemAnimation = {
-  visible: custom => ({
-    opacity: 1,
-    x: 0,
-    transition: {
-      delay: custom * 0.2}
-  }),
-  hidden: {
-    opacity: 0,
-    x: -100,
- },
-}
 
 export function Main() {
 
@@ -50,6 +25,7 @@ export function Main() {
     {id: 5, wid: '9rem', name: 'Неверов Андрей', institution: 'магистрант НГУ, инженер ИВМиМГ СО РАН', image: Neverov},
     {id: 6, wid: '9rem', name: 'Петракова Виктория', institution: 'к.ф.-м.н., м.н.с. ИВМ СО РАН', image: Petrakova}
   ]
+
   return(
       <>
       <Main_picture />

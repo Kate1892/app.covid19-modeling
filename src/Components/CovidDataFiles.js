@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Container, Card, Row, Col, Image, Button, Nav, NavDropdown, Table, Stack} from 'react-bootstrap';
 

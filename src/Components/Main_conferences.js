@@ -1,7 +1,7 @@
-import React from "react";
 import {Container, Card, Image, Col, Row} from 'react-bootstrap';
 import MConferenseItem from './ConferenseItem'
 import { motion } from "framer-motion"
+
 import conf_DynInSyb from ".././images/conf/conf_DynInSyb.png"
 import conf_BGRS from ".././images/conf/conf_BGRS.png"
 import conf_SBB from ".././images/conf/conf_SBB.png"

@@ -1,26 +1,15 @@
-import React from "react";
 import {Container, Card, Image, Col, Row, Table, Stack, OverlayTrigger, Popover} from 'react-bootstrap';
+import { motion } from "framer-motion"
+import {BsDownload} from 'react-icons/bs'
+
 import sfblok from "./../images/sfblok.png"
 import sfifblok from "./../images/sfifblok.png"
 import firdblok from "./../images/firdblok.png"
 import blokd from "./../images/blokd.png"
-import { motion } from "framer-motion"
-import {BsDownload} from 'react-icons/bs'
-
+import { variantsY as variants } from "./Animation"
 
 const Description_SEIRHCD = () => {
-  const variants = {
-    visible: custom => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: custom * 0.2}
-    }),
-    hidden: {
-      opacity: 0,
-      y: -100,
-   },
-  }
+
     return (
       <>
       <Row >

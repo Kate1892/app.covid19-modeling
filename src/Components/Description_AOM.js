@@ -1,17 +1,18 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import {Container, Card, Image, Col, Row, Table, Modal, Button, Popover, OverlayTrigger, Stack} from 'react-bootstrap';
+import { motion } from "framer-motion"
+import {BsFillPersonLinesFill} from 'react-icons/bs'
+
 import fblok from "./../images/fblok.png"
 import model from "./../images/model.png"
 import sblok from "./../images/sblok.png"
-import { motion } from "framer-motion"
 import CovidDataFiles from './CovidDataFiles'
 import CollapseParamCSV from './CollapseParamCSV'
 import AltayG from ".././images/gerbs/Altay_region_gerb.png"
 import OmskG from ".././images/gerbs/Omsk_region_gerb.png"
 import HSKG from ".././images/gerbs/Novosibirsk_region_gerb.png"
+import { variantsY as variants } from "./Animation"
 
-
-import {BsFillPersonLinesFill} from 'react-icons/bs'
 
 const Description_AOM = () => {
 
@@ -27,19 +28,6 @@ const Description_AOM = () => {
     {id: 2, name: 'Омская область', hr: 'https://covid19-modeling.ru/data/omsk-region-data.csv', img: OmskG},
     {id: 3, name: 'Алтайский край', hr: 'https://covid19-modeling.ru/data/altay-region-data.csv', img: AltayG},
   ]
-
-  const variants = {
-    visible: custom => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: custom * 0.2}
-    }),
-    hidden: {
-      opacity: 0,
-      y: -100,
-   },
-  }
 
     return (
       <>

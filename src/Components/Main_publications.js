@@ -1,4 +1,3 @@
-import React from "react";
 import {Container, Card, ListGroup} from 'react-bootstrap';
 
 const Main_publications = () => {

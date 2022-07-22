@@ -271,13 +271,13 @@ function ModelingSEIR_HCD() {
     .then(res => {
         for (const dataObj of res.data) {
           data.push(dataObj.Date);
-          if (stype == 1){
+          if (stype === 1){
             name = "Новые выявленные случаи"
             tr.push(dataObj.new_diagnoses)
-          } else if (stype == 2) {
+          } else if (stype === 2) {
             name = "Критически больные, С"
             tr.push(dataObj.ventilation)
-          } else if (stype == 3) {
+          } else if (stype === 3) {
             name = "Умершие, D"
             tr.push(dataObj.cum_deaths)
           }
@@ -299,15 +299,15 @@ function ModelingSEIR_HCD() {
             setM_mean(Math.round(parseFloat(res.data[res.data.length-1].mu_mean)*1000) / 1000)
             for (const dataObj of res.data) {
               data.push(dataObj.Date);
-              if (stype == 1){
+              if (stype === 1){
                 mean.push(dataObj.fk_mean)
                 max.push(dataObj.fk_max)
                 min.push(dataObj.fk_min)
-              } else if (stype == 2) {
+              } else if (stype === 2) {
                 mean.push(dataObj.C_mean)
                 max.push(dataObj.C_max)
                 min.push(dataObj.C_min)
-              } else if (stype== 3) {
+              } else if (stype === 3) {
                 mean.push(dataObj.D_mean)
                 max.push(dataObj.D_max)
                 min.push(dataObj.D_min)

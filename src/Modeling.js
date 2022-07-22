@@ -1940,15 +1940,15 @@ COVID-19, в основе которой лежат обработка непо�
                           const selectedRegion = e.target.value;
                           let sregion = Number(selectedRegion)
                           setRegion_data(sregion)
-                          if(sregion == 1){
+                          if(sregion === 1){
                             setRegion_name("Новосибирская область")
                             setPopulation_data(2798170)
                             setFieldValue("population", 2798170)
-                          } else if(sregion == 2) {
+                          } else if(sregion === 2) {
                             setRegion_name("Омская область")
                             setPopulation_data(578698)
                             setFieldValue("population", 1879548)
-                          } else if(sregion == 3) {
+                          } else if(sregion === 3) {
                             setRegion_name("Алтайский край")
                             setPopulation_data(2268179)
                             setFieldValue("population", 2268179)
@@ -2027,17 +2027,17 @@ COVID-19, в основе которой лежат обработка непо�
               <motion.div initial="hidden"
                  custom={1}
                 variants={variants} whileInView="visible" viewport={{amount: 0.1, once: true}}>
-            {chartnum == 1 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data1(e)}>Показать данные</Button> : null}
-            {chartnum == 2 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data2(e)}>Показать данные</Button> : null}
-            {chartnum == 3 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data3(e)}>Показать данные</Button> : null}
-            {chartnum == 4 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data4(e)}>Показать данные</Button> : null}
-            {chartnum == 5 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data5(e)}>Показать данные</Button> : null}
+            {chartnum === 1 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data1(e)}>Показать данные</Button> : null}
+            {chartnum === 2 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data2(e)}>Показать данные</Button> : null}
+            {chartnum === 3 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data3(e)}>Показать данные</Button> : null}
+            {chartnum === 4 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data4(e)}>Показать данные</Button> : null}
+            {chartnum === 5 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data5(e)}>Показать данные</Button> : null}
 
-            {chartnum == 6 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data6(e)}>Показать данные</Button> : null}
-            {chartnum == 7 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data7(e)}>Показать данные</Button> : null}
-            {chartnum == 8 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data8(e)}>Показать данные</Button> : null}
-            {chartnum == 9 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data9(e)}>Показать данные</Button> : null}
-            {chartnum == 10 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data10(e)}>Показать данные</Button> : null}
+            {chartnum === 6 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data6(e)}>Показать данные</Button> : null}
+            {chartnum === 7 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data7(e)}>Показать данные</Button> : null}
+            {chartnum === 8 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data8(e)}>Показать данные</Button> : null}
+            {chartnum === 9 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data9(e)}>Показать данные</Button> : null}
+            {chartnum === 10 ? <Button variant="outline-danger" className="" size="sm" onClick={(e)=>real_data10(e)}>Показать данные</Button> : null}
             <OverlayTrigger
              placement="left"
              overlay={

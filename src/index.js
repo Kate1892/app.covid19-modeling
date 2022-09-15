@@ -1,11 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom'
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
+import './index.css'
+import App from './App'
 import 'bootstrap/dist/css/bootstrap.min.css'
-
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,6 +12,4 @@ ReactDOM.render(
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
-);
-
-reportWebVitals();
+)

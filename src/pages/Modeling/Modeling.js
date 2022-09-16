@@ -52,7 +52,7 @@ import {
 import { Line } from 'react-chartjs-2'
 import zoomPlugin from 'chartjs-plugin-zoom'
 
-import { NaviBarv2, Description_AOM } from '../../components'
+import { NaviBar, Description_AOM } from '../../components'
 import { ModelingSEIR_HCD } from '../../pages'
 
 import {
@@ -1780,7 +1780,7 @@ export function Modeling() {
 
   return (
     <>
-      <NaviBarv2 />
+      <NaviBar expand={'lg'} bg={'dark'} variant='dark' />
       <Container
         className='my-3'
         style={{

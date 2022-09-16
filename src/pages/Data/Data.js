@@ -1,6 +1,6 @@
 import { Container, Row } from 'react-bootstrap'
 
-import { NaviBarv2 } from '../../components'
+import { NaviBar } from '../../components'
 import {
   AltayData,
   NskData,
@@ -18,7 +18,7 @@ import { DataCard } from '../../components/DataContent/DataCard'
 export function Data() {
   return (
     <>
-      <NaviBarv2 />
+      <NaviBar expand={'lg'} bg={'dark'} variant='dark' />
       <Container
         className='my-3'
         style={{

@@ -5,15 +5,11 @@ import {
   Container,
   Row,
   Col,
-  Card,
   Button,
-  Image,
-  Dropdown,
   OverlayTrigger,
   Popover,
   Spinner,
   Alert,
-  Placeholder,
   Tab,
 } from 'react-bootstrap'
 import { BsZoomOut, BsInfo, BsZoomIn } from 'react-icons/bs'
@@ -32,6 +28,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
+
 import { Line } from 'react-chartjs-2'
 import zoomPlugin from 'chartjs-plugin-zoom'
 import scales from 'chartjs-plugin-zoom'
@@ -55,7 +52,7 @@ ChartJS.register(
 
 ChartJS.register(zoomPlugin, scales)
 
-export const StaticCovidData = props => {
+export const StaticCovidData = ({ region }) => {
   const [lastData, setLastsData] = useState(0)
   const [lastDatadate, setLastsDatadate] = useState(0)
   const [last_ndeaths, setlast_ndeaths] = useState(0)
@@ -80,7 +77,7 @@ export const StaticCovidData = props => {
     let cov_nrec = []
     let cov_ncrit = []
     let cov_cumchild = []
-    let url = props.region.hr
+    let url = region.hr
     axios
       .get(url)
       .then(res => {
@@ -285,7 +282,7 @@ export const StaticCovidData = props => {
   ]
 
   return (
-    <Tab.Pane eventKey={props.region.eventKey}>
+    <Tab.Pane eventKey={region.eventKey}>
       <div className='mx-3 my-3'>
         <div>
           <Container>

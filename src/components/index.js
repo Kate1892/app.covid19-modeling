@@ -3,6 +3,7 @@ export * from './CovidContent/StaticCovidData'
 export * from './CovidContent/StaticCovidDataItem'
 export * from './DataContent/CollapseParamCSV'
 export * from './Footer/Footer'
+export * from './NavBar/NaviBar'
 export * from './MainContent/ConferenseItem'
 export * from './MainContent/MCinfo'
 export * from './MainContent/MPInfo'
@@ -15,6 +16,3 @@ export * from './MainContent/TeamItem' //
 
 export * from './ModelsDescription/Description_AOM'
 export * from './ModelsDescription/Description_SEIRHCD'
-
-export * from './NavBar/NaviBar'
-export * from './NavBar/NaviBarv2'

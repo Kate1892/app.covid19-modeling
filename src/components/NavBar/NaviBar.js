@@ -11,18 +11,24 @@ import { NavLink } from 'react-router-dom'
 import ip_head from '../../images/ip_head.png'
 
 const setActive = ({ isActive }) => (isActive ? 'active-link' : 'non-active')
-export function NaviBar() {
+
+export function NaviBar({ expand, bg, cn, variant }) {
   return (
     <>
-      <Navbar collapseOnSelect expand='md' className='text-white'>
+      <Navbar
+        collapseOnSelect
+        expand={expand}
+        bg={bg}
+        className={cn}
+        variant={variant}
+      >
         <Container className='py-1'>
-          <Navbar.Brand className='text-white '>
+          <Navbar.Brand className='text-white'>
             <Stack direction='horizontal' gap={3}>
               <Image
                 variant='bottom'
                 className=''
                 src={ip_head}
-                roundedCircle
                 fluid
                 style={({ width: '3rem' }, { height: '3rem' })}
               />{' '}
@@ -31,10 +37,7 @@ export function NaviBar() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='responsive-navbar-nav' />
           <Navbar.Collapse id='responsive-navbar-nav'>
-            <Nav
-              className='me-auto'
-              className='justify-content-end flex-grow-1 pe-4'
-            >
+            <Nav className='justify-content-end flex-grow-1 pe-4'>
               <Nav.Link>
                 <NavLink to='/' className={setActive}>
                   <h5>Главная</h5>
@@ -60,7 +63,7 @@ export function NaviBar() {
                     <NavLink
                       to='/statistics'
                       className={({ isActive }) =>
-                        isActive ? 'active-link' : 'text-secondary'
+                        isActive ? 'active-dropdown' : 'non-active-dropdown'
                       }
                     >
                       Коронавирус

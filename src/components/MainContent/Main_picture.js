@@ -13,7 +13,7 @@ export const Main_picture = () => {
         height: '680px',
       }}
     >
-      <NaviBar />
+      <NaviBar expand={'md'} cn={'text-white'} />
       <div align='left' className='my-auto mx-auto'>
         <b>
           <motion.div

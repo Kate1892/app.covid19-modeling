@@ -10,28 +10,27 @@ import {
   Main_conferences,
 } from '../../components'
 
-import { variantsY as variants } from '../../components/Animation/Animation'
+import {
+  AnimationV,
+  variantsY as variants,
+} from '../../components/Animation/Animation'
 import { posts } from './TeamInfo'
 
 export function Main() {
   return (
     <>
       <Main_picture />
+
       <Container>
-        <motion.div
-          initial='hidden'
-          custom={2}
-          variants={variants}
-          whileInView='visible'
-          viewport={{ amount: 0.05, once: true }}
-        >
+        <AnimationV variants={variants}>
           <Card className='text-center bg-secondary text-white my-3'>
             <Card.Title>
               {' '}
               <h4 className='my-1 '>Команда</h4>{' '}
             </Card.Title>
           </Card>
-        </motion.div>
+        </AnimationV>
+
         <motion.div initial='hidden' animate='visible'>
           <Container>
             <Row xs={1} md={2} className='justify-content-md-center'>
@@ -49,69 +48,37 @@ export function Main() {
             </Row>
           </Container>
         </motion.div>
-        <motion.div
-          initial='hidden'
-          custom={2}
-          variants={variants}
-          whileInView='visible'
-          viewport={{ amount: 0.05, once: true }}
-          className='my-3'
-        >
+
+        <AnimationV variants={variants} cn={'my-3'}>
           <hr />
           <h4 className='text-left mx-5 text-secondary'>Kонтакты</h4>
-        </motion.div>
-        <motion.div
-          initial='hidden'
-          custom={2}
-          variants={variants}
-          whileInView='visible'
-          viewport={{ amount: 0.05, once: true }}
-        >
+        </AnimationV>
+
+        <AnimationV variants={variants}>
           <Main_contacts />
-        </motion.div>
-        <motion.div
-          initial='hidden'
-          custom={2}
-          variants={variants}
-          whileInView='visible'
-          viewport={{ amount: 0.05, once: true }}
-          className='my-3'
-        >
+        </AnimationV>
+
+        <AnimationV variants={variants} cn={'my-3'}>
           <hr />
           <h4 className='text-left mx-5 text-secondary'>Публикации</h4>
-        </motion.div>
-        <motion.div
-          initial='hidden'
-          custom={2}
-          variants={variants}
-          whileInView='visible'
-          viewport={{ amount: 0.05, once: true }}
-        >
+        </AnimationV>
+
+        <AnimationV variants={variants}>
           <Main_publications />
-        </motion.div>
-        <motion.div
-          initial='hidden'
-          custom={2}
-          variants={variants}
-          whileInView='visible'
-          viewport={{ amount: 0.05, once: true }}
-        >
+        </AnimationV>
+
+        <AnimationV variants={variants}>
           <Card className='text-center bg-secondary text-white my-3'>
             <Card.Title>
               {' '}
               <h4 className='my-1 '>Конференции</h4>{' '}
             </Card.Title>
           </Card>
-        </motion.div>
-        <motion.div
-          initial='hidden'
-          custom={2}
-          variants={variants}
-          whileInView='visible'
-          viewport={{ amount: 0.05, once: true }}
-        >
-          <Main_conferences />{' '}
-        </motion.div>
+        </AnimationV>
+
+        <AnimationV variants={variants}>
+          <Main_conferences />
+        </AnimationV>
       </Container>
     </>
   )

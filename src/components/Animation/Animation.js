@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+
 export const variantsY = {
   visible: custom => ({
     opacity: 1,
@@ -24,4 +26,19 @@ export const variantsX = {
     opacity: 0,
     x: -100,
   },
+}
+
+export const AnimationV = props => {
+  return (
+    <motion.div
+      initial='hidden'
+      custom={2}
+      variants={props.variants}
+      whileInView='visible'
+      viewport={{ amount: 0.05, once: true }}
+      className={props.cn ? props.ch : ''}
+    >
+      {props.children}
+    </motion.div>
+  )
 }

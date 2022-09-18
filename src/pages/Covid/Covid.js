@@ -1,5 +1,5 @@
 import { Container, Tab, Nav } from 'react-bootstrap'
-
+import { useState, useEffect } from 'react'
 import { NaviBar, StaticCovidData } from '../../components'
 
 import {
@@ -8,8 +8,22 @@ import {
 } from '../../components/Animation/Animation'
 import { CovidNavItem } from '../../components/CovidContent/CovidNavItem'
 import { descItems } from './CovidRegInfo'
+import { useDispatch } from 'react-redux'
+import { fetchData } from '../../redux/covidDataPage/asyncAction'
 
 export function Covid() {
+  const dispatch = useDispatch()
+
+  const [key, setKey] = useState('novosibirsk')
+
+  const fetchCovidData = async key => {
+    dispatch(fetchData(key))
+  }
+
+  useEffect(() => {
+    fetchCovidData(key)
+  }, [key])
+
   return (
     <>
       <NaviBar expand={'lg'} bg={'dark'} variant='dark' />
@@ -34,6 +48,7 @@ export function Covid() {
           style={{
             width: '100%',
           }}
+          onSelect={k => setKey(k)}
           id='left-tabs-example'
           defaultActiveKey='novosibirsk'
         >

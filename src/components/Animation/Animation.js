@@ -32,10 +32,12 @@ export const AnimationV = props => {
   return (
     <motion.div
       initial='hidden'
-      custom={2}
+      custom={props.custom ? props.custom : 2}
       variants={props.variants}
       whileInView='visible'
-      viewport={{ amount: 0.05, once: true }}
+      viewport={
+        props.viewport ? { ...props.viewport } : { amount: 0.05, once: true }
+      }
       className={props.cn ? props.ch : ''}
     >
       {props.children}

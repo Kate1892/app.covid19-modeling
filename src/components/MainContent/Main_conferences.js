@@ -1,7 +1,7 @@
-import { Container, Card, Image, Col, Row } from 'react-bootstrap'
+import { Container, Row } from 'react-bootstrap'
 import { MConferenseItem, MCitem2 } from './ConferenseItem'
-import { motion } from 'framer-motion'
 import { confs, conf2 } from './MCinfo'
+import { AnimationV } from '../Animation/Animation'
 
 export const Main_conferences = () => {
   const variants = {
@@ -40,21 +40,15 @@ export const Main_conferences = () => {
           ))}
         </Row>
       </Container>
-      <motion.div
-        initial='hidden'
-        custom={3}
-        variants={variants}
-        whileInView='visible'
-        viewport={{ amount: 0.5, once: true }}
-      >
+      <AnimationV variants={variants}>
         <Container className='my-2'>
           <Row className='justify-xs-center'>
             {conf2.map(conf => (
-              <MCitem2 key={conf.key} {...conf} />
+              <MCitem2 key={conf.id} {...conf} />
             ))}
           </Row>
         </Container>
-      </motion.div>
+      </AnimationV>
     </>
   )
 }

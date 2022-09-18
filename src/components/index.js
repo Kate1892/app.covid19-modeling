@@ -16,3 +16,4 @@ export * from './MainContent/TeamItem' //
 
 export * from './ModelsDescription/Description_AOM'
 export * from './ModelsDescription/Description_SEIRHCD'
+export * from './Plugs/Plugs'

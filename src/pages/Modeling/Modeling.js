@@ -52,7 +52,7 @@ import {
 import { Line } from 'react-chartjs-2'
 import zoomPlugin from 'chartjs-plugin-zoom'
 
-import { NaviBar, Description_AOM } from '../../components'
+import { NaviBar, Description_AOM, Plugs } from '../../components'
 import { ModelingSEIR_HCD } from '../../pages'
 
 import {
@@ -2513,22 +2513,7 @@ export function Modeling() {
                         />
                       </div>
                     ) : someerrors ? (
-                      <div
-                        style={{
-                          height: '350px',
-                        }}
-                      >
-                        <Alert variant='danger' className='my-5'>
-                          {' '}
-                          <Alert.Heading>Ошибка загрузки</Alert.Heading>
-                          Сервер временно не отвечает, пожалуйста,{' '}
-                          <Alert.Link href='/modeling'>
-                            обновите страницу
-                          </Alert.Link>{' '}
-                          или повторите попытку позже.
-                          <hr />{' '}
-                        </Alert>{' '}
-                      </div>
+                      <Plugs />
                     ) : newChart ? (
                       <div style={{ height: '25rem' }}>
                         <Line

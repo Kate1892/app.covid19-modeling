@@ -1,27 +1,21 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import {
-  Container,
   Card,
   Stack,
   Row,
   Col,
-  Button,
-  Nav,
   Form,
   ListGroup,
   OverlayTrigger,
   Popover,
   Collapse,
 } from 'react-bootstrap'
-
-import { FiDownload } from 'react-icons/fi'
-import { BsZoomOut, BsInfo, BsZoomIn } from 'react-icons/bs'
-import {
-  BsFillArrowUpRightSquareFill,
-  BsFillCaretRightFill,
-  BsFillCaretDownFill,
-} from 'react-icons/bs'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectseirhcdData } from '../../redux/seirhcdBlock/selectors'
+import { selectseirhcdChData } from '../../redux/seirhcdChangeBlock/selectors'
+import { fetchCovData } from '../../redux/seirhcdBlock/asyncAction'
+import { fetchChangeCovData } from '../../redux/seirhcdChangeBlock/asyncAction'
 
 import { Formik } from 'formik'
 import { motion } from 'framer-motion'
@@ -39,10 +33,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js'
-import { Bar, Line } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import zoomPlugin from 'chartjs-plugin-zoom'
-
-import { Description_SEIRHCD } from '../../components'
 import { OptionItem } from './OptionItem'
 
 import {
@@ -50,7 +42,11 @@ import {
   variantsY as variants2,
 } from '../../components/Animation/Animation'
 
-import { download_chart, zoom_chart } from '../../utils/ChartFun'
+import { SEIRHCDHeader } from '../../components/SEIRHCDcontent/SEIRHCDHeader'
+import { BlockHeader } from '../../components/SEIRHCDcontent/BlockHeader'
+import { ChartButtons } from '../../components/Plugs/ChartButtons'
+import { headers } from '../../components/SEIRHCDcontent/BlockHeaderInfo'
+import { SubBlock } from '../../components/SEIRHCDcontent/SubBlock'
 
 ChartJS.register(
   CategoryScale,
@@ -87,11 +83,6 @@ export const ModelingSEIR_HCD = () => {
       setdates2(dates)
     })
   }
-
-  const [chartData, setChartData] = useState({
-    datasets: [],
-  })
-  const [chartOptions, setChartOptions] = useState({})
 
   const [openBS, setOpenBS] = useState(true)
   const [openM, setOpenM] = useState(false)
@@ -434,714 +425,6 @@ export const ModelingSEIR_HCD = () => {
       })
   }
 
-  let r0_mean = []
-  let r0_max = []
-  let r0_min = []
-  const [r0_meanBS, setr0_meanDataBS] = useState(r0_mean)
-
-  const res_validR0 = () => {
-    let dataBS = []
-    axios
-      .get('https://server.covid19-modeling.ru/api/res_valid')
-      .then(res => {
-        for (const dataObj of res.data) {
-          dataBS.push(dataObj.Date)
-          r0_mean.push(dataObj.R0_mean)
-          r0_max.push(dataObj.R0_max)
-          r0_min.push(dataObj.R0_min)
-        }
-        setChartData({
-          labels: dataBS,
-          datasets: [
-            {
-              label: 'R0 min',
-              data: r0_min,
-              fill: false,
-              borderColor: 'rgba(0,0,0, 0.1)',
-              backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'R0 max',
-              data: r0_max,
-              fill: '-1',
-              borderColor: 'rgba(0,0,0, 0.1)',
-              backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'R0 среднее',
-              data: r0_mean,
-              fill: false,
-              borderColor: 'rgba(255,0,0, 1)',
-              backgroundColor: 'rgba(255, 0, 0, 1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-        setChartOptions({
-          maintainAspectRatio: false,
-          responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-              zoom: {
-                wheel: {
-                  enabled: true,
-                  speed: 0.1,
-                },
-                drag: {
-                  enabled: true,
-                },
-                pan: { enabled: true },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'xy',
-              },
-            },
-            legend: {
-              position: 'right',
-            },
-            title: {
-              display: true,
-              align: 'start',
-              text: '',
-            },
-          },
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const [chartData2, setChartData2] = useState({
-    datasets: [],
-  })
-
-  const [chartDataTrain, setChartDataTrain] = useState({
-    datasets: [],
-  })
-  const [chartOptionsTrain, setChartOptionsTrain] = useState({})
-
-  const res_trainR0 = () => {
-    let dataBS = []
-    axios
-      .get('https://server.covid19-modeling.ru/api/res_train')
-      .then(res => {
-        for (const dataObj of res.data) {
-          dataBS.push(dataObj.Date)
-          r0_mean.push(dataObj.R0_mean)
-          r0_max.push(dataObj.R0_max)
-          r0_min.push(dataObj.R0_min)
-        }
-
-        setChartDataTrain({
-          labels: dataBS,
-          datasets: [
-            {
-              label: 'R0 min',
-              data: r0_min,
-              fill: false,
-              borderColor: 'rgba(0,0,0, 0.1)',
-              backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'R0 max',
-              data: r0_max,
-              fill: '-1',
-              borderColor: 'rgba(0,0,0, 0.1)',
-              backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'R0 среднее',
-              data: r0_mean,
-              fill: false,
-              borderColor: 'rgba(255,0,0, 1)',
-              backgroundColor: 'rgba(255, 0, 0, 1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-        setChartOptionsTrain({
-          maintainAspectRatio: false,
-          responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-              zoom: {
-                wheel: {
-                  enabled: true,
-                  speed: 0.1,
-                },
-                drag: {
-                  enabled: true,
-                },
-                pan: { enabled: true },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'xy',
-              },
-            },
-            legend: {
-              position: 'right',
-            },
-            title: {
-              display: true,
-              align: 'start',
-              text: '',
-            },
-          },
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
-  const [chartOptionsSEIRHCD, setChartOptionsSEIRHCD] = useState({})
-  const [chartDataSEIRHCD, setChartDataSEIRHCD] = useState({
-    datasets: [],
-  })
-
-  const res_train = (mean, max, min, param) => {
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    let r_data = []
-    axios
-      .get('https://server.covid19-modeling.ru/api/res_train')
-      .then(res => {
-        for (const dataObj of res.data) {
-          dataSEIRHCD.push(dataObj.Date)
-          mean_data.push(dataObj[mean])
-          max_data.push(dataObj[max])
-          min_data.push(dataObj[min])
-        }
-        axios
-          .get('https://server.covid19-modeling.ru/api/csvCovid/nd/')
-          .then(res2 => {
-            for (const dataObj of res2.data) {
-              r_data.push(parseInt(dataObj[param]))
-            }
-            setChartDataSEIRHCD({
-              labels: dataSEIRHCD,
-              datasets: [
-                {
-                  label: 'min',
-                  data: min_data,
-                  fill: false,
-                  borderColor: 'rgba(0,0,0, 0.1)',
-                  backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                  tension: 0.9,
-                  borderWidth: 1,
-                  pointRadius: 0.3,
-                  pointHoverRadius: 5,
-                  pointHitRadius: 30,
-                  pointBorderWidth: 0.1,
-                },
-                {
-                  label: 'max',
-                  data: max_data,
-                  fill: '-1',
-                  borderColor: 'rgba(0,0,0, 0.1)',
-                  backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                  tension: 0.9,
-                  borderWidth: 1,
-                  pointRadius: 0.3,
-                  pointHoverRadius: 5,
-                  pointHitRadius: 30,
-                  pointBorderWidth: 0.1,
-                },
-                {
-                  label: 'среднее',
-                  data: mean_data,
-                  fill: false,
-                  borderColor: 'rgba(13,110,253, 1)',
-                  backgroundColor: 'rgba(13, 110, 253, 1)',
-                  tension: 0.9,
-                  borderWidth: 2,
-                  pointRadius: 0.3,
-                  pointHoverRadius: 5,
-                  pointHitRadius: 30,
-                  pointBorderWidth: 0.1,
-                },
-                {
-                  label: 'Реальные данные',
-                  data: r_data,
-                  fill: false,
-                  borderColor: 'rgba(255, 127, 80, 1)',
-                  backgroundColor: 'rgba(255, 127, 80, 1)',
-                  tension: 0.9,
-                  borderWidth: 0.01,
-                  pointRadius: 2,
-                  pointHoverRadius: 5,
-                  pointHitRadius: 30,
-                  pointBorderWidth: 0.1,
-                },
-              ],
-            })
-            setChartOptionsSEIRHCD({
-              maintainAspectRatio: false,
-              responsive: true,
-              plugins: {
-                zoom: {
-                  pan: {
-                    enabled: true,
-                    mode: 'xy',
-                  },
-                  zoom: {
-                    wheel: {
-                      enabled: true,
-                      speed: 0.1,
-                    },
-                    drag: {
-                      enabled: true,
-                    },
-                    pan: { enabled: true },
-                    pinch: {
-                      enabled: true,
-                    },
-                    mode: 'xy',
-                  },
-                },
-                legend: {
-                  position: 'right',
-                },
-                title: {
-                  display: true,
-                  align: 'center',
-                  text: 'Новые выявленные случаи',
-                },
-              },
-            })
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
-  const [chartOptionsSEIRHCD_v, setChartOptionsSEIRHCD_v] = useState({})
-  const [chartDataSEIRHCD_v, setChartDataSEIRHCD_v] = useState({
-    datasets: [],
-  })
-
-  const res_valid = (mean, max, min, param) => {
-    let dataSEIRHCD = []
-    let mean_data = []
-    let max_data = []
-    let min_data = []
-    let r_data = []
-    axios
-      .get('https://server.covid19-modeling.ru/api/res_valid')
-      .then(res => {
-        for (const dataObj of res.data) {
-          dataSEIRHCD.push(dataObj.Date)
-          mean_data.push(dataObj[mean])
-          max_data.push(dataObj[max])
-          min_data.push(dataObj[min])
-        }
-        axios
-          .get('https://server.covid19-modeling.ru/api/csvCovid/nd')
-          .then(res2 => {
-            for (const dataObj of res2.data) {
-              r_data.push(parseInt(dataObj[param]))
-            }
-            setChartDataSEIRHCD_v({
-              labels: dataSEIRHCD,
-              datasets: [
-                {
-                  label: 'min',
-                  data: min_data,
-                  fill: false,
-                  borderColor: 'rgba(0,0,0, 0.1)',
-                  backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                  tension: 0.9,
-                  borderWidth: 1,
-                  pointRadius: 0.3,
-                  pointHoverRadius: 5,
-                  pointHitRadius: 30,
-                  pointBorderWidth: 0.1,
-                },
-                {
-                  label: 'max',
-                  data: max_data,
-                  fill: '-1',
-                  borderColor: 'rgba(0,0,0, 0.1)',
-                  backgroundColor: 'rgba(0, 0, 0, 0.1)',
-                  tension: 0.9,
-                  borderWidth: 1,
-                  pointRadius: 0.3,
-                  pointHoverRadius: 5,
-                  pointHitRadius: 30,
-                  pointBorderWidth: 0.1,
-                },
-                {
-                  label: 'среднее',
-                  data: mean_data,
-                  fill: false,
-                  borderColor: 'rgba(13,110,253, 1)',
-                  backgroundColor: 'rgba(13, 110, 253, 1)',
-                  tension: 0.9,
-                  borderWidth: 2,
-                  pointRadius: 0.3,
-                  pointHoverRadius: 5,
-                  pointHitRadius: 30,
-                  pointBorderWidth: 0.1,
-                },
-                {
-                  label: 'Реальные данные',
-                  data: r_data,
-                  fill: false,
-                  borderColor: 'rgba(255, 127, 80, 1)',
-                  backgroundColor: 'rgba(255, 127, 80, 1)',
-                  tension: 0.9,
-                  borderWidth: 0.01,
-                  pointRadius: 2,
-                  pointHoverRadius: 5,
-                  pointHitRadius: 30,
-                  pointBorderWidth: 0.1,
-                },
-              ],
-            })
-            setChartOptionsSEIRHCD_v({
-              maintainAspectRatio: false,
-              responsive: true,
-              plugins: {
-                zoom: {
-                  pan: {
-                    enabled: true,
-                    mode: 'xy',
-                  },
-                  zoom: {
-                    wheel: {
-                      enabled: true,
-                      speed: 0.1,
-                    },
-                    drag: {
-                      enabled: true,
-                    },
-                    pan: { enabled: true },
-                    pinch: {
-                      enabled: true,
-                    },
-                    mode: 'xy',
-                  },
-                },
-                legend: {
-                  position: 'right',
-                },
-                title: {
-                  display: true,
-                  align: 'center',
-                  text: 'Новые выявленные случаи',
-                },
-              },
-            })
-          })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
-  const [chartOptions_p, setChartOptions_p] = useState({})
-  const [chartData_p, setChartData_p] = useState({
-    datasets: [],
-  })
-  const res_validP = () => {
-    let dataSEIRHCD = []
-    let ae_data = []
-    let ai_data = []
-    let e_data = []
-    let m_data = []
-    axios
-      .get('https://server.covid19-modeling.ru/api/res_valid/')
-      .then(res => {
-        for (const dataObj of res.data) {
-          dataSEIRHCD.push(dataObj.Date)
-          ae_data.push(dataObj.alpha_e_mean)
-          ai_data.push(dataObj.alpha_i_mean)
-          e_data.push(dataObj.eps_hc_mean)
-          m_data.push(dataObj.mu_mean)
-        }
-        setChartData_p({
-          labels: dataSEIRHCD,
-          datasets: [
-            {
-              label: '\u03B1\u2091',
-              data: ae_data,
-              fill: false,
-              borderColor: 'rgba(0,0,255, 1)',
-              backgroundColor: 'rgba(0, 0, 255, 1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: '\u03B1\u1D62',
-              data: ai_data,
-              fill: false,
-              borderColor: 'rgba(255,0,0, 1)',
-              backgroundColor: 'rgba(255, 0, 0, 1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: '\u03B5\u2095\u1D9C',
-              data: e_data,
-              fill: false,
-              borderColor: 'rgba(92, 184, 92, 1)',
-              backgroundColor: 'rgba(92, 184, 92, 1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: '\u03BC',
-              data: m_data,
-              fill: false,
-              borderColor: 'rgba(128, 0, 255, 1)',
-              backgroundColor: 'rgba(128, 0, 255, 1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-        setChartOptions_p({
-          maintainAspectRatio: false,
-          responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-              zoom: {
-                wheel: {
-                  enabled: true,
-                  speed: 0.1,
-                },
-                drag: {
-                  enabled: true,
-                },
-                pan: { enabled: true },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'xy',
-              },
-            },
-            legend: {
-              position: 'right',
-            },
-            title: {
-              display: true,
-              align: 'center',
-              text: '',
-            },
-          },
-          scales: {
-            quantity: {
-              title: {
-                display: true,
-                text: 'вероятность',
-              },
-              position: 'left',
-              type: 'linear',
-            },
-          },
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const [chartOptions_pm, setChartOptions_pm] = useState({})
-  const [chartData_pm, setChartData_pm] = useState({
-    datasets: [],
-  })
-  const res_trainP = () => {
-    let dataSEIRHCD = []
-    let ae_data = []
-    let ai_data = []
-    let e_data = []
-    let m_data = []
-    axios
-      .get('https://server.covid19-modeling.ru/api/res_train/')
-      .then(res => {
-        for (const dataObj of res.data) {
-          dataSEIRHCD.push(dataObj.Date)
-          ae_data.push(dataObj.alpha_e_mean)
-          ai_data.push(dataObj.alpha_i_mean)
-          e_data.push(dataObj.eps_hc_mean)
-          m_data.push(dataObj.mu_mean)
-        }
-        setChartData_pm({
-          labels: dataSEIRHCD,
-          datasets: [
-            {
-              label: '\u03B1\u2091',
-              data: ae_data,
-              fill: false,
-              borderColor: 'rgba(0,0,255, 1)',
-              backgroundColor: 'rgba(0, 0, 255, 1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: '\u03B1\u1D62',
-              data: ai_data,
-              fill: false,
-              borderColor: 'rgba(255,0,0, 1)',
-              backgroundColor: 'rgba(255, 0, 0, 1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: '\u03B5\u2095\u1D9C',
-              data: e_data,
-              fill: false,
-              borderColor: 'rgba(92, 184, 92, 1)',
-              backgroundColor: 'rgba(92, 184, 92, 1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: '\u03BC',
-              data: m_data,
-              fill: false,
-              borderColor: 'rgba(128, 0, 255, 1)',
-              backgroundColor: 'rgba(128, 0, 255, 1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-        setChartOptions_pm({
-          maintainAspectRatio: false,
-          responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-              zoom: {
-                wheel: {
-                  enabled: true,
-                  speed: 0.1,
-                },
-                drag: {
-                  enabled: true,
-                },
-                pan: { enabled: true },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'xy',
-              },
-            },
-            legend: {
-              position: 'right',
-            },
-            title: {
-              display: true,
-              align: 'center',
-              text: '',
-            },
-          },
-          scales: {
-            quantity: {
-              title: {
-                display: true,
-                text: 'вероятность',
-              },
-              position: 'left',
-              type: 'linear',
-            },
-          },
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
   const [prognose_type, setPrognose_type] = useState(1)
   const [prognose_data, setPrognose_data] = useState(dates[0])
 
@@ -1158,30 +441,60 @@ export const ModelingSEIR_HCD = () => {
   const [ehc_mean, setEhc_mean] = useState()
   const [m_mean, setM_mean] = useState()
 
+  const dispatch = useDispatch()
+
+  const {
+    status,
+    chartData_tR0,
+    chartData_vR0,
+    chartOptions_R0,
+    chartData_tP,
+    chartData_vP,
+    chartOptions_P,
+  } = useSelector(selectseirhcdData)
+
+  const { status2, chartData_T, chartData_V, chartOptions_ } =
+    useSelector(selectseirhcdChData)
+
+  const chartOptions = { ...chartOptions_ }
+  const chartOptions_P_ = { ...chartOptions_P }
+  const chartOptions_R0_ = { ...chartOptions_R0 }
+
+  const fetchData = async () => {
+    dispatch(fetchCovData('tR0'))
+    dispatch(fetchCovData('vR0'))
+    dispatch(fetchCovData('tP'))
+    dispatch(fetchCovData('vP'))
+
+    const obj = {
+      mean: 'fk_mean',
+      max: 'fk_max',
+      min: 'fk_min',
+      real_data: 'new_diagnoses',
+    }
+    dispatch(fetchChangeCovData({ ...obj, key: 'train' }))
+    dispatch(fetchChangeCovData({ ...obj, key: 'valid' }))
+  }
+
+  const fetchSeirhcdData = async (mean, max, min, title, key) => {
+    const obj = {
+      mean: mean,
+      max: max,
+      min: min,
+      real_data: title,
+      key: key,
+    }
+    dispatch(fetchChangeCovData(obj))
+  }
+
   useEffect(() => {
-    res_validR0()
+    fetchData()
   }, [])
 
   useEffect(() => {
     datesOption()
   }, [])
 
-  useEffect(() => {
-    res_trainR0()
-  }, [])
-
-  useEffect(() => {
-    res_train('fk_mean', 'fk_max', 'fk_min', 'new_diagnoses')
-  }, [])
-  useEffect(() => {
-    res_valid('fk_mean', 'fk_max', 'fk_min', 'new_diagnoses')
-  }, [])
-  useEffect(() => {
-    res_validP()
-  }, [])
-  useEffect(() => {
-    res_trainP()
-  }, [])
   useEffect(() => {
     lastDate2()
   }, [])
@@ -1197,181 +510,18 @@ export const ModelingSEIR_HCD = () => {
     forecasts_R0(lastData)
   }, [lastData])
 
-  const [openSEIRHCD, setOpenSEIRHCD] = useState(false)
-
   return (
     <>
       <Card className=' mx-auto' border='light' bg='light'>
-        <Row>
-          <Col md={2} className='text-center'>
-            <Row>
-              <Col xs={12} lg={12}>
-                {' '}
-                <Button
-                  variant='outline-primary'
-                  className='bg-white text-primary  shadow1 my-2 mx-2'
-                  onClick={() => setOpenSEIRHCD(!openSEIRHCD)}
-                >
-                  {' '}
-                  {openSEIRHCD ? (
-                    <BsFillCaretDownFill size={15} />
-                  ) : (
-                    <BsFillCaretRightFill size={15} />
-                  )}{' '}
-                  Описание модели
-                </Button>
-              </Col>
-              <Col xs={12} lg={12} className='mx-2'>
-                <OverlayTrigger
-                  rootClose={true}
-                  placement='bottom'
-                  ref={ref => (this.overlay = ref)}
-                  overlay={
-                    <Popover className='shadow1'>
-                      <Popover.Body>
-                        <div align='center' className='text-black'>
-                          Математическое моделирование и прогнозирование
-                          COVID-19 в Москве и Новосибирской области
-                        </div>
-                        <small align='center' className='text-success'>
-                          <div>О.И. Криворотько</div>
-                          <div>С.И. Кабанихин</div>
-                          <div>Н.Ю. Зятьков</div>
-                          <div>А.Ю. Приходько</div>
-                          <div>Н.М. Прохошин</div>
-                          <div>М.А. Шишленин</div>
-                        </small>
-                      </Popover.Body>
-                    </Popover>
-                  }
-                >
-                  <a href='https://covid19-modeling.ru/data/papers/1_Krivorotko_et_al_COVID-19_in_Moscow_and_NSO.pdf'>
-                    <Button
-                      variant='link'
-                      onClick={e => {
-                        document.body.click(e)
-                        this.overlay.hide()
-                      }}
-                    >
-                      <BsFillArrowUpRightSquareFill size={30} />
-                    </Button>
-                  </a>
-                </OverlayTrigger>
-                <OverlayTrigger
-                  rootClose={true}
-                  placement='bottom'
-                  ref={ref => (this.overlay = ref)}
-                  overlay={
-                    <Popover className='shadow1'>
-                      <Popover.Body>
-                        <div align='center' className='text-black'>
-                          Анализ чувствительности и идентифицируемости
-                          математических моделей распространения эпидемии
-                          COVID-19
-                        </div>
-                        <small align='center' className='text-success'>
-                          <div>О.И. Криворотько</div>
-                          <div>С.И. Кабанихин</div>
-                          <div>М.И. Сосновская</div>
-                          <div>Д.В. Андорная.</div>
-                        </small>
-                      </Popover.Body>
-                    </Popover>
-                  }
-                >
-                  <a href='https://covid19-modeling.ru/data/papers/2_Krivorotko_et_al_COVID-19_Identifiability.pdf'>
-                    <Button
-                      variant='link'
-                      onClick={e => {
-                        document.body.click(e)
-                        this.overlay.hide()
-                      }}
-                    >
-                      <BsFillArrowUpRightSquareFill size={30} />
-                    </Button>
-                  </a>
-                </OverlayTrigger>
-                <OverlayTrigger
-                  rootClose={true}
-                  placement='bottom'
-                  ref={ref => (this.overlay = ref)}
-                  overlay={
-                    <Popover className='shadow1'>
-                      <Popover.Body>
-                        <div align='center' className='text-black'>
-                          Forecasting Recessions in the US Economy Using Machine
-                          Learning Methods
-                        </div>
-                        <small align='center' className='text-success'>
-                          <div>Nikolay Zyatkov</div>
-                          <div>Olga Krivorotko</div>
-                        </small>
-                      </Popover.Body>
-                    </Popover>
-                  }
-                >
-                  <a href='https://ieeexplore.ieee.org/document/9588678/authors#authors'>
-                    <Button
-                      variant='link'
-                      onClick={e => {
-                        document.body.click(e)
-                        this.overlay.hide()
-                      }}
-                    >
-                      <BsFillArrowUpRightSquareFill size={30} />
-                    </Button>
-                  </a>
-                </OverlayTrigger>
-              </Col>
-            </Row>
-          </Col>
-          <Col md={10}>
-            <Card className='my-3 shadow1'>
-              <p align='justify' className='mx-3 my-1'>
-                <small></small>
-              </p>{' '}
-            </Card>
-            <div className='mx-2'>
-              <hr />
-            </div>
-          </Col>
-        </Row>
-        <Collapse in={openSEIRHCD}>
-          <div id='example-collapse-text' className='my-2'>
-            <Description_SEIRHCD />
-          </div>
-        </Collapse>
-        <OverlayTrigger
-          placement='bottom'
-          overlay={
-            <Popover>
-              <Popover.Body>
-                <div align='justify' className='text-black'>
-                  <small>
-                    Cценарий распространения COVID-19 в регионе на 7 дней при
-                    условии сохранения текущих ограничений и уровня вакцинации
-                    на день моделрования.
-                  </small>
-                </div>
-              </Popover.Body>
-            </Popover>
-          }
-        >
-          <Button
-            variant='outline-info'
-            className='mx-3 my-2 bg-white'
-            onClick={() => setOpenBS(!openBS)}
-            aria-controls='example-fade-text'
-            aria-expanded={openBS}
-          >
-            {openBS ? (
-              <BsFillCaretDownFill size={15} />
-            ) : (
-              <BsFillCaretRightFill size={15} />
-            )}{' '}
-            Базовый сценарий
-          </Button>
-        </OverlayTrigger>
+        <SEIRHCDHeader />
+
+        <BlockHeader
+          open={openBS}
+          setOpen={setOpenBS}
+          description={headers[0].description}
+          title={'Базовый сценарий'}
+        />
+
         <Collapse in={openBS}>
           <div id='example-collapse-text'>
             <Row>
@@ -1476,81 +626,8 @@ export const ModelingSEIR_HCD = () => {
                 </motion.div>
               </Col>
               <Col xs={12} md={8}>
-                <Row>
-                  <Col xs={12} sm={12} md={12} lg={8}></Col>
-                  <Col xs={12} sm={12} md={12} lg={4}>
-                    <motion.div
-                      initial='hidden'
-                      custom={1}
-                      variants={variants}
-                      whileInView='visible'
-                      viewport={{ amount: 0.1, once: true }}
-                    >
-                      <OverlayTrigger
-                        placement='left'
-                        overlay={
-                          <Popover>
-                            <Popover.Body>
-                              <small className='text-muted'>
-                                Чтобы скрыть отображаемые данные - кликните по
-                                их названиям
-                              </small>
-                            </Popover.Body>
-                          </Popover>
-                        }
-                      >
-                        <Button
-                          variant='outline-secondary'
-                          size='sm'
-                          className='align-right mx-1'
-                          onClick={e => zoom_chart(e)}
-                        >
-                          <BsInfo size={18} />
-                        </Button>
-                      </OverlayTrigger>
-                      <OverlayTrigger
-                        placement='left'
-                        overlay={
-                          <Popover>
-                            <Popover.Body>
-                              <small className='text-muted'>
-                                Для приближения - выделите необходимую область
-                                или прокрутите колесо мыши.
-                              </small>
-                            </Popover.Body>
-                          </Popover>
-                        }
-                      >
-                        <Button
-                          variant='outline-secondary'
-                          size='sm'
-                          className='align-right mx-1'
-                          onClick={e => zoom_chart(e)}
-                        >
-                          <BsZoomIn />
-                        </Button>
-                      </OverlayTrigger>
-                      <Button
-                        variant='outline-secondary'
-                        size='sm'
-                        className='mx-1 align-right'
-                        onClick={e => {
-                          forecasts_new(prognose_type, prognose_data)
-                        }}
-                      >
-                        <BsZoomOut />
-                      </Button>
-                      <Button
-                        variant='outline-secondary'
-                        size='sm'
-                        className='mx-1'
-                        onClick={e => download_chart(e, 'chart2')}
-                      >
-                        <FiDownload />
-                      </Button>
-                    </motion.div>
-                  </Col>
-                </Row>
+                <ChartButtons chartId={'chart2'} />
+                {/* forecasts_new(prognose_type, prognose_data) */}
                 <div style={{ height: '20rem' }}>
                   <Bar
                     id='chart2'
@@ -1817,1148 +894,107 @@ export const ModelingSEIR_HCD = () => {
                 </motion.div>
               </Col>
             </Row>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-              className='mx-3'
-            >
-              <hr />
-              <h4 className='mx-5 text-secondary'>
-                Базовый индекс репродукции COVID-19 в Новосибирской области и
-                прогноз
-              </h4>
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <Container className='mx-2'>
-                <Row>
-                  <Col xs={12} sm={12} md={12} lg={8}></Col>
-                  <Col xs={12} sm={12} md={12} lg={4}>
-                    <OverlayTrigger
-                      placement='left'
-                      overlay={
-                        <Popover>
-                          <Popover.Body>
-                            <small className='text-muted'>
-                              Чтобы скрыть отображаемые данные - кликните по их
-                              названиям
-                            </small>
-                          </Popover.Body>
-                        </Popover>
-                      }
-                    >
-                      <Button
-                        variant='outline-secondary'
-                        size='sm'
-                        className='align-right mx-1'
-                        onClick={e => zoom_chart(e)}
-                      >
-                        <BsInfo size={18} />
-                      </Button>
-                    </OverlayTrigger>
-                    <OverlayTrigger
-                      placement='left'
-                      overlay={
-                        <Popover>
-                          <Popover.Body>
-                            <small className='text-muted'>
-                              Для приближения - выделите необходимую область или
-                              прокрутите колесо мыши.
-                            </small>
-                          </Popover.Body>
-                        </Popover>
-                      }
-                    >
-                      <Button
-                        variant='outline-secondary'
-                        size='sm'
-                        className='align-right mx-1'
-                        onClick={e => zoom_chart(e)}
-                      >
-                        <BsZoomIn />
-                      </Button>
-                    </OverlayTrigger>
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='mx-1'
-                      onClick={e => {
-                        forecasts_R0(prognose_data)
-                      }}
-                    >
-                      <BsZoomOut />
-                    </Button>
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className=''
-                      onClick={e => download_chart(e, 'chart9')}
-                    >
-                      <FiDownload />
-                    </Button>
-                  </Col>
-                </Row>
-              </Container>
-              <div>
-                <Container style={{ height: '20rem' }}>
-                  <Line
-                    id='chart9'
-                    options={chartOptions_bsR0}
-                    data={chartData_bsR0}
-                    height='75%'
-                  />
-                </Container>
-              </div>
-            </motion.div>
+
+            <SubBlock
+              title={
+                'Базовый индекс репродукции COVID-19 в Новосибирской области и прогноз'
+              }
+              chartId={'chart9'}
+              chartOptions={chartOptions_bsR0}
+              chartData={chartData_bsR0}
+              height={'75%'}
+            />
           </div>
         </Collapse>
-        <OverlayTrigger
-          placement='bottom'
-          overlay={
-            <Popover>
-              <Popover.Body>
-                <div align='justify' className='text-black'>
-                  <small>
-                    Результат реализации SEIR-HCD модели распространения
-                    COVID-19 в регионе при откалиброванных параметрах модели на
-                    каждому 14-дневном интервале по времени.
-                  </small>
-                </div>
-              </Popover.Body>
-            </Popover>
-          }
-        >
-          <Button
-            variant='outline-info'
-            className='mx-3 my-2 bg-white'
-            onClick={() => setOpenM(!openM)}
-            aria-controls='example-fade-text'
-            aria-expanded={openM}
-          >
-            {openM ? (
-              <BsFillCaretDownFill size={15} />
-            ) : (
-              <BsFillCaretRightFill size={15} />
-            )}{' '}
-            Моделирование
-          </Button>
-        </OverlayTrigger>
+        {/*  */}
+        {/* SeirhcdBlock */}
+        <BlockHeader
+          open={openM}
+          setOpen={setOpenM}
+          description={headers[1].description}
+          title={'Моделирование'}
+        />
+
         <Collapse in={openM}>
           <div id='example-collapse-text'>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <h4 className='mx-5 my-2 text-secondary'>
-                Кривые SEIRHCD и реальные данные
-              </h4>{' '}
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <Nav variant='pills' defaultActiveKey='1' className='my-2'>
-                <Nav.Item>
-                  <Button
-                    className='mx-3'
-                    size='sm'
-                    variant='outline-info'
-                    onClick={e => {
-                      res_train('fk_mean', 'fk_max', 'fk_min', 'new_diagnoses')
-                    }}
-                    style={{ color: '#FFFFFF' }}
-                  >
-                    <Nav.Link eventKey='1'>Новые выявленные случаи</Nav.Link>
-                  </Button>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Восприимчивые
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_train('S_mean', 'S_max', 'S_min', '')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='2'>
-                        <b>S</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Больные без симптомов
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_train('E_mean', 'E_max', 'E_min')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='3'>
-                        <b>E</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Больные с симптомами
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_train('I_mean', 'I_max', 'I_min')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='4'>
-                        <b>I</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Вылеченные
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_train('R_mean', 'R_max', 'R_min', 'cum_recoveries')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='5'>
-                        <b>R</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Госпитализированные
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_train('H_mean', 'H_max', 'H_min', 'hospitalised')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='6'>
-                        <b>H</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Критически больные
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_train('C_mean', 'C_max', 'C_min', 'n_critical')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='7'>
-                        <b>C</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Умершие
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_train('D_mean', 'D_max', 'D_min', 'cum_deaths')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='8'>
-                        <b>D</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-              </Nav>
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <Row>
-                <Col xs={12} sm={12} md={12} lg={8}></Col>
-                <Col xs={12} sm={12} md={12} lg={4}>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Чтобы скрыть отображаемые данные - кликните по их
-                            названиям
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsInfo size={18} />
-                    </Button>
-                  </OverlayTrigger>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Для приближения - выделите необходимую область или
-                            прокрутите колесо мыши.
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsZoomIn />
-                    </Button>
-                  </OverlayTrigger>
+            <SubBlock
+              title={'Кривые SEIRHCD и реальные данные'}
+              navFun={fetchSeirhcdData}
+              chartId={'chart4'}
+              chartOptions={chartOptions}
+              chartData={chartData_T}
+              block={'train'}
+            />
 
-                  <Button
-                    variant='outline-secondary'
-                    size='sm'
-                    className=''
-                    onClick={e => download_chart(e, 'chart4')}
-                  >
-                    <FiDownload />
-                  </Button>
-                </Col>
-              </Row>
-              <Container style={{ height: '20rem' }}>
-                <Line
-                  id='chart4'
-                  options={chartOptionsSEIRHCD}
-                  data={chartDataSEIRHCD}
-                  height='90%'
-                />
-              </Container>
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-              className='mx-3'
-            >
-              <hr />
-              <h4 className='mx-5 text-secondary'>
-                Базовый индекс репродукции COVID-19 в Новосибирской области
-              </h4>
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <Row>
-                <Col xs={12} sm={12} md={12} lg={8}></Col>
-                <Col xs={12} sm={12} md={12} lg={4}>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Чтобы скрыть отображаемые данные - кликните по их
-                            названиям
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsInfo size={18} />
-                    </Button>
-                  </OverlayTrigger>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Для приближения - выделите необходимую область или
-                            прокрутите колесо мыши.
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsZoomIn />
-                    </Button>
-                  </OverlayTrigger>
-                  <Button
-                    variant='outline-secondary'
-                    size='sm'
-                    className='mx-1'
-                    onClick={res_trainR0}
-                  >
-                    <BsZoomOut />
-                  </Button>
-                  <Button
-                    variant='outline-secondary'
-                    size='sm'
-                    className=''
-                    onClick={e => download_chart(e, 'chart5')}
-                  >
-                    <FiDownload />
-                  </Button>
-                </Col>
-              </Row>
-              <Container style={{ height: '20rem' }}>
-                <Line
-                  id='chart5'
-                  options={chartOptionsTrain}
-                  data={chartDataTrain}
-                  height='100%'
-                />
-              </Container>
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <hr />
-              <h4 className='mx-5 text-secondary'>
-                Восстановленные параметры модели COVID-19 для Новосибирской
-                области
-              </h4>
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <Row>
-                <Col xs={12} sm={12} md={12} lg={8}></Col>
-                <Col xs={12} sm={12} md={12} lg={4}>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Чтобы скрыть отображаемые данные - кликните по их
-                            названиям
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsInfo size={18} />
-                    </Button>
-                  </OverlayTrigger>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Для приближения - выделите необходимую область или
-                            прокрутите колесо мыши.
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsZoomIn />
-                    </Button>
-                  </OverlayTrigger>
-                  <Button
-                    variant='outline-secondary'
-                    size='sm'
-                    className='mx-1'
-                    onClick={res_trainP}
-                  >
-                    <BsZoomOut />
-                  </Button>
-                  <Button
-                    variant='outline-secondary'
-                    size='sm'
-                    className=''
-                    onClick={e => download_chart(e, 'chart8')}
-                  >
-                    <FiDownload />
-                  </Button>
-                </Col>
-              </Row>
-              <Container style={{ height: '20rem' }}>
-                <Line
-                  id='chart8'
-                  options={chartOptions_pm}
-                  data={chartData_pm}
-                  height='90%'
-                />
-              </Container>
-            </motion.div>
+            {status === 'success' ? (
+              <SubBlock
+                title={
+                  'Базовый индекс репродукции COVID-19 в Новосибирской области'
+                }
+                chartId={'chart5'}
+                chartOptions={chartOptions_R0_}
+                chartData={chartData_tR0}
+              />
+            ) : (
+              ''
+            )}
+            {status === 'success' ? (
+              <SubBlock
+                title={
+                  'Восстановленные параметры модели COVID-19 для Новосибирской области'
+                }
+                chartId={'chart8'}
+                chartOptions={chartOptions_P_}
+                chartData={chartData_tP}
+              />
+            ) : (
+              ''
+            )}
           </div>
         </Collapse>
-        <OverlayTrigger
-          placement='bottom'
-          overlay={
-            <Popover>
-              <Popover.Body>
-                <div align='justify' className='text-black'>
-                  <small>
-                    Результат валидации SEIR-HCD модели распространения COVID-19
-                    в регионе: по откалиброванным параметрам за предыдущий
-                    14-дневный период реализуется базовый сценарий на 7 дней,
-                    который сравненивается с реальными данными.
-                  </small>
-                </div>
-              </Popover.Body>
-            </Popover>
-          }
-        >
-          <Button
-            variant='outline-info'
-            className='mx-3 my-2 bg-white'
-            onClick={() => setOpenV(!openV)}
-            aria-controls='example-fade-text'
-            aria-expanded={openV}
-          >
-            {openV ? (
-              <BsFillCaretDownFill size={15} />
-            ) : (
-              <BsFillCaretRightFill size={15} />
-            )}{' '}
-            Валидация модели
-          </Button>
-        </OverlayTrigger>
+        {/*  */}
+        <BlockHeader
+          open={openV}
+          setOpen={setOpenV}
+          description={headers[2].description}
+          title={'Валидация модели'}
+        />
+
         <Collapse in={openV}>
           <div id='example-collapse-text'>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <h4 className='mx-5 my-2 text-secondary'>
-                Кривые SEIRHCD и реальные данные
-              </h4>
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <Nav variant='pills' defaultActiveKey='1' className='my-2'>
-                <Nav.Item>
-                  <Button
-                    className='mx-3'
-                    size='sm'
-                    variant='outline-info'
-                    onClick={e => {
-                      res_valid('fk_mean', 'fk_max', 'fk_min', 'new_diagnoses')
-                    }}
-                    style={{ color: '#FFFFFF' }}
-                  >
-                    <Nav.Link eventKey='1'>Новые выявленные случаи</Nav.Link>
-                  </Button>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Восприимчивые
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_valid('S_mean', 'S_max', 'S_min', '')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='2'>
-                        <b>S</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Больные без симптомов
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_valid('E_mean', 'E_max', 'E_min', 'new_diagnoses')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='3'>
-                        <b>E</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Больные с симптомами
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_valid('I_mean', 'I_max', 'I_min', 'new_diagnoses')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='4'>
-                        <b>I</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Вылеченные
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_valid('R_mean', 'R_max', 'R_min', 'cum_recoveries')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='5'>
-                        <b>R</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Госпитализированные
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_valid('H_mean', 'H_max', 'H_min', 'hospitalised')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='6'>
-                        <b>H</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Критически больные
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_valid('C_mean', 'C_max', 'C_min', 'n_critical')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='7'>
-                        <b>C</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-                <Nav.Item>
-                  <OverlayTrigger
-                    placement='bottom'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <div align='center' className='text-info'>
-                            Умершие
-                          </div>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      size='sm'
-                      variant='outline-info'
-                      onClick={e => {
-                        res_valid('D_mean', 'D_max', 'D_min', 'cum_deaths')
-                      }}
-                      className='mx-1'
-                    >
-                      <Nav.Link eventKey='8'>
-                        <b>D</b>
-                      </Nav.Link>
-                    </Button>
-                  </OverlayTrigger>
-                </Nav.Item>
-              </Nav>{' '}
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <Row>
-                <Col xs={12} sm={12} md={12} lg={8}></Col>
-                <Col xs={12} sm={12} md={12} lg={4}>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Чтобы скрыть отображаемые данные - кликните по их
-                            названиям
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsInfo size={18} />
-                    </Button>
-                  </OverlayTrigger>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Для приближения - выделите необходимую область или
-                            прокрутите колесо мыши.
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsZoomIn />
-                    </Button>
-                  </OverlayTrigger>
-                  <Button
-                    variant='outline-secondary'
-                    size='sm'
-                    className=''
-                    onClick={e => download_chart(e, 'chart6')}
-                  >
-                    <FiDownload />
-                  </Button>
-                </Col>
-              </Row>
-              <Container style={{ height: '20rem' }}>
-                <Line
-                  id='chart6'
-                  options={chartOptionsSEIRHCD_v}
-                  data={chartDataSEIRHCD_v}
-                  height='90%'
-                />
-              </Container>
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              {' '}
-              <hr />
-              <h4 className='mx-5 text-secondary'>
-                Базовый индекс репродукции COVID-19 в Новосибирской области
-              </h4>
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <Row>
-                <Col xs={12} sm={12} md={12} lg={8}></Col>
-                <Col xs={12} sm={12} md={12} lg={4}>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Чтобы скрыть отображаемые данные - кликните по их
-                            названиям
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsInfo size={18} />
-                    </Button>
-                  </OverlayTrigger>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Для приближения - выделите необходимую область или
-                            прокрутите колесо мыши.
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsZoomIn />
-                    </Button>
-                  </OverlayTrigger>
-                  <Button
-                    variant='outline-secondary'
-                    size='sm'
-                    className='mx-1'
-                    onClick={res_validR0}
-                  >
-                    <BsZoomOut />
-                  </Button>
-                  <Button
-                    variant='outline-secondary'
-                    size='sm'
-                    className=''
-                    onClick={e => download_chart(e, 'chart3')}
-                  >
-                    <FiDownload />
-                  </Button>
-                </Col>
-              </Row>
-              <Container style={{ height: '20rem' }}>
-                <Line
-                  id='chart3'
-                  options={chartOptions}
-                  data={chartData}
-                  height='90%'
-                />
-              </Container>
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              {' '}
-              <hr />
-              <h4 className='mx-5 text-secondary'>
-                Восстановленные параметры модели COVID-19 для Новосибирской
-                области
-              </h4>{' '}
-            </motion.div>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.05, once: true }}
-            >
-              <Row>
-                <Col xs={12} sm={12} md={12} lg={8}></Col>
-                <Col xs={12} sm={12} md={12} lg={4}>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Чтобы скрыть отображаемые данные - кликните по их
-                            названиям
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsInfo size={18} />
-                    </Button>
-                  </OverlayTrigger>
-                  <OverlayTrigger
-                    placement='left'
-                    overlay={
-                      <Popover>
-                        <Popover.Body>
-                          <small className='text-muted'>
-                            Для приближения - выделите необходимую область или
-                            прокрутите колесо мыши.
-                          </small>
-                        </Popover.Body>
-                      </Popover>
-                    }
-                  >
-                    <Button
-                      variant='outline-secondary'
-                      size='sm'
-                      className='align-right mx-1'
-                      onClick={e => zoom_chart(e)}
-                    >
-                      <BsZoomIn />
-                    </Button>
-                  </OverlayTrigger>
-                  <Button
-                    variant='outline-secondary'
-                    size='sm'
-                    className='mx-1'
-                    onClick={res_validP}
-                  >
-                    <BsZoomOut />
-                  </Button>
-                  <Button
-                    variant='outline-secondary'
-                    size='sm'
-                    className=''
-                    onClick={e => download_chart(e, 'chart7')}
-                  >
-                    <FiDownload />
-                  </Button>
-                </Col>
-              </Row>
-              <Container style={{ height: '20rem' }}>
-                <Line
-                  id='chart7'
-                  options={chartOptions_p}
-                  data={chartData_p}
-                  height='90%'
-                />
-              </Container>
-            </motion.div>
+            <SubBlock
+              title={'Кривые SEIRHCD и реальные данные'}
+              navFun={fetchSeirhcdData}
+              chartId={'chart6'}
+              chartOptions={chartOptions}
+              chartData={chartData_V}
+              block={'valid'}
+            />
+
+            {status === 'success' ? (
+              <SubBlock
+                title={
+                  'Базовый индекс репродукции COVID-19 в Новосибирской области'
+                }
+                chartId={'chart3'}
+                chartOptions={chartOptions_R0_}
+                chartData={chartData_vR0}
+              />
+            ) : (
+              ''
+            )}
+            {status === 'success' ? (
+              <SubBlock
+                title={
+                  'Восстановленные параметры модели COVID-19 для Новосибирской области'
+                }
+                chartId={'chart7'}
+                chartOptions={chartOptions_P_}
+                chartData={chartData_vP}
+              />
+            ) : (
+              ''
+            )}
           </div>
         </Collapse>
       </Card>

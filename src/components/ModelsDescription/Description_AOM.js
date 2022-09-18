@@ -1,28 +1,17 @@
 import { useState } from 'react'
-import {
-  Card,
-  Image,
-  Col,
-  Row,
-  Modal,
-  Button,
-  Popover,
-  OverlayTrigger,
-  Stack,
-} from 'react-bootstrap'
-import { motion } from 'framer-motion'
+import { Card, Image, Col, Row, Modal, Stack } from 'react-bootstrap'
+
 import { BsFillPersonLinesFill } from 'react-icons/bs'
+import { filesAOM } from './AOM_infoFiles'
 
 import fblok from '../../images/fblok.png'
 import model from '../../images/model.png'
 import sblok from '../../images/sblok.png'
-import AltayG from '../../images/gerbs/Altay_region_gerb.png'
-import OmskG from '../../images/gerbs/Omsk_region_gerb.png'
-import HSKG from '../../images/gerbs/Novosibirsk_region_gerb.png'
 
 import { CovidDataFiles, CollapseParamCSV } from '../../components'
 
-import { variantsY as variants } from '../Animation/Animation'
+import { variantsY as variants, AnimationV } from '../Animation/Animation'
+import { AOM_agParams } from './AOM_agParams'
 
 export const Description_AOM = () => {
   const [show, setShow] = useState(false)
@@ -32,38 +21,11 @@ export const Description_AOM = () => {
   const handleClose1 = () => setShow1(false)
   const handleShow1 = () => setShow1(true)
 
-  const files = [
-    {
-      id: 1,
-      name: 'Новосибирская область',
-      hr: 'https://covid19-modeling.ru/data/novosibirsk-region-data.csv',
-      img: HSKG,
-    },
-    {
-      id: 2,
-      name: 'Омская область',
-      hr: 'https://covid19-modeling.ru/data/omsk-region-data.csv',
-      img: OmskG,
-    },
-    {
-      id: 3,
-      name: 'Алтайский край',
-      hr: 'https://covid19-modeling.ru/data/altay-region-data.csv',
-      img: AltayG,
-    },
-  ]
-
   return (
     <>
       <Row>
         <Col sm={12} xs={12} md={12} lg={6}>
-          <motion.div
-            initial='hidden'
-            custom={1}
-            variants={variants}
-            whileInView='visible'
-            viewport={{ amount: 0.1 }}
-          >
+          <AnimationV variants={variants} custom={1} viewport={{ amount: 0.1 }}>
             <Card className='border mx-3 my-1 shadow1'>
               <Card.Header className='text-success'>
                 1. Инициация популяции
@@ -82,14 +44,9 @@ export const Description_AOM = () => {
                 </Modal>
               </Card.Body>
             </Card>{' '}
-          </motion.div>
-          <motion.div
-            initial='hidden'
-            custom={1}
-            variants={variants}
-            whileInView='visible'
-            viewport={{ amount: 0.1 }}
-          >
+          </AnimationV>
+
+          <AnimationV variants={variants} custom={1} viewport={{ amount: 0.1 }}>
             <Card className='border mx-3 my-1 shadow1'>
               <Card.Header className='text-white bg-success'>
                 2. Заражение
@@ -116,91 +73,32 @@ export const Description_AOM = () => {
                 </div>
               </Card.Body>
             </Card>
-          </motion.div>
-          <motion.div
-            initial='hidden'
-            custom={1}
-            variants={variants}
-            whileInView='visible'
-            viewport={{ amount: 0.1 }}
-          >
+          </AnimationV>
+
+          <AnimationV variants={variants} custom={1} viewport={{ amount: 0.1 }}>
             <Card className='border shadow1 my-1 mx-3'>
               <Card.Header className='text-center text-white bg-success'>
                 Данные
               </Card.Header>
               <Card.Body align='center'>
                 <Stack gap={3}>
-                  {files.map(file => (
+                  {filesAOM.map(file => (
                     <CovidDataFiles key={file.id} file={file} />
                   ))}
                   <CollapseParamCSV />
                 </Stack>
               </Card.Body>
             </Card>
-          </motion.div>
+          </AnimationV>
         </Col>
         <Col sm={12} xs={12} md={12} lg={6}>
-          <motion.div
-            initial='hidden'
-            custom={1}
-            variants={variants}
-            whileInView='visible'
-            viewport={{ amount: 0.1 }}
-          >
+          <AnimationV variants={variants} custom={1} viewport={{ amount: 0.1 }}>
             <Card className='border my-1 mx-3 shadow1'>
               <Card.Header className='text-white bg-success'>
                 <BsFillPersonLinesFill size={30} /> Параметры агентов
               </Card.Header>
               <Card.Body align='left'>
-                <Row>
-                  <Col>
-                    <div>Не зависят от времени:</div>
-                    <small>
-                      <div>• возраст</div>
-                      <div>• пол</div>
-                      <div>• социальный статус</div>
-                      <div>• прогрессирование заболевания</div>
-                    </small>
-                  </Col>
-                  <Col>
-                    <div>Зависят от времени:</div>
-                    <small>
-                      <div>• эпид. статус:</div>
-                      <div>
-                        𝑆, 𝐸, 𝐼, 𝑅, 𝐻, 𝐶, 𝐷, 𝐴, 𝑀
-                        <OverlayTrigger
-                          placement='bottom'
-                          overlay={
-                            <Popover>
-                              <Popover.Body>
-                                <small className='text-success'>
-                                  <div>S – восприимчивые к заражению</div>
-                                  <div>E – зараженные незаразные</div>
-                                  <div>𝐼 – инфицированные</div>
-                                  <div>R – вылечившиеся</div>
-                                  <div>H – госпитализированные</div>
-                                  <div>C – больные в критическом состоянии</div>
-                                  <div>D – умершие</div>
-                                  <div>A - бессимптомные больные</div>
-                                  <div>M - больные в легкой форме</div>{' '}
-                                </small>
-                              </Popover.Body>
-                            </Popover>
-                          }
-                        >
-                          <Button
-                            size='sm'
-                            variant='link'
-                            className='text-success'
-                          >
-                            ?
-                          </Button>
-                        </OverlayTrigger>
-                      </div>
-                      <div>• шанс быть протестированным</div>
-                    </small>
-                  </Col>
-                </Row>
+                <AOM_agParams />
                 <div align='justify'>
                   <small>
                     В зависимости от возраста агенты контактируют друг с другом
@@ -209,14 +107,9 @@ export const Description_AOM = () => {
                 </div>
               </Card.Body>
             </Card>
-          </motion.div>
-          <motion.div
-            initial='hidden'
-            custom={1}
-            variants={variants}
-            whileInView='visible'
-            viewport={{ amount: 0.1 }}
-          >
+          </AnimationV>
+
+          <AnimationV variants={variants} custom={1} viewport={{ amount: 0.1 }}>
             <Card className='border shadow1 my-1 mx-3'>
               <Card.Header className='text-success'>
                 3. Прогрессирование заболевания
@@ -228,14 +121,9 @@ export const Description_AOM = () => {
                 </Modal>
               </Card.Body>
             </Card>
-          </motion.div>
-          <motion.div
-            initial='hidden'
-            custom={1}
-            variants={variants}
-            whileInView='visible'
-            viewport={{ amount: 0.1 }}
-          >
+          </AnimationV>
+
+          <AnimationV variants={variants} custom={1} viewport={{ amount: 0.1 }}>
             <Card className='border my-1 shadow1 mx-3'>
               <Card.Header className='text-success bg-light'>
                 4. Тестирование агентов
@@ -255,14 +143,9 @@ export const Description_AOM = () => {
                 </div>
               </Card.Body>
             </Card>
-          </motion.div>
-          <motion.div
-            initial='hidden'
-            custom={1}
-            variants={variants}
-            whileInView='visible'
-            viewport={{ amount: 0.1 }}
-          >
+          </AnimationV>
+
+          <AnimationV variants={variants} custom={1} viewport={{ amount: 0.1 }}>
             <Card className='border shadow1 my-1 mx-3'>
               <Card.Header className='text-white bg-success'>
                 5. Введение сдерживающих эпидемию мер
@@ -283,7 +166,7 @@ export const Description_AOM = () => {
                 </div>
               </Card.Body>
             </Card>
-          </motion.div>
+          </AnimationV>
         </Col>
       </Row>
     </>

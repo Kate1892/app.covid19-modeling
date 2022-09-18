@@ -9,7 +9,7 @@ export const Main_publications = () => {
         <ListGroup as='ol' variant='flush' numbered>
           {publications.map(pub => (
             <MPitem
-              key={pub.key}
+              key={pub.id}
               href={pub.href}
               description={pub.description}
             />

@@ -1,6 +1,7 @@
 import { forwardRef } from 'react'
 import { Card, Col, Spinner } from 'react-bootstrap'
 import { motion } from 'framer-motion'
+import { Status } from '../../redux/types'
 
 const StaticCovidDataItem = forwardRef((props, ref) => {
   return (
@@ -12,21 +13,23 @@ const StaticCovidDataItem = forwardRef((props, ref) => {
       >
         <Card.Body>
           <Card.Title className='text-center text-info'>
-            {props.last.lastData ? (
-              <div>
-                {isNaN(props.last.lastData) ? (
-                  <p>нет данных</p>
-                ) : (
-                  <h3>{props.last.lastData}</h3>
-                )}
-              </div>
-            ) : (
+            {props.status === Status.ERROR ? (
+              <div></div>
+            ) : props.status === Status.LOADING ? (
               <Spinner
                 style={{ position: 'absolute', top: '10%' }}
                 size='sm'
                 animation='border'
                 variant='info'
               />
+            ) : (
+              <div>
+                {isNaN(props.last.value) ? (
+                  <p>нет данных</p>
+                ) : (
+                  <h3>{props.last.value}</h3>
+                )}
+              </div>
             )}
           </Card.Title>
           <Card.Text className='text-center'>
@@ -39,8 +42,7 @@ const StaticCovidDataItem = forwardRef((props, ref) => {
         >
           <small className='text-muted'>
             <small className='text-center'>
-              По данным на{' '}
-              {props.last.lastDatadate ? props.last.lastDatadate : <div></div>}
+              По данным на {props.last.date ? props.last.date : <div></div>}
             </small>
           </small>
         </Card.Footer>

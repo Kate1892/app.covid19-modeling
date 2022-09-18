@@ -48,7 +48,6 @@ export function Footer() {
               <div align='center'>
                 <Image
                   variant='bottom'
-                  className=''
                   src={RFFI}
                   fluid
                   style={({ width: '2.5rem' }, { height: '2.5em' })}
@@ -57,7 +56,6 @@ export function Footer() {
               <div align='center'>
                 <Image
                   variant='bottom'
-                  className=''
                   src={RF2}
                   fluid
                   style={({ width: '2.7rem' }, { height: '2.7rem' })}
@@ -70,7 +68,7 @@ export function Footer() {
             >
               <Image
                 variant='center'
-                className=' my-2'
+                className='my-2'
                 src={mmf6}
                 fluid
                 style={({ width: '7rem' }, { height: '5rem' })}

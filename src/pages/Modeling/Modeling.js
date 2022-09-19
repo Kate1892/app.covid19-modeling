@@ -1,4 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchAomData } from '../../redux/aomBlcok/asyncAction'
+import { selectAomdData } from '../../redux/aomBlcok/selectors'
+import { setNewChartData } from '../../redux/aomBlcok/slice'
 import {
   Container,
   Card,
@@ -14,24 +18,14 @@ import {
   Spinner,
   Tabs,
   Tab,
-  Collapse,
   Alert,
 } from 'react-bootstrap'
 
 import axios from 'axios'
-import FileDownload from 'js-file-download'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 
-import {
-  BsFillFileEarmarkPdfFill,
-  BsFillArrowUpRightSquareFill,
-  BsFillCaretRightFill,
-  BsFillCaretDownFill,
-  BsExclamationLg,
-  BsInfo,
-  BsZoomIn,
-} from 'react-icons/bs'
+import { BsExclamationLg, BsInfo, BsZoomIn } from 'react-icons/bs'
 import { FiDownload } from 'react-icons/fi'
 
 import { motion } from 'framer-motion'
@@ -52,7 +46,7 @@ import {
 import { Line } from 'react-chartjs-2'
 import zoomPlugin from 'chartjs-plugin-zoom'
 
-import { NaviBar, Description_AOM, Plugs } from '../../components'
+import { NaviBar, Plugs } from '../../components'
 import { ModelingSEIR_HCD } from '../../pages'
 
 import {
@@ -60,6 +54,7 @@ import {
   variantsY as variants2,
 } from '../../components/Animation/Animation'
 import { download_chart, zoom_chart } from '../../utils/ChartFun'
+import { AomHeader } from '../../components/AOMcontent/AomHeader'
 
 ChartJS.register(
   CategoryScale,
@@ -75,17 +70,6 @@ ChartJS.register(
 )
 
 ChartJS.register(zoomPlugin)
-
-const download_article = e => {
-  e.preventDefault()
-  axios({
-    url: 'https://server.covid19-modeling.ru/article',
-    method: 'GET',
-    responseType: 'blob',
-  }).then(resA => {
-    FileDownload(resA.data, 'article.pdf')
-  })
-}
 
 const schema = yup.object().shape({
   population: yup
@@ -190,581 +174,581 @@ export function Modeling() {
   //1-5 - chart
   //6-10 - init chart
 
-  const real_data1 = e => {
-    axios
-      .get('https://server.covid19-modeling.ru/api/csvCovid/nd')
-      .then(res => {
-        for (const dataObj of res.data) {
-          cov_nd_state.push(parseInt(dataObj.new_diagnoses))
-          cov_data_state.push(dataObj.date)
-        }
-        setChartData_all({
-          labels: data,
-          datasets: [
-            {
-              label: 'данные',
-              data: cov_nd_state,
-              borderColor: 'rgb(255, 127, 80)',
-              backgroundColor: 'rgb(255, 127, 80, 1)',
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'cредний прогноз',
-              data: data_cov_nd,
-              fill: false,
-              borderColor: 'rgba(0, 191, 255, 1)',
-              backgroundColor: 'rgba(0, 191, 255, 1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: data_cov_nd_high,
-              fill: true,
-              backgroundColor: 'rgba(135, 206, 250, 0.2)',
-              borderColor: 'rgba(135, 206, 250, 0.8)',
-              tension: 0.9,
-              borderWidth: 0.5,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const real_data2 = e => {
-    axios
-      .get('https://server.covid19-modeling.ru/api/csvCovid/nd')
-      .then(res => {
-        for (const dataObj of res.data) {
-          cov_nd_state.push(parseInt(dataObj.cum_diagnoses))
-          cov_data_state.push(dataObj.date)
-        }
-        setChartData_all({
-          labels: data,
-          datasets: [
-            {
-              label: 'данные',
-              data: cov_nd_state,
-              borderColor: 'rgb(255, 127, 80)',
-              backgroundColor: 'rgb(255, 127, 80, 1)',
-              tension: 0.9,
-              borderWidth: 0.001,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'cредний прогноз',
-              data: data_cov_cum_diag,
-              fill: false,
-              borderColor: 'rgba(0, 0, 0, 1)',
-              backgroundColor: 'rgba(0, 0, 0, 1)',
-              tension: 0.9,
-              borderWidth: 4,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: data_cov_cum_diag_high,
-              fill: true,
-              borderColor: 'rgba(0, 0, 0, 0.1)',
-              backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const real_data3 = e => {
-    axios
-      .get('https://server.covid19-modeling.ru/api/csvCovid/nd')
-      .then(res => {
-        for (const dataObj of res.data) {
-          cov_nd_state.push(parseInt(dataObj.new_deaths))
-          cov_data_state.push(dataObj.date)
-        }
-        setChartData_all({
-          labels: data,
-          datasets: [
-            {
-              label: 'данные',
-              data: cov_nd_state,
-              borderColor: 'rgb(255, 127, 80)',
-              backgroundColor: 'rgb(255, 127, 80, 1)',
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'cредний прогноз',
-              data: data_new_death,
-              fill: false,
-              borderColor: 'rgba(255,0,0, 1)',
-              backgroundColor: 'rgba(255, 0, 0, 1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: data_cov_new_death_high,
-              fill: true,
-              borderColor: 'rgba(255, 0, 0, 0.1)',
-              backgroundColor: 'rgba(255, 0, 0, 0.1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const real_data4 = e => {
-    axios
-      .get('https://server.covid19-modeling.ru/api/csvCovid/nd')
-      .then(res => {
-        for (const dataObj of res.data) {
-          cov_nd_state.push(parseInt(dataObj.new_recoveries))
-          cov_data_state.push(dataObj.date)
-        }
-        setChartData_all({
-          labels: data,
-          datasets: [
-            {
-              label: 'данные',
-              data: cov_nd_state,
-              borderColor: 'rgb(255, 127, 80)',
-              backgroundColor: 'rgb(255, 127, 80, 1)',
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'cредний прогноз',
-              data: data_new_rec,
-              fill: false,
-              borderColor: 'rgba(252,141,214, 1)',
-              backgroundColor: 'rgba(252,141,214, 1)',
-              tension: 0.9,
-              borderWidth: 4,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: data_cov_new_rec_high,
-              fill: true,
-              borderColor: 'rgba(252,141,214, 0.3)',
-              backgroundColor: 'rgba(252,141,214, 0.3)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const real_data5 = e => {
-    axios
-      .get('https://server.covid19-modeling.ru/api/csvCovid/nd')
-      .then(res => {
-        for (const dataObj of res.data) {
-          cov_nd_state.push(parseInt(dataObj.n_critical))
-          cov_data_state.push(dataObj.date)
-        }
-        setChartData_all({
-          labels: data,
-          datasets: [
-            {
-              label: 'данные',
-              data: cov_nd_state,
-              borderColor: 'rgb(255, 127, 80)',
-              backgroundColor: 'rgb(255, 127, 80, 1)',
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'cредний прогноз',
-              data: data_new_crit,
-              fill: false,
-              borderColor: 'rgba(128, 0, 255, 1)',
-              backgroundColor: 'rgba(128, 0, 255, 1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: data_cov_new_crit_high,
-              fill: true,
-              borderColor: 'rgba(128, 0, 255, 0.1)',
-              backgroundColor: 'rgba(128, 0, 255, 0.1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
+  // const real_data1 = e => {
+  //   axios
+  //     .get('https://server.covid19-modeling.ru/api/csvCovid/nd')
+  //     .then(res => {
+  //       for (const dataObj of res.data) {
+  //         cov_nd_state.push(parseInt(dataObj.new_diagnoses))
+  //         cov_data_state.push(dataObj.date)
+  //       }
+  //       setChartData_all({
+  //         labels: data,
+  //         datasets: [
+  //           {
+  //             label: 'данные',
+  //             data: cov_nd_state,
+  //             borderColor: 'rgb(255, 127, 80)',
+  //             backgroundColor: 'rgb(255, 127, 80, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 0.01,
+  //             pointRadius: 2,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'cредний прогноз',
+  //             data: data_cov_nd,
+  //             fill: false,
+  //             borderColor: 'rgba(0, 191, 255, 1)',
+  //             backgroundColor: 'rgba(0, 191, 255, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 2,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'максимальный прогноз',
+  //             data: data_cov_nd_high,
+  //             fill: true,
+  //             backgroundColor: 'rgba(135, 206, 250, 0.2)',
+  //             borderColor: 'rgba(135, 206, 250, 0.8)',
+  //             tension: 0.9,
+  //             borderWidth: 0.5,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //         ],
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+  // const real_data2 = e => {
+  //   axios
+  //     .get('https://server.covid19-modeling.ru/api/csvCovid/nd')
+  //     .then(res => {
+  //       for (const dataObj of res.data) {
+  //         cov_nd_state.push(parseInt(dataObj.cum_diagnoses))
+  //         cov_data_state.push(dataObj.date)
+  //       }
+  //       setChartData_all({
+  //         labels: data,
+  //         datasets: [
+  //           {
+  //             label: 'данные',
+  //             data: cov_nd_state,
+  //             borderColor: 'rgb(255, 127, 80)',
+  //             backgroundColor: 'rgb(255, 127, 80, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 0.001,
+  //             pointRadius: 2,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'cредний прогноз',
+  //             data: data_cov_cum_diag,
+  //             fill: false,
+  //             borderColor: 'rgba(0, 0, 0, 1)',
+  //             backgroundColor: 'rgba(0, 0, 0, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 4,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'максимальный прогноз',
+  //             data: data_cov_cum_diag_high,
+  //             fill: true,
+  //             borderColor: 'rgba(0, 0, 0, 0.1)',
+  //             backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  //             tension: 0.9,
+  //             borderWidth: 2,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //         ],
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+  // const real_data3 = e => {
+  //   axios
+  //     .get('https://server.covid19-modeling.ru/api/csvCovid/nd')
+  //     .then(res => {
+  //       for (const dataObj of res.data) {
+  //         cov_nd_state.push(parseInt(dataObj.new_deaths))
+  //         cov_data_state.push(dataObj.date)
+  //       }
+  //       setChartData_all({
+  //         labels: data,
+  //         datasets: [
+  //           {
+  //             label: 'данные',
+  //             data: cov_nd_state,
+  //             borderColor: 'rgb(255, 127, 80)',
+  //             backgroundColor: 'rgb(255, 127, 80, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 0.01,
+  //             pointRadius: 2,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'cредний прогноз',
+  //             data: data_new_death,
+  //             fill: false,
+  //             borderColor: 'rgba(255,0,0, 1)',
+  //             backgroundColor: 'rgba(255, 0, 0, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 1,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'максимальный прогноз',
+  //             data: data_cov_new_death_high,
+  //             fill: true,
+  //             borderColor: 'rgba(255, 0, 0, 0.1)',
+  //             backgroundColor: 'rgba(255, 0, 0, 0.1)',
+  //             tension: 0.9,
+  //             borderWidth: 2,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //         ],
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+  // const real_data4 = e => {
+  //   axios
+  //     .get('https://server.covid19-modeling.ru/api/csvCovid/nd')
+  //     .then(res => {
+  //       for (const dataObj of res.data) {
+  //         cov_nd_state.push(parseInt(dataObj.new_recoveries))
+  //         cov_data_state.push(dataObj.date)
+  //       }
+  //       setChartData_all({
+  //         labels: data,
+  //         datasets: [
+  //           {
+  //             label: 'данные',
+  //             data: cov_nd_state,
+  //             borderColor: 'rgb(255, 127, 80)',
+  //             backgroundColor: 'rgb(255, 127, 80, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 0.01,
+  //             pointRadius: 2,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'cредний прогноз',
+  //             data: data_new_rec,
+  //             fill: false,
+  //             borderColor: 'rgba(252,141,214, 1)',
+  //             backgroundColor: 'rgba(252,141,214, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 4,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'максимальный прогноз',
+  //             data: data_cov_new_rec_high,
+  //             fill: true,
+  //             borderColor: 'rgba(252,141,214, 0.3)',
+  //             backgroundColor: 'rgba(252,141,214, 0.3)',
+  //             tension: 0.9,
+  //             borderWidth: 2,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //         ],
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+  // const real_data5 = e => {
+  //   axios
+  //     .get('https://server.covid19-modeling.ru/api/csvCovid/nd')
+  //     .then(res => {
+  //       for (const dataObj of res.data) {
+  //         cov_nd_state.push(parseInt(dataObj.n_critical))
+  //         cov_data_state.push(dataObj.date)
+  //       }
+  //       setChartData_all({
+  //         labels: data,
+  //         datasets: [
+  //           {
+  //             label: 'данные',
+  //             data: cov_nd_state,
+  //             borderColor: 'rgb(255, 127, 80)',
+  //             backgroundColor: 'rgb(255, 127, 80, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 0.01,
+  //             pointRadius: 2,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'cредний прогноз',
+  //             data: data_new_crit,
+  //             fill: false,
+  //             borderColor: 'rgba(128, 0, 255, 1)',
+  //             backgroundColor: 'rgba(128, 0, 255, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 1,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'максимальный прогноз',
+  //             data: data_cov_new_crit_high,
+  //             fill: true,
+  //             borderColor: 'rgba(128, 0, 255, 0.1)',
+  //             backgroundColor: 'rgba(128, 0, 255, 0.1)',
+  //             tension: 0.9,
+  //             borderWidth: 2,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //         ],
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
 
-  const real_data6 = e => {
-    axios({
-      url: 'https://server.covid19-modeling.ru/api/curData',
-      method: 'POST',
-      data: { region_data },
-    })
-      .then(res => {
-        for (const dataObj of res.data) {
-          cov_nd_state.push(parseInt(dataObj.new_diagnoses))
-        }
-        setINITChartData_all({
-          labels: data,
-          datasets: [
-            {
-              label: 'данные',
-              data: cov_nd_state,
-              borderColor: 'rgb(255, 127, 80)',
-              backgroundColor: 'rgb(255, 127, 80, 1)',
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'cредний прогноз',
-              data: data_cov_nd,
-              fill: false,
-              borderColor: 'rgba(0, 191, 255, 1)',
-              backgroundColor: 'rgba(0, 191, 255, 1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: data_cov_nd_high,
-              fill: true,
-              backgroundColor: 'rgba(135, 206, 250, 0.2)',
-              borderColor: 'rgba(135, 206, 250, 0.8)',
-              tension: 0.9,
-              borderWidth: 0.5,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const real_data7 = e => {
-    axios({
-      url: 'https://server.covid19-modeling.ru/api/curData',
-      method: 'POST',
-      data: { region_data },
-    })
-      .then(res => {
-        for (const dataObj of res.data) {
-          cov_nd_state.push(parseInt(dataObj.cum_diagnoses))
-          cov_data_state.push(dataObj.date)
-        }
-        setINITChartData_all({
-          labels: data,
-          datasets: [
-            {
-              label: 'данные',
-              data: cov_nd_state,
-              borderColor: 'rgb(255, 127, 80)',
-              backgroundColor: 'rgb(255, 127, 80, 1)',
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'cредний прогноз',
-              data: data_cov_cum_diag,
-              fill: false,
-              borderColor: 'rgba(0, 0, 0, 1)',
-              backgroundColor: 'rgba(0, 0, 0, 1)',
-              tension: 0.9,
-              borderWidth: 4,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: data_cov_cum_diag_high,
-              fill: true,
-              borderColor: 'rgba(0, 0, 0, 0.1)',
-              backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const real_data8 = e => {
-    axios({
-      url: 'https://server.covid19-modeling.ru/api/curData',
-      method: 'POST',
-      data: { region_data },
-    })
-      .then(res => {
-        for (const dataObj of res.data) {
-          cov_nd_state.push(parseInt(dataObj.new_deaths))
-          cov_data_state.push(dataObj.date)
-        }
-        setINITChartData_all({
-          labels: data,
-          datasets: [
-            {
-              label: 'данные',
-              data: cov_nd_state,
-              borderColor: 'rgb(255, 127, 80)',
-              backgroundColor: 'rgb(255, 127, 80, 1)',
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'cредний прогноз',
-              data: data_new_death,
-              fill: false,
-              borderColor: 'rgba(255,0,0, 1)',
-              backgroundColor: 'rgba(255, 0, 0, 1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: data_cov_new_death_high,
-              fill: true,
-              borderColor: 'rgba(255, 0, 0, 0.1)',
-              backgroundColor: 'rgba(255, 0, 0, 0.1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const real_data9 = e => {
-    axios({
-      url: 'https://server.covid19-modeling.ru/api/curData',
-      method: 'POST',
-      data: { region_data },
-    })
-      .then(res => {
-        for (const dataObj of res.data) {
-          cov_nd_state.push(parseInt(dataObj.new_recoveries))
-          cov_data_state.push(dataObj.date)
-        }
-        setINITChartData_all({
-          labels: data,
-          datasets: [
-            {
-              label: 'данные',
-              data: cov_nd_state,
-              borderColor: 'rgb(255, 127, 80)',
-              backgroundColor: 'rgb(255, 127, 80, 1)',
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'cредний прогноз',
-              data: data_new_rec,
-              fill: false,
-              borderColor: 'rgba(252,141,214, 1)',
-              backgroundColor: 'rgba(252,141,214, 1)',
-              tension: 0.9,
-              borderWidth: 4,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: data_cov_new_rec_high,
-              fill: true,
-              borderColor: 'rgba(252,141,214, 0.3)',
-              backgroundColor: 'rgba(252,141,214, 0.3)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const real_data10 = e => {
-    axios({
-      url: 'https://server.covid19-modeling.ru/api/curData',
-      method: 'POST',
-      data: { region_data },
-    })
-      .then(res => {
-        for (const dataObj of res.data) {
-          cov_nd_state.push(parseInt(dataObj.n_critical))
-          cov_data_state.push(dataObj.date)
-        }
-        setINITChartData_all({
-          labels: data,
-          datasets: [
-            {
-              label: 'данные',
-              data: cov_nd_state,
-              borderColor: 'rgb(255, 127, 80)',
-              backgroundColor: 'rgb(255, 127, 80, 1)',
-              tension: 0.9,
-              borderWidth: 0.01,
-              pointRadius: 2,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'cредний прогноз',
-              data: data_new_crit,
-              fill: false,
-              borderColor: 'rgba(128, 0, 255, 1)',
-              backgroundColor: 'rgba(128, 0, 255, 1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: data_cov_new_crit_high,
-              fill: true,
-              borderColor: 'rgba(128, 0, 255, 0.1)',
-              backgroundColor: 'rgba(128, 0, 255, 0.1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
+  // const real_data6 = e => {
+  //   axios({
+  //     url: 'https://server.covid19-modeling.ru/api/curData',
+  //     method: 'POST',
+  //     data: { region_data },
+  //   })
+  //     .then(res => {
+  //       for (const dataObj of res.data) {
+  //         cov_nd_state.push(parseInt(dataObj.new_diagnoses))
+  //       }
+  //       setINITChartData_all({
+  //         labels: data,
+  //         datasets: [
+  //           {
+  //             label: 'данные',
+  //             data: cov_nd_state,
+  //             borderColor: 'rgb(255, 127, 80)',
+  //             backgroundColor: 'rgb(255, 127, 80, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 0.01,
+  //             pointRadius: 2,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'cредний прогноз',
+  //             data: data_cov_nd,
+  //             fill: false,
+  //             borderColor: 'rgba(0, 191, 255, 1)',
+  //             backgroundColor: 'rgba(0, 191, 255, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 2,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'максимальный прогноз',
+  //             data: data_cov_nd_high,
+  //             fill: true,
+  //             backgroundColor: 'rgba(135, 206, 250, 0.2)',
+  //             borderColor: 'rgba(135, 206, 250, 0.8)',
+  //             tension: 0.9,
+  //             borderWidth: 0.5,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //         ],
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+  // const real_data7 = e => {
+  //   axios({
+  //     url: 'https://server.covid19-modeling.ru/api/curData',
+  //     method: 'POST',
+  //     data: { region_data },
+  //   })
+  //     .then(res => {
+  //       for (const dataObj of res.data) {
+  //         cov_nd_state.push(parseInt(dataObj.cum_diagnoses))
+  //         cov_data_state.push(dataObj.date)
+  //       }
+  //       setINITChartData_all({
+  //         labels: data,
+  //         datasets: [
+  //           {
+  //             label: 'данные',
+  //             data: cov_nd_state,
+  //             borderColor: 'rgb(255, 127, 80)',
+  //             backgroundColor: 'rgb(255, 127, 80, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 0.01,
+  //             pointRadius: 2,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'cредний прогноз',
+  //             data: data_cov_cum_diag,
+  //             fill: false,
+  //             borderColor: 'rgba(0, 0, 0, 1)',
+  //             backgroundColor: 'rgba(0, 0, 0, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 4,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'максимальный прогноз',
+  //             data: data_cov_cum_diag_high,
+  //             fill: true,
+  //             borderColor: 'rgba(0, 0, 0, 0.1)',
+  //             backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  //             tension: 0.9,
+  //             borderWidth: 2,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //         ],
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+  // const real_data8 = e => {
+  //   axios({
+  //     url: 'https://server.covid19-modeling.ru/api/curData',
+  //     method: 'POST',
+  //     data: { region_data },
+  //   })
+  //     .then(res => {
+  //       for (const dataObj of res.data) {
+  //         cov_nd_state.push(parseInt(dataObj.new_deaths))
+  //         cov_data_state.push(dataObj.date)
+  //       }
+  //       setINITChartData_all({
+  //         labels: data,
+  //         datasets: [
+  //           {
+  //             label: 'данные',
+  //             data: cov_nd_state,
+  //             borderColor: 'rgb(255, 127, 80)',
+  //             backgroundColor: 'rgb(255, 127, 80, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 0.01,
+  //             pointRadius: 2,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'cредний прогноз',
+  //             data: data_new_death,
+  //             fill: false,
+  //             borderColor: 'rgba(255,0,0, 1)',
+  //             backgroundColor: 'rgba(255, 0, 0, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 1,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'максимальный прогноз',
+  //             data: data_cov_new_death_high,
+  //             fill: true,
+  //             borderColor: 'rgba(255, 0, 0, 0.1)',
+  //             backgroundColor: 'rgba(255, 0, 0, 0.1)',
+  //             tension: 0.9,
+  //             borderWidth: 2,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //         ],
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+  // const real_data9 = e => {
+  //   axios({
+  //     url: 'https://server.covid19-modeling.ru/api/curData',
+  //     method: 'POST',
+  //     data: { region_data },
+  //   })
+  //     .then(res => {
+  //       for (const dataObj of res.data) {
+  //         cov_nd_state.push(parseInt(dataObj.new_recoveries))
+  //         cov_data_state.push(dataObj.date)
+  //       }
+  //       setINITChartData_all({
+  //         labels: data,
+  //         datasets: [
+  //           {
+  //             label: 'данные',
+  //             data: cov_nd_state,
+  //             borderColor: 'rgb(255, 127, 80)',
+  //             backgroundColor: 'rgb(255, 127, 80, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 0.01,
+  //             pointRadius: 2,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'cредний прогноз',
+  //             data: data_new_rec,
+  //             fill: false,
+  //             borderColor: 'rgba(252,141,214, 1)',
+  //             backgroundColor: 'rgba(252,141,214, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 4,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'максимальный прогноз',
+  //             data: data_cov_new_rec_high,
+  //             fill: true,
+  //             borderColor: 'rgba(252,141,214, 0.3)',
+  //             backgroundColor: 'rgba(252,141,214, 0.3)',
+  //             tension: 0.9,
+  //             borderWidth: 2,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //         ],
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
+  // const real_data10 = e => {
+  //   axios({
+  //     url: 'https://server.covid19-modeling.ru/api/curData',
+  //     method: 'POST',
+  //     data: { region_data },
+  //   })
+  //     .then(res => {
+  //       for (const dataObj of res.data) {
+  //         cov_nd_state.push(parseInt(dataObj.n_critical))
+  //         cov_data_state.push(dataObj.date)
+  //       }
+  //       setINITChartData_all({
+  //         labels: data,
+  //         datasets: [
+  //           {
+  //             label: 'данные',
+  //             data: cov_nd_state,
+  //             borderColor: 'rgb(255, 127, 80)',
+  //             backgroundColor: 'rgb(255, 127, 80, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 0.01,
+  //             pointRadius: 2,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'cредний прогноз',
+  //             data: data_new_crit,
+  //             fill: false,
+  //             borderColor: 'rgba(128, 0, 255, 1)',
+  //             backgroundColor: 'rgba(128, 0, 255, 1)',
+  //             tension: 0.9,
+  //             borderWidth: 1,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //           {
+  //             label: 'максимальный прогноз',
+  //             data: data_cov_new_crit_high,
+  //             fill: true,
+  //             borderColor: 'rgba(128, 0, 255, 0.1)',
+  //             backgroundColor: 'rgba(128, 0, 255, 0.1)',
+  //             tension: 0.9,
+  //             borderWidth: 2,
+  //             pointRadius: 0.3,
+  //             pointHoverRadius: 5,
+  //             pointHitRadius: 30,
+  //             pointBorderWidth: 0.1,
+  //           },
+  //         ],
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err)
+  //     })
+  // }
 
   const initchart = () => {
     setChartnum(6)
@@ -1376,397 +1360,12 @@ export function Modeling() {
         console.log(err)
       })
   }
-  const chart_cumdiag = () => {
-    setChartnum(2)
-    axios
-      .get('https://server.covid19-modeling.ru/getMsim')
-      .then(res => {
-        for (const dataObj of res.data.results.cum_diagnoses) {
-          cov_cum_diag.push(parseInt(dataObj))
-          setData_cov_cum_diag(cov_cum_diag)
-        }
-        for (const dataObj of res.data.results.date) {
-          cov_data.push(dataObj)
-          setData(cov_data)
-        }
-        for (const dataObj of res.data.results.cum_diagnoses_high) {
-          cov_cum_diag_high.push(dataObj)
-          setData_cov_cum_diag_high(cov_cum_diag_high)
-        }
-        setChartData_all({
-          labels: cov_data,
-          datasets: [
-            {
-              label: 'cредний прогноз',
-              data: cov_cum_diag,
-              fill: false,
-              borderColor: 'rgba(0, 0, 0, 1)',
-              backgroundColor: 'rgba(0, 0, 0, 1)',
-              tension: 0.9,
-              borderWidth: 4,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: cov_cum_diag_high,
-              fill: true,
-              borderColor: 'rgba(0, 0, 0, 0.1)',
-              backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-        setChartOptions({
-          maintainAspectRatio: false,
-          responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-              zoom: {
-                wheel: {
-                  enabled: true,
-                  speed: 0.1,
-                },
-                drag: {
-                  enabled: true,
-                },
-                pan: { enabled: true },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'xy',
-              },
-            },
-            legend: {
-              position: 'top',
-            },
-            title: {
-              display: true,
-              align: 'start',
-              text: 'Прогноз суммарного количества заражений',
-            },
-            subtitle: {
-              display: true,
-              align: 'end',
-              text: [
-                'Регион прогнозирования: ' + region_name,
-                'Численность популяции: ' + population_data,
-                'Начально инфицированных: ' + init_inf,
-                'Дней прогнозирования: ' + n_future_day,
-              ],
-            },
-          },
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const chart_newdeath = () => {
-    setChartnum(3)
-    axios
-      .get('https://server.covid19-modeling.ru/getMsim')
-      .then(res => {
-        for (const dataObj of res.data.results.new_deaths) {
-          cov_new_death.push(parseInt(dataObj))
-          setData_cov_new_death(cov_new_death)
-        }
-        for (const dataObj of res.data.results.date) {
-          cov_data.push(dataObj)
-          setData(cov_data)
-        }
-        for (const dataObj of res.data.results.new_deaths_high) {
-          cov_new_death_high.push(dataObj)
-          setData_cov_new_death_high(cov_new_death)
-        }
-        setChartData_all({
-          labels: cov_data,
-          datasets: [
-            {
-              label: 'cредний прогноз',
-              data: cov_new_death,
-              fill: false,
-              borderColor: 'rgba(255,0,0, 1)',
-              backgroundColor: 'rgba(255, 0, 0, 1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: cov_new_death_high,
-              fill: true,
-              borderColor: 'rgba(255, 0, 0, 0.1)',
-              backgroundColor: 'rgba(255, 0, 0, 0.1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-        setChartOptions({
-          maintainAspectRatio: false,
-          responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-              zoom: {
-                wheel: {
-                  enabled: true,
-                  speed: 0.1,
-                },
-                drag: {
-                  enabled: true,
-                },
-                pan: { enabled: true },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'xy',
-              },
-            },
-            legend: {
-              position: 'top',
-            },
-            title: {
-              display: true,
-              align: 'start',
-              text: 'Прогноз летальных исходов',
-            },
-            subtitle: {
-              display: true,
-              align: 'end',
-              text: [
-                'Регион прогнозирования: ' + region_name,
-                'Численность популяции: ' + population_data,
-                'Начально инфицированных: ' + init_inf,
-                'Дней прогнозирования: ' + n_future_day,
-              ],
-            },
-          },
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const chart_new_rec = () => {
-    setChartnum(4)
-    axios
-      .get('https://server.covid19-modeling.ru/getMsim')
-      .then(res => {
-        for (const dataObj of res.data.results.new_recoveries) {
-          cov_new_rec.push(parseInt(dataObj))
-          setData_cov_new_rec(cov_new_rec)
-        }
-        for (const dataObj of res.data.results.date) {
-          cov_data.push(dataObj)
-          setData(cov_data)
-        }
-        for (const dataObj of res.data.results.new_recoveries_high) {
-          cov_new_rec_high.push(dataObj)
-          setData_cov_new_rec_high(cov_new_rec_high)
-        }
-        setChartData_all({
-          labels: cov_data,
-          datasets: [
-            {
-              label: 'cредний прогноз',
-              data: cov_new_rec,
-              fill: false,
-              borderColor: 'rgba(252,141,214, 1)',
-              backgroundColor: 'rgba(252,141,214, 1)',
-              tension: 0.9,
-              borderWidth: 4,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: cov_new_rec_high,
-              fill: true,
-              borderColor: 'rgba(252,141,214, 0.3)',
-              backgroundColor: 'rgba(252,141,214, 0.3)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-        setChartOptions({
-          maintainAspectRatio: false,
-          responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-              zoom: {
-                wheel: {
-                  enabled: true,
-                  speed: 0.1,
-                },
-                drag: {
-                  enabled: true,
-                },
-                pan: { enabled: true },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'xy',
-              },
-            },
-            legend: {
-              position: 'top',
-            },
-            title: {
-              display: true,
-              align: 'start',
-              text: 'Прогноз новых случаев выздоровления',
-            },
-            subtitle: {
-              display: true,
-              align: 'end',
-              text: [
-                'Регион прогнозирования: ' + region_name,
-                'Численность популяции: ' + population_data,
-                'Начально инфицированных: ' + init_inf,
-                'Дней прогнозирования: ' + n_future_day,
-              ],
-            },
-          },
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const chart_new_crit = () => {
-    setChartnum(5)
-    axios
-      .get('https://server.covid19-modeling.ru/getMsim')
-      .then(res => {
-        for (const dataObj of res.data.results.new_critical) {
-          cov_new_crit.push(parseInt(dataObj))
-          setData_cov_new_crit(cov_new_crit)
-        }
-        for (const dataObj of res.data.results.date) {
-          cov_data.push(dataObj)
-          setData(cov_data)
-        }
-        for (const dataObj of res.data.results.new_critical_high) {
-          cov_new_crit_high.push(dataObj)
-          setData_cov_new_crit_high(cov_new_crit_high)
-        }
-        setChartData_all({
-          labels: cov_data,
-          datasets: [
-            {
-              label: 'cредний прогноз',
-              data: cov_new_crit,
-              fill: false,
-              borderColor: 'rgba(128, 0, 255, 1)',
-              backgroundColor: 'rgba(128, 0, 255, 1)',
-              tension: 0.9,
-              borderWidth: 1,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-            {
-              label: 'максимальный прогноз',
-              data: cov_new_crit_high,
-              fill: true,
-              borderColor: 'rgba(128, 0, 255, 0.1)',
-              backgroundColor: 'rgba(128, 0, 255, 0.1)',
-              tension: 0.9,
-              borderWidth: 2,
-              pointRadius: 0.3,
-              pointHoverRadius: 5,
-              pointHitRadius: 30,
-              pointBorderWidth: 0.1,
-            },
-          ],
-        })
-        setChartOptions({
-          maintainAspectRatio: false,
-          responsive: true,
-          plugins: {
-            zoom: {
-              pan: {
-                enabled: true,
-                mode: 'xy',
-              },
-              zoom: {
-                wheel: {
-                  enabled: true,
-                  speed: 0.1,
-                },
-                drag: {
-                  enabled: true,
-                },
-                pan: { enabled: true },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'xy',
-              },
-            },
-            legend: {
-              position: 'top',
-            },
-            title: {
-              display: true,
-              align: 'start',
-              text: 'Прогноз количества больных в критическом состоянии',
-            },
-            subtitle: {
-              display: true,
-              align: 'end',
-              text: [
-                'Регион прогнозирования: ' + region_name,
-                'Численность популяции: ' + population_data,
-                'Начально инфицированных: ' + init_inf,
-                'Дней прогнозирования: ' + n_future_day,
-              ],
-            },
-          },
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
+
+  const dispatch = useDispatch()
+  const { status, chartData } = useSelector(selectAomdData)
 
   useEffect(() => {
-    real_data1()
+    dispatch(fetchAomData())
   }, [])
 
   useEffect(() => {
@@ -1775,8 +1374,6 @@ export function Modeling() {
 
   const [withspinner, setWithspinner] = useState(false)
   const [newChart, setnewChart] = useState(true) /////true
-  const [open, setOpen] = useState(false)
-  const [reset, setReset] = useState(true)
 
   return (
     <>
@@ -1790,187 +1387,7 @@ export function Modeling() {
         <Tabs justify defaultActiveKey='AOM' id='uncontrolled-tab-example'>
           <Tab eventKey='AOM' title='Агентная модель'>
             <Card className='text-center mx-auto' border='light' bg='light'>
-              <Row>
-                <Col md={2}>
-                  <Row>
-                    <Col xs={12} lg={12}>
-                      {' '}
-                      <Button
-                        variant='outline-primary'
-                        className='bg-white shadow1 text-primary my-2 mx-2'
-                        onClick={() => setOpen(!open)}
-                        aria-controls='example-fade-text'
-                        aria-expanded={open}
-                      >
-                        {' '}
-                        {open ? (
-                          <BsFillCaretDownFill size={15} />
-                        ) : (
-                          <BsFillCaretRightFill size={15} />
-                        )}{' '}
-                        Описание модели
-                      </Button>
-                    </Col>
-                    <Col xs={12} lg={12}>
-                      <OverlayTrigger
-                        rootClose={true}
-                        placement='bottom'
-                        ref={ref => (this.overlay = ref)}
-                        overlay={
-                          <Popover className='shadow1'>
-                            <Popover.Body>
-                              <div align='center' className='text-black'>
-                                Моделирование сценариев распространения Covid-19
-                                в Республике Казахстан на основе регуляризации
-                                агентной модели.
-                              </div>
-                              <small align='center' className='text-success'>
-                                <div>О.И. Криворотько</div>
-                                <div>С.И. Кабанихин</div>
-                                <div>М.А. Бектемесов</div>
-                                <div>М.И. Сосновская</div>
-                                <div>А.В.Неверов</div>
-                              </small>
-                            </Popover.Body>
-                          </Popover>
-                        }
-                      >
-                        <Button
-                          variant='link'
-                          onClick={e => {
-                            download_article(e)
-                            document.body.click(e)
-                            this.overlay.hide()
-                          }}
-                        >
-                          <BsFillFileEarmarkPdfFill size={30} />
-                        </Button>
-                      </OverlayTrigger>
-                      <OverlayTrigger
-                        rootClose={true}
-                        placement='bottom'
-                        ref={ref => (this.overlay = ref)}
-                        overlay={
-                          <Popover className='shadow1'>
-                            <Popover.Body>
-                              <div align='center' className='text-success'>
-                                <div>
-                                  <small>
-                                    Публикация в журнале Моделирование
-                                    инфекционных заболеваний.
-                                  </small>
-                                </div>
-                                <div className='text-black'>
-                                  Агентное моделирование вспышек COVID-19 в
-                                  штате Нью-Йорк и Великобритании: алгоритм
-                                  идентификации параметров
-                                </div>
-                                <div>
-                                  <small>О.И. Криворотько</small>
-                                </div>
-                                <div>
-                                  <small>М.И. Сосновская</small>
-                                </div>
-                                <div>
-                                  <small>И.А. Ващенко</small>
-                                </div>
-                                <div>
-                                  <small>CliffKerr</small>
-                                </div>
-                                <div>
-                                  <small>DanielLesnic</small>
-                                </div>
-                              </div>
-                            </Popover.Body>
-                          </Popover>
-                        }
-                      >
-                        <a href='https://www.sciencedirect.com/science/article/pii/S2468042721000798'>
-                          <Button
-                            variant='link'
-                            onClick={e => {
-                              document.body.click(e)
-                              this.overlay.hide()
-                            }}
-                          >
-                            <BsFillArrowUpRightSquareFill size={30} />
-                          </Button>
-                        </a>
-                      </OverlayTrigger>
-                      <OverlayTrigger
-                        rootClose={true}
-                        ref={ref => (this.overlay = ref)}
-                        placement='bottom'
-                        overlay={
-                          <Popover className='shadow1'>
-                            <Popover.Body>
-                              <div align='center' className='text-success'>
-                                <div>
-                                  <small>
-                                    Препринт 300 СО РАН, института математики
-                                    им. С.Л.Соболева.
-                                  </small>
-                                </div>
-                                <div className='text-black'>
-                                  Математические модели распространения
-                                  COVID-19.
-                                </div>
-                                <div>
-                                  <small>О.И. Криворотько</small>
-                                </div>
-                                <div>
-                                  <small>С.И. Кабанихин</small>
-                                </div>
-                              </div>
-                            </Popover.Body>
-                          </Popover>
-                        }
-                      >
-                        <a href='https://arxiv.org/pdf/2112.05315.pdf'>
-                          <Button
-                            variant='link'
-                            onClick={e => {
-                              document.body.click(e)
-                              this.overlay.hide()
-                            }}
-                          >
-                            <BsFillArrowUpRightSquareFill size={30} />
-                          </Button>
-                        </a>
-                      </OverlayTrigger>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col md={10}>
-                  <Card className='my-3 shadow1'>
-                    {' '}
-                    <p align='justify' className='mx-3 my-1'>
-                      <small>
-                        Прогнозирование производится посредством агентной модели
-                        расчета сценариев динамики выявленных случаев COVID-19,
-                        в основе которой лежат обработка неполных
-                        эпидемиологических данных и решение обратной задачи
-                        восстановления параметров агентной модели по
-                        совокупности доступных эпидемиологических данных.
-                        Основным инструментом построения модели является
-                        открытая библиотека{' '}
-                        <a href='https://docs.idmod.org/projects/covasim/en/latest/index.html'>
-                          COVASIM
-                        </a>
-                        .{' '}
-                      </small>
-                    </p>
-                  </Card>
-                  <div className='mx-2'>
-                    <hr />
-                  </div>
-                </Col>
-              </Row>
-              <Collapse in={open}>
-                <div id='example-collapse-text' className='my-2'>
-                  <Description_AOM />
-                </div>
-              </Collapse>
+              <AomHeader />
               <Row>
                 <Col sm={12} xs={12} md={12} lg={4}>
                   <motion.div
@@ -2177,7 +1594,7 @@ export function Modeling() {
                               </div>
                             </Stack>
                           </Col>
-                          <Col sm={12} sm={12} xs={12} md={12} lg={5}>
+                          <Col sm={12} xs={12} md={12} lg={5}>
                             <Formik
                               validationSchema={schema}
                               onChange={e =>
@@ -2344,7 +1761,7 @@ export function Modeling() {
                           whileInView='visible'
                           viewport={{ amount: 0.1, once: true }}
                         >
-                          {chartnum === 1 ? (
+                          {/* {chartnum === 1 ? (
                             <Button
                               variant='outline-danger'
                               className=''
@@ -2444,7 +1861,7 @@ export function Modeling() {
                             >
                               Показать данные
                             </Button>
-                          ) : null}
+                          ) : null} */}
                           <OverlayTrigger
                             placement='left'
                             overlay={
@@ -2516,12 +1933,26 @@ export function Modeling() {
                       <Plugs />
                     ) : newChart ? (
                       <div style={{ height: '25rem' }}>
-                        <Line
-                          id='chart'
-                          data={chartData_all}
-                          options={chartOptions}
-                          height='150%'
-                        />
+                        {status === 'success' ? (
+                          <Line
+                            id='chart'
+                            data={chartData}
+                            options={chartOptions}
+                            height='150%'
+                          />
+                        ) : (
+                          <div
+                            style={{
+                              height: '400px',
+                            }}
+                          >
+                            <Spinner
+                              style={{ position: 'absolute', top: '50%' }}
+                              animation='border'
+                              variant='info'
+                            />
+                          </div>
+                        )}
                       </div>
                     ) : (
                       <div>
@@ -2551,7 +1982,9 @@ export function Modeling() {
                               className='shadow3'
                               size='sm'
                               variant='outline-info'
-                              onClick={chart}
+                              onClick={() =>
+                                dispatch(setNewChartData('new_diagnoses'))
+                              }
                               style={{ color: '#FFFFFF' }}
                             >
                               <Nav.Link className='hoverWhite' eventKey='1'>
@@ -2563,7 +1996,9 @@ export function Modeling() {
                             <Button
                               size='sm'
                               variant='outline-info'
-                              onClick={chart_cumdiag}
+                              onClick={() =>
+                                dispatch(setNewChartData('cum_diagnoses'))
+                              }
                               className='mx-1 shadow3'
                             >
                               <Nav.Link className='hoverWhite' eventKey='2'>
@@ -2575,7 +2010,9 @@ export function Modeling() {
                             <Button
                               size='sm'
                               variant='outline-info'
-                              onClick={chart_newdeath}
+                              onClick={() =>
+                                dispatch(setNewChartData('new_deaths'))
+                              }
                               className='mx-1 shadow3'
                             >
                               <Nav.Link className='hoverWhite' eventKey='3'>
@@ -2587,7 +2024,9 @@ export function Modeling() {
                             <Button
                               size='sm'
                               variant='outline-info'
-                              onClick={chart_new_rec}
+                              onClick={() =>
+                                dispatch(setNewChartData('new_recoveries'))
+                              }
                               className='mx-1 shadow3'
                             >
                               <Nav.Link className='hoverWhite' eventKey='4'>
@@ -2599,7 +2038,9 @@ export function Modeling() {
                             <Button
                               size='sm'
                               variant='outline-info'
-                              onClick={chart_new_crit}
+                              onClick={() =>
+                                dispatch(setNewChartData('new_critical'))
+                              }
                               className='mx-1 shadow3'
                             >
                               <Nav.Link className='hoverWhite' eventKey='5'>

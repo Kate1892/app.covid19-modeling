@@ -11,6 +11,7 @@ import {
   Popover,
   Collapse,
 } from 'react-bootstrap'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { selectseirhcdData } from '../../redux/seirhcdBlock/selectors'
 import { selectseirhcdChData } from '../../redux/seirhcdChangeBlock/selectors'
@@ -35,9 +36,9 @@ import {
 } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 import zoomPlugin from 'chartjs-plugin-zoom'
-import { OptionItem } from './OptionItem'
 
 import {
+  AnimationV,
   variantsX as variants,
   variantsY as variants2,
 } from '../../components/Animation/Animation'
@@ -47,6 +48,8 @@ import { BlockHeader } from '../../components/SEIRHCDcontent/BlockHeader'
 import { ChartButtons } from '../../components/Plugs/ChartButtons'
 import { headers } from '../../components/SEIRHCDcontent/BlockHeaderInfo'
 import { SubBlock } from '../../components/SEIRHCDcontent/SubBlock'
+import { OptionItem } from './OptionItem'
+import { SeirhcdBlock } from '../../components/SEIRHCDcontent/SeirhcdBlock'
 
 ChartJS.register(
   CategoryScale,
@@ -60,29 +63,27 @@ ChartJS.register(
   PointElement,
   Filler
 )
-
 ChartJS.register(zoomPlugin)
+let ldate
 
 export const ModelingSEIR_HCD = () => {
   const lastDate2 = () => {
     axios.get('https://server.covid19-modeling.ru/datesSEIR').then(res => {
-      setLastsData(res.data.dates[res.data.dates.length - 1].data)
-    })
-  }
+      // setLastsData(res.data.dates[res.data.dates.length - 1].data)
 
-  const dates = []
-  const [dates2, setdates2] = useState(dates)
-  const [lastData, setLastsData] = useState(0)
-
-  const datesOption = () => {
-    axios.get('https://server.covid19-modeling.ru/datesSEIR').then(res => {
       for (const dataObj of res.data.dates) {
         dates.push({ date: dataObj.data })
       }
       dates.reverse()
       setdates2(dates)
+      ldate = dates2[dates2.length - 1].date
     })
   }
+  const dates = []
+  const [dates2, setdates2] = useState(dates)
+  const [lastData, setLastsData] = useState(0)
+
+  // const ldate = dates2[dates2.length - 1].date
 
   const [openBS, setOpenBS] = useState(true)
   const [openM, setOpenM] = useState(false)
@@ -492,28 +493,28 @@ export const ModelingSEIR_HCD = () => {
   }, [])
 
   useEffect(() => {
-    datesOption()
-  }, [])
-
-  useEffect(() => {
     lastDate2()
   }, [])
 
   useEffect(() => {
     lastDate2()
-    setPrognose_data(lastData)
-    forecasts_new(1, lastData)
-  }, [lastData])
+    setPrognose_data(ldate)
+    forecasts_new(1, ldate)
+  }, [ldate])
 
   useEffect(() => {
     lastDate2()
-    forecasts_R0(lastData)
-  }, [lastData])
+    forecasts_R0(ldate)
+  }, [ldate])
 
   return (
     <>
       <Card className=' mx-auto' border='light' bg='light'>
         <SEIRHCDHeader />
+
+        {/* {headers.map((el) => (
+          <SeirhcdBlock el = {el} />
+        ))} */}
 
         <BlockHeader
           open={openBS}
@@ -526,26 +527,18 @@ export const ModelingSEIR_HCD = () => {
           <div id='example-collapse-text'>
             <Row>
               <Col xs={12} md={4}>
-                <motion.div
-                  initial='hidden'
-                  custom={2}
-                  variants={variants}
-                  whileInView='visible'
-                  viewport={{ amount: 0.1, once: true }}
-                >
+                <AnimationV variants={variants}>
                   <ListGroup className='mx-3 shadow1 my-1'>
                     <ListGroup.Item
                       align='left'
                       className='bg-secondary text-secondary'
-                    >
-                      .
-                    </ListGroup.Item>
+                      style={{ height: '42px' }}
+                    />
                     <ListGroup.Item variant='light'>
                       <Row>
                         <Col xs={12} md={12} sm={12} lg={4}>
                           <Stack gap={0}>
                             <div>
-                              {' '}
                               <p
                                 align='left'
                                 className='my-1 text-black text-small'
@@ -554,7 +547,6 @@ export const ModelingSEIR_HCD = () => {
                               </p>
                             </div>
                             <div>
-                              {' '}
                               <p
                                 align='left'
                                 className='my-4 text-black text-small'
@@ -566,17 +558,7 @@ export const ModelingSEIR_HCD = () => {
                         </Col>
                         <Col xs={12} md={12} sm={12} lg={8}>
                           <Formik>
-                            {({
-                              handleSubmit,
-                              handleChange,
-                              handleBlur,
-                              values,
-                              touched,
-                              isValid,
-                              errors,
-                              resetForm,
-                              setFieldValue,
-                            }) => (
+                            {() => (
                               <Form noValidate>
                                 <Stack gap={3}>
                                   <Form.Select
@@ -623,7 +605,7 @@ export const ModelingSEIR_HCD = () => {
                       </Row>
                     </ListGroup.Item>
                   </ListGroup>
-                </motion.div>
+                </AnimationV>
               </Col>
               <Col xs={12} md={8}>
                 <ChartButtons chartId={'chart2'} />
@@ -638,6 +620,12 @@ export const ModelingSEIR_HCD = () => {
                 </div>
               </Col>
             </Row>
+            <AnimationV variants={variants2} cn={'mx-3'}>
+              <hr />
+              <h4 className='mx-5 text-secondary'>
+                Текущие параметры модели и их доверительный интервал
+              </h4>
+            </AnimationV>
             <motion.div
               initial='hidden'
               custom={2}

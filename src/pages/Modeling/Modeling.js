@@ -57,6 +57,7 @@ import { download_chart, zoom_chart } from '../../utils/ChartFun'
 import { AomHeader } from '../../components/AOMcontent/AomHeader'
 import { navItemsInfo } from '../../components/AOMcontent/NavItemsInfo'
 import { NavItems } from '../../components/AOMcontent/NavItems'
+import { Status } from '../../redux/types'
 
 ChartJS.register(
   CategoryScale,
@@ -598,14 +599,9 @@ export function Modeling() {
                     </Stack>
 
                     <div style={{ height: '25rem' }}>
-                      {status === 'success' ? (
-                        <Line
-                          id='chart'
-                          data={chartData}
-                          options={chartOptions_copy}
-                          height='150%'
-                        />
-                      ) : (
+                      {status === Status.ERROR ? (
+                        <Plugs />
+                      ) : status === Status.LOADING ? (
                         <div
                           style={{
                             height: '400px',
@@ -617,6 +613,13 @@ export function Modeling() {
                             variant='info'
                           />
                         </div>
+                      ) : (
+                        <Line
+                          id='chart'
+                          data={chartData}
+                          options={chartOptions_copy}
+                          height='150%'
+                        />
                       )}
                     </div>
 
@@ -629,9 +632,13 @@ export function Modeling() {
                         {navItemsInfo.map(el => (
                           <NavItems
                             id={el.id}
-                            key={el.key}
+                            key={el.id}
                             title={el.title}
                             prType={el.prType}
+                            population_data={population_data}
+                            region_data={region_data}
+                            n_future_day={n_future_day}
+                            init_inf={init_inf}
                           />
                         ))}
                       </Nav>

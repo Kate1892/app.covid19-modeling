@@ -17,6 +17,9 @@ import { selectseirhcdData } from '../../redux/seirhcdBlock/selectors'
 import { selectseirhcdChData } from '../../redux/seirhcdChangeBlock/selectors'
 import { fetchCovData } from '../../redux/seirhcdBlock/asyncAction'
 import { fetchChangeCovData } from '../../redux/seirhcdChangeBlock/asyncAction'
+import { fetchBPCovData } from '../../redux/seirhcdBPblock/asyncAction'
+import { selectseirhcdBPdata } from '../../redux/seirhcdBPblock/selectors'
+import { setChartDataType } from '../../redux/seirhcdBPblock/slice'
 
 import { Formik } from 'formik'
 import { motion } from 'framer-motion'
@@ -89,358 +92,12 @@ export const ModelingSEIR_HCD = () => {
   const [openM, setOpenM] = useState(false)
   const [openV, setOpenV] = useState(false)
 
-  const [chartData_bsR0, setChartData_bsR0] = useState({
-    datasets: [],
-  })
-  const [chartOptions_bsR0, setChartOptions_bsR0] = useState({})
-
-  const forecasts_R0 = selected => {
-    let data = []
-    let mean = []
-    let max = []
-    let min = []
-    let tr = []
-    let tr_min = []
-    let tr_max = []
-    let datatype = selected
-    let dataT = selected
-    axios({
-      url: 'https://server.covid19-modeling.ru/api/forecasts_train/',
-      method: 'POST',
-      data: { dataT },
-    })
-      .then(res => {
-        for (const dataObj of res.data) {
-          data.push(dataObj.Date)
-          tr.push(dataObj.R0_mean)
-          tr_min.push(dataObj.R0_min)
-          tr_max.push(dataObj.R0_max)
-          mean.push(dataObj.R0_mean)
-          max.push(dataObj.R0_max)
-          min.push(dataObj.R0_min)
-        }
-        axios({
-          url: 'https://server.covid19-modeling.ru/api/forecasts/',
-          method: 'POST',
-          data: { datatype },
-        }).then(res => {
-          for (const dataObj of res.data) {
-            data.push(dataObj.Date)
-            mean.push(dataObj.R0_mean)
-            max.push(dataObj.R0_max)
-            min.push(dataObj.R0_min)
-          }
-          setChartData_bsR0({
-            labels: data,
-            datasets: [
-              {
-                label: 'реальные данные',
-                data: tr_min,
-                fill: false,
-                borderColor: 'rgba(2, 117, 216, 0.1)',
-                backgroundColor: 'rgba(2, 117, 216, 0.1)',
-                tension: 0.9,
-                borderWidth: 0.1,
-                pointRadius: 0.3,
-                pointHoverRadius: 5,
-                pointHitRadius: 30,
-                pointBorderWidth: 0.1,
-                barPercentage: 2,
-              },
-              {
-                label: 'реальные данные',
-                data: tr_max,
-                fill: '-1',
-                borderColor: 'rgba(2, 117, 216, 0.1)',
-                backgroundColor: 'rgba(2, 117, 216, 0.1)',
-                tension: 0.9,
-                borderWidth: 0.1,
-                pointRadius: 0.3,
-                pointHoverRadius: 5,
-                pointHitRadius: 30,
-                pointBorderWidth: 0.1,
-                barPercentage: 2,
-              },
-              {
-                label: 'реальные данные',
-                data: tr,
-                fill: false,
-                borderColor: 'rgba(2, 117, 216, 1)',
-                backgroundColor: 'rgba(2, 117, 216, 1)',
-                tension: 0.9,
-                borderWidth: 2,
-                pointRadius: 0.3,
-                pointHoverRadius: 5,
-                pointHitRadius: 30,
-                pointBorderWidth: 0.1,
-                barPercentage: 2,
-              },
-              {
-                label: 'модель',
-                data: min,
-                fill: false,
-                borderColor: 'rgba(217, 83, 79, 0.1)',
-                backgroundColor: 'rgba(217, 83, 79, 0.1)',
-                tension: 0.9,
-                borderWidth: 0.1,
-                pointRadius: 0.3,
-                pointHoverRadius: 5,
-                pointHitRadius: 30,
-                pointBorderWidth: 0.1,
-                barPercentage: 2,
-              },
-              {
-                label: 'модель',
-                data: max,
-                fill: '-1',
-                borderColor: 'rgba(217, 83, 79, 0.1)',
-                backgroundColor: 'rgba(217, 83, 79, 0.1)',
-                tension: 0.9,
-                borderWidth: 0.1,
-                pointRadius: 0.3,
-                pointHoverRadius: 5,
-                pointHitRadius: 30,
-                pointBorderWidth: 0.1,
-                barPercentage: 2,
-              },
-              {
-                label: 'модель',
-                data: mean,
-                fill: false,
-                borderColor: 'rgba(217, 83, 79, 1)',
-                backgroundColor: 'rgba(217, 83, 79, 1)',
-                tension: 0.9,
-                borderWidth: 2,
-                pointRadius: 0.3,
-                pointHoverRadius: 5,
-                pointHitRadius: 30,
-                pointBorderWidth: 0.1,
-                barPercentage: 2,
-              },
-            ],
-          })
-          setChartOptions_bsR0({
-            maintainAspectRatio: false,
-            responsive: true,
-            plugins: {
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'xy',
-                },
-                zoom: {
-                  wheel: {
-                    enabled: true,
-                    speed: 0.1,
-                  },
-                  drag: {
-                    enabled: true,
-                  },
-                  pan: { enabled: true },
-                  pinch: {
-                    enabled: true,
-                  },
-                  mode: 'xy',
-                },
-              },
-              legend: {
-                position: 'right',
-              },
-              title: {
-                display: true,
-                align: 'start',
-                text: '',
-              },
-            },
-          })
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-  const [chartData_pred, setChartData_pred] = useState({
-    datasets: [],
-  })
-  const [chartOptions_pred, setChartOptions_pred] = useState({})
-
-  const forecasts_new = (stype, datatype) => {
-    let data = []
-    let mean = []
-    let max = []
-    let min = []
-    let tr = []
-    let name = 'Новые выявленные случаи'
-    axios({
-      url: 'https://server.covid19-modeling.ru/api/forecasts_true/',
-      method: 'POST',
-      data: { datatype },
-    })
-      .then(res => {
-        for (const dataObj of res.data) {
-          data.push(dataObj.Date)
-          if (stype === 1) {
-            name = 'Новые выявленные случаи'
-            tr.push(dataObj.new_diagnoses)
-          } else if (stype === 2) {
-            name = 'Критически больные, С'
-            tr.push(dataObj.ventilation)
-          } else if (stype === 3) {
-            name = 'Умершие, D'
-            tr.push(dataObj.cum_deaths)
-          }
-          mean.push(0)
-        }
-        axios({
-          url: 'https://server.covid19-modeling.ru/api/forecasts',
-          method: 'POST',
-          data: { datatype },
-        }).then(res => {
-          setAE(
-            Math.round(
-              parseFloat(res.data[res.data.length - 1].alpha_e_std) * 1000
-            ) / 1000
-          )
-          setAI(
-            Math.round(
-              parseFloat(res.data[res.data.length - 1].alpha_i_std) * 1000
-            ) / 1000
-          )
-          setEhc(
-            Math.round(
-              parseFloat(res.data[res.data.length - 1].eps_hc_std) * 1000
-            ) / 1000
-          )
-          setM(
-            Math.round(
-              parseFloat(res.data[res.data.length - 1].mu_std) * 1000
-            ) / 1000
-          )
-          setAE_mean(
-            Math.round(
-              parseFloat(res.data[res.data.length - 1].alpha_e_mean) * 1000
-            ) / 1000
-          )
-          setAI_mean(
-            Math.round(
-              parseFloat(res.data[res.data.length - 1].alpha_i_mean) * 1000
-            ) / 1000
-          )
-          setEhc_mean(
-            Math.round(
-              parseFloat(res.data[res.data.length - 1].eps_hc_mean) * 1000
-            ) / 1000
-          )
-          setM_mean(
-            Math.round(
-              parseFloat(res.data[res.data.length - 1].mu_mean) * 1000
-            ) / 1000
-          )
-          for (const dataObj of res.data) {
-            data.push(dataObj.Date)
-            if (stype === 1) {
-              mean.push(dataObj.fk_mean)
-              max.push(dataObj.fk_max)
-              min.push(dataObj.fk_min)
-            } else if (stype === 2) {
-              mean.push(dataObj.C_mean)
-              max.push(dataObj.C_max)
-              min.push(dataObj.C_min)
-            } else if (stype === 3) {
-              mean.push(dataObj.D_mean)
-              max.push(dataObj.D_max)
-              min.push(dataObj.D_min)
-            }
-          }
-          setChartData_pred({
-            labels: data,
-            datasets: [
-              {
-                label: 'реальные данные',
-                data: tr,
-                fill: false,
-                borderColor: 'rgba(2, 117, 216, 1)',
-                backgroundColor: 'rgba(2, 117, 216, 1)',
-                tension: 0.9,
-                borderWidth: 0.1,
-                pointRadius: 0.3,
-                pointHoverRadius: 5,
-                pointHitRadius: 30,
-                pointBorderWidth: 0.1,
-                barPercentage: 2,
-              },
-              {
-                label: 'модель',
-                data: mean,
-                fill: false,
-                borderColor: 'rgba(217, 83, 79, 1)',
-                backgroundColor: 'rgba(217, 83, 79, 1)',
-                tension: 0.9,
-                borderWidth: 0.1,
-                pointRadius: 0.3,
-                pointHoverRadius: 5,
-                pointHitRadius: 30,
-                pointBorderWidth: 0.1,
-                barPercentage: 2,
-              },
-            ],
-          })
-          setChartOptions_pred({
-            maintainAspectRatio: false,
-            responsive: true,
-            plugins: {
-              zoom: {
-                pan: {
-                  enabled: true,
-                  mode: 'xy',
-                },
-                zoom: {
-                  wheel: {
-                    enabled: true,
-                    speed: 0.1,
-                  },
-                  drag: {
-                    enabled: true,
-                  },
-                  pan: { enabled: true },
-                  pinch: {
-                    enabled: true,
-                  },
-                  mode: 'xy',
-                },
-              },
-              legend: {
-                position: 'right',
-              },
-              title: {
-                display: true,
-                align: 'start',
-                text: name,
-              },
-            },
-          })
-        })
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
-
   const [prognose_type, setPrognose_type] = useState(1)
   const [prognose_data, setPrognose_data] = useState(dates[0])
 
   //1 - новые выявленные случаи
   //2 - критически больные
   //3 - умершие
-
-  const [ae, setAE] = useState()
-  const [ai, setAI] = useState()
-  const [ehc, setEhc] = useState()
-  const [m, setM] = useState()
-  const [ae_mean, setAE_mean] = useState()
-  const [ai_mean, setAI_mean] = useState()
-  const [ehc_mean, setEhc_mean] = useState()
-  const [m_mean, setM_mean] = useState()
 
   const dispatch = useDispatch()
 
@@ -457,9 +114,19 @@ export const ModelingSEIR_HCD = () => {
   const { status2, chartData_T, chartData_V, chartOptions_ } =
     useSelector(selectseirhcdChData)
 
+  const {
+    chartData_BP,
+    chartOptions_bp,
+    params,
+    chartData_bpR0,
+    chartOptions_bpR0,
+  } = useSelector(selectseirhcdBPdata)
+
+  const chartOptions_bpR0_ = { ...chartOptions_bpR0 }
   const chartOptions = { ...chartOptions_ }
   const chartOptions_P_ = { ...chartOptions_P }
   const chartOptions_R0_ = { ...chartOptions_R0 }
+  const chartOptions_bp_ = { ...chartOptions_bp }
 
   const fetchData = async () => {
     dispatch(fetchCovData('tR0'))
@@ -496,15 +163,26 @@ export const ModelingSEIR_HCD = () => {
     lastDate2()
   }, [])
 
-  useEffect(() => {
-    lastDate2()
-    setPrognose_data(ldate)
-    forecasts_new(1, ldate)
-  }, [ldate])
+  const fetchSeirhcdBPdata = async (num, ldate) => {
+    dispatch(
+      fetchBPCovData({
+        stype: num,
+        datatype: ldate,
+      })
+    )
+  }
 
   useEffect(() => {
     lastDate2()
-    forecasts_R0(ldate)
+    setPrognose_data(ldate)
+  }, [ldate])
+
+  useEffect(() => {
+    fetchSeirhcdBPdata(1, '2022-06-02')
+  }, [])
+
+  useEffect(() => {
+    lastDate2()
   }, [ldate])
 
   return (
@@ -569,8 +247,13 @@ export const ModelingSEIR_HCD = () => {
                                     onChange={e => {
                                       const selected = e.target.value
                                       setPrognose_data(selected)
-                                      forecasts_new(prognose_type, selected)
-                                      forecasts_R0(selected)
+                                      //forecasts_new(prognose_type, selected)
+                                      dispatch(
+                                        fetchBPCovData({
+                                          stype: prognose_type,
+                                          datatype: selected,
+                                        })
+                                      )
                                     }}
                                   >
                                     {dates2.map((dates, index) => (
@@ -586,7 +269,8 @@ export const ModelingSEIR_HCD = () => {
                                       const selectedType = e.target.value
                                       let stype = Number(selectedType)
                                       setPrognose_type(stype, prognose_data)
-                                      forecasts_new(stype, prognose_data)
+                                      dispatch(setChartDataType(stype))
+                                      //forecasts_new(stype, prognose_data)
                                     }}
                                   >
                                     <option value='1'>
@@ -613,8 +297,8 @@ export const ModelingSEIR_HCD = () => {
                 <div style={{ height: '20rem' }}>
                   <Bar
                     id='chart2'
-                    options={chartOptions_pred}
-                    data={chartData_pred}
+                    options={chartOptions_bp_}
+                    data={chartData_BP}
                     height='90%'
                   />
                 </div>
@@ -626,19 +310,6 @@ export const ModelingSEIR_HCD = () => {
                 Текущие параметры модели и их доверительный интервал
               </h4>
             </AnimationV>
-            <motion.div
-              initial='hidden'
-              custom={2}
-              variants={variants2}
-              whileInView='visible'
-              viewport={{ amount: 0.1, once: true }}
-              className='mx-3'
-            >
-              <hr />
-              <h4 className='mx-5 text-secondary'>
-                Текущие параметры модели и их доверительный интервал
-              </h4>
-            </motion.div>
             <Row className='mx-5 my-3'>
               <Col xs={12} md={6} lg={3}>
                 <motion.div
@@ -683,13 +354,13 @@ export const ModelingSEIR_HCD = () => {
                                   <div className='text-muted'>
                                     среднее{' '}
                                     <b className='text-black'>
-                                      <h5>{ae_mean}</h5>
+                                      <h5>{params[0].ae_mean}</h5>
                                     </b>
                                   </div>
                                   <div className='text-muted'>
                                     std{' '}
                                     <b className='text-black'>
-                                      <h5>{ae}</h5>
+                                      <h5>{params[0].ae}</h5>
                                     </b>
                                   </div>{' '}
                                 </small>
@@ -743,13 +414,13 @@ export const ModelingSEIR_HCD = () => {
                                   <div className='text-muted'>
                                     среднее{' '}
                                     <b className='text-black'>
-                                      <h5>{ai_mean}</h5>
+                                      <h5>{params[1].ai_mean}</h5>
                                     </b>
                                   </div>
                                   <div className='text-muted'>
                                     std{' '}
                                     <b className='text-black'>
-                                      <h5>{ai}</h5>
+                                      <h5>{params[1].ai}</h5>
                                     </b>
                                   </div>{' '}
                                 </small>
@@ -806,13 +477,13 @@ export const ModelingSEIR_HCD = () => {
                                   <div className='text-muted'>
                                     среднее{' '}
                                     <b className='text-black'>
-                                      <h5>{ehc_mean}</h5>
+                                      <h5>{params[2].ehc_mean}</h5>
                                     </b>
                                   </div>
                                   <div className='text-muted'>
                                     std{' '}
                                     <b className='text-black'>
-                                      <h5>{ehc}</h5>
+                                      <h5>{params[2].ehc}</h5>
                                     </b>
                                   </div>{' '}
                                 </small>
@@ -862,13 +533,13 @@ export const ModelingSEIR_HCD = () => {
                                   <div className='text-muted'>
                                     среднее{' '}
                                     <b className='text-black'>
-                                      <h5>{m_mean}</h5>
+                                      <h5>{params[3].m_mean}</h5>
                                     </b>
                                   </div>
                                   <div className='text-muted'>
                                     std{' '}
                                     <b className='text-black'>
-                                      <h5>{m}</h5>
+                                      <h5>{params[3].m}</h5>
                                     </b>
                                   </div>{' '}
                                 </small>
@@ -888,8 +559,8 @@ export const ModelingSEIR_HCD = () => {
                 'Базовый индекс репродукции COVID-19 в Новосибирской области и прогноз'
               }
               chartId={'chart9'}
-              chartOptions={chartOptions_bsR0}
-              chartData={chartData_bsR0}
+              chartOptions={chartOptions_bpR0_}
+              chartData={chartData_bpR0}
               height={'75%'}
             />
           </div>

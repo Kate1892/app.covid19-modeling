@@ -130,7 +130,14 @@ export const prognoseSlice = createSlice({
   initialState,
   reducers: {
     setNewChartData(state, action) {
-      setChartData(state, action.payload)
+      setChartData(
+        state,
+        action.payload.prType,
+        action.payload.population_data,
+        action.payload.region_data,
+        action.payload.n_future_day,
+        action.payload.init_inf
+      )
     },
   },
   extraReducers: builder => {

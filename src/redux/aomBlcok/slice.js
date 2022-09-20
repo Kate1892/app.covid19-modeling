@@ -3,9 +3,75 @@ import { Status } from '../types'
 import { chartDataset, chartOptions } from './types'
 import { fetchAomData } from './asyncAction'
 
-const setChartData = (state, key) => {
+const nullifyState = state => {
+  state.chartData = {
+    labels: '',
+    datasets: [{}, {}, {}],
+  }
+  state.date = []
+  state.new_diagnoses = {
+    new_diagnoses: [],
+    new_diagnoses_high: [],
+    real_new_diagnoses: [],
+  }
+  state.cum_diagnoses = {
+    cum_diagnoses: [],
+    cum_diagnoses_high: [],
+    real_cum_diagnoses: [],
+  }
+
+  state.new_deaths = {
+    new_deaths: [],
+    new_deaths_high: [],
+    real_new_deaths: [],
+  }
+  state.new_recoveries = {
+    new_recoveries: [],
+    new_recoveries_high: [],
+    real_new_recoveries: [],
+  }
+
+  state.new_critical = {
+    new_critical: [],
+    new_critical_high: [],
+    real_new_critical: [],
+  }
+}
+
+const setChartData = (
+  state,
+  key,
+  population_data,
+  region_data,
+  n_future_day,
+  init_inf
+) => {
   state.chartData.labels = state.date
-  state.chartOptions_ = { ...chartOptions }
+  let region_name = 'Новосибирская область'
+  if (region_data === 2) {
+    region_name = 'Омская область'
+  } else if (region_data === 3) {
+    region_name = 'Алтайский край'
+  }
+  const pluginsOption = {
+    ...chartOptions.plugins,
+    subtitle: {
+      display: true,
+      align: 'end',
+      position: 'top',
+      text: [
+        'Регион прогнозирования: ' + region_name,
+        'Численность популяции: ' + population_data,
+        'Начально инфицированных: ' + init_inf,
+        'Дней прогнозирования: ' + n_future_day,
+      ],
+    },
+  }
+
+  state.chartOptions_ = {
+    ...chartOptions,
+    plugins: pluginsOption,
+  }
   //   switch keys по ключам для цветов и т д
 
   state.chartData.datasets[0] = {
@@ -70,6 +136,8 @@ export const prognoseSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchAomData.pending, state => {
       state.status = Status.LOADING
+
+      nullifyState(state)
     })
     builder.addCase(fetchAomData.fulfilled, (state, action) => {
       state.status = Status.SUCCESS
@@ -93,13 +161,25 @@ export const prognoseSlice = createSlice({
           state[key][key + '_high'].push(parseInt(dataObj))
         }
         for (const dataObj of action.payload.real_data) {
-          state[key]['real_' + key].push(parseInt(dataObj[key]))
+          if (key === 'new_critical') {
+            state[key]['real_' + key].push(parseInt(dataObj['n_critical']))
+          } else {
+            state[key]['real_' + key].push(parseInt(dataObj[key]))
+          }
         }
       }
-      setChartData(state, 'new_diagnoses')
+      setChartData(
+        state,
+        'new_diagnoses',
+        action.payload.population_data,
+        action.payload.region_data,
+        action.payload.n_future_day,
+        action.payload.init_inf
+      )
     })
     builder.addCase(fetchAomData.rejected, state => {
       state.status = Status.ERROR
+      nullifyState(state)
     })
   },
 })

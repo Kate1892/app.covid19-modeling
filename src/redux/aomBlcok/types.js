@@ -74,16 +74,5 @@ export const chartOptions = {
       align: 'start',
       text: 'Прогноз новых случаев заражения',
     },
-    // subtitle: {
-    //   display: true,
-    //   align: 'end',
-    //   position: 'top',
-    //   text: [
-    //     'Регион прогнозирования: ' + region_name,
-    //     'Численность популяции: ' + population_data,
-    //     'Начально инфицированных: ' + init_inf,
-    //     'Дней прогнозирования: ' + n_future_day,
-    //   ],
-    // },
   },
 }

@@ -48,7 +48,6 @@ export const covidChangeDataSlice = createSlice({
       state.status2 = Status.LOADING
     })
     builder.addCase(fetchChangeCovData.fulfilled, (state, action) => {
-      console.log(action.payload.title)
       state.status2 = Status.SUCCESS
       let date = [],
         mean = [],

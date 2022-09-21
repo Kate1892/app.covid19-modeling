@@ -3,34 +3,34 @@ import { Status } from '../types'
 import { fetchData } from './asyncAction'
 import { chartDatasets, chartOptions } from '../types'
 
+const keys = [
+  'new_diagnoses',
+  'cum_deaths',
+  'cum_diagnoses',
+  'cum_children',
+  'cum_recoveries',
+  'n_critical',
+]
+
+const nullifyState = state => {
+  for (const key of keys) {
+    state[key] = []
+  }
+  state.date = []
+  state.chartOptions = {}
+}
+
 const setDataSets = state => {
   state.chartOptions = { ...chartOptions }
 
   state.chartData.labels = state.date
-
-  state.chartData.datasets[0] = {
-    ...chartDatasets[0],
-    data: state.new_diagnoses,
-  }
-  state.chartData.datasets[1] = {
-    ...chartDatasets[1],
-    data: state.cum_deaths,
-  }
-  state.chartData.datasets[2] = {
-    ...chartDatasets[2],
-    data: state.cum_diagnoses,
-  }
-  state.chartData.datasets[3] = {
-    ...chartDatasets[3],
-    data: state.cum_children,
-  }
-  state.chartData.datasets[4] = {
-    ...chartDatasets[4],
-    data: state.cum_recoveries,
-  }
-  state.chartData.datasets[5] = {
-    ...chartDatasets[5],
-    data: state.n_critical,
+  let cur = 0
+  for (const key of keys) {
+    state.chartData.datasets[cur] = {
+      ...chartDatasets[cur],
+      data: state[key],
+    }
+    cur++
   }
 }
 
@@ -77,73 +77,31 @@ export const covidDataSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(fetchData.pending, state => {
       state.status = Status.LOADING
-      state.new_diagnoses = []
-      state.cum_deaths = []
-      state.cum_diagnoses = []
-      state.cum_recoveries = []
-      state.n_critical = []
-      state.cum_children = []
-      state.date = []
-      state.chartData = {
-        labels: '',
-        datasets: [{}, {}, {}, {}, {}, {}],
-      }
-      state.chartOptions = {}
+      nullifyState(state)
     })
     builder.addCase(fetchData.fulfilled, (state, action) => {
       state.status = Status.SUCCESS
       for (const dataObj of action.payload) {
         state.date = [...state.date, dataObj.date]
-        state.new_diagnoses = [
-          ...state.new_diagnoses,
-          parseInt(dataObj.new_diagnoses),
-        ]
-        state.cum_deaths = [...state.cum_deaths, parseInt(dataObj.cum_deaths)]
-        state.cum_diagnoses = [
-          ...state.cum_diagnoses,
-          parseInt(dataObj.cum_diagnoses),
-        ]
-        state.cum_recoveries = [
-          ...state.cum_recoveries,
-          parseInt(dataObj.cum_recoveries),
-        ]
-        state.n_critical = [...state.n_critical, parseInt(dataObj.n_critical)]
-        state.cum_children = [
-          ...state.cum_children,
-          parseInt(dataObj.cum_children),
-        ]
+        for (const key of keys) {
+          state[key] = [...state[key], parseInt(dataObj[key])]
+        }
       }
 
-      state.lastData[0].date = state.date[state.date.length - 1]
-      state.lastData[1].date = state.date[state.date.length - 1]
-      state.lastData[2].date = state.date[state.date.length - 1]
-
-      state.lastData[0].value = parseInt(
-        action.payload[action.payload.length - 1].new_diagnoses
-      )
-      state.lastData[1].value = state.lastData[2].value = parseInt(
-        action.payload[action.payload.length - 1].new_recoveries
-      )
-      state.lastData[2].value = parseInt(
-        action.payload[action.payload.length - 1].new_deaths
-      )
-
+      const sKeys = ['new_diagnoses', 'new_recoveries', 'new_deaths']
+      let cur = 0
+      for (const k of sKeys) {
+        state.lastData[cur].date = state.date[state.date.length - 1]
+        state.lastData[cur].value = parseInt(
+          action.payload[action.payload.length - 1][k]
+        )
+        cur++
+      }
       setDataSets(state)
     })
     builder.addCase(fetchData.rejected, state => {
       state.status = Status.ERROR
-      state.new_diagnoses = []
-      state.cum_deaths = []
-      state.cum_diagnoses = []
-      state.cum_recoveries = []
-      state.n_critical = []
-      state.cum_children = []
-      state.date = []
-      state.chartData = {
-        labels: '',
-        datasets: [{}, {}, {}, {}, {}, {}],
-      }
-      state.chartOptions = {}
+      nullifyState(state)
     })
   },
 })

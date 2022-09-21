@@ -4,10 +4,6 @@ import { fetchBPCovData } from './asyncAction'
 import { chartOptions, chartData, chartR0Options, chartR0Data } from './types'
 
 const nullifyState = state => {
-  //   state.chartData_BP = {
-  //     labels: '',
-  //     datasets: [{}, {}],
-  //   }
   state.date = []
   state.new_diagnoses = []
   state.ventilation = []
@@ -70,31 +66,6 @@ const setChartR0Data = state => {
     }
     cur++
   }
-
-  //   state.chartData_bpR0.datasets[0] = {
-  //     ...chartR0Data[0],
-  //     data: state.R0_min_train,
-  //   }
-  //   state.chartData_bpR0.datasets[1] = {
-  //     ...chartR0Data[1],
-  //     data: state.R0_max_train,
-  //   }
-  //   state.chartData_bpR0.datasets[2] = {
-  //     ...chartR0Data[2],
-  //     data: state.R0_mean_train,
-  //   }
-  //   state.chartData_bpR0.datasets[3] = {
-  //     ...chartR0Data[3],
-  //     data: state.R0_min_entire,
-  //   }
-  //   state.chartData_bpR0.datasets[4] = {
-  //     ...chartR0Data[4],
-  //     data: state.R0_max_entire,
-  //   }
-  //   state.chartData_bpR0.datasets[5] = {
-  //     ...chartR0Data[5],
-  //     data: state.R0_mean_entire,
-  //   }
 }
 
 const roundParamValue = (data, paramName) => {
